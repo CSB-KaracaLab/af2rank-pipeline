@@ -16,7 +16,7 @@ Choose which template-capable AlphaFold2 weights score the models:
 | AF2-multimer v3 1–5 | `model_1_multimer_v3` … `model_5_multimer_v3`, with the chains joined by a 20-glycine linker |
 | Both | all seven |
 
-Every model is scored with each selected weight. The notebook then shows the scores, a comparison of the weights, the rescored structures and PAE maps, and a ZIP of all results.
+Every model is scored with each selected weight. The notebook then shows the scores for each model and weight, the rescored structures and PAE maps, and a ZIP of all results.
 
 ## Run locally
 
