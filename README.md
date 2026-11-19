@@ -8,15 +8,18 @@ AF2Rank Pipeline scores existing protein-complex structures. It standardizes cha
 
 The notebook opens on a GPU runtime; if Colab gives you a CPU runtime, choose *Runtime → Change runtime type →* a GPU (for example T4) before running. Run the included 1BRS example or upload your own FASTA and structures.
 
-Choose which template-capable AlphaFold2 weights score the models:
+Tick any of these template-capable AlphaFold2 weight sets to score the models:
 
 | Weight set | Weights |
 |---|---|
 | AF2-ptm 1, 2 (default) | `model_1_ptm`, `model_2_ptm` |
-| AF2-multimer v3 1–5 | `model_1_multimer_v3` … `model_5_multimer_v3`, with the chains joined by a 20-glycine linker |
-| Both | all seven |
+| AF2.1 multimer v1 | `model_1_multimer` … `model_5_multimer` |
+| AF2.2 multimer v2 | `model_1_multimer_v2` … `model_5_multimer_v2` |
+| AF2.3 multimer v3 | `model_1_multimer_v3` … `model_5_multimer_v3` |
 
-Every model is scored with each selected weight. The notebook then shows the scores for each model and weight, the rescored structures and PAE maps, and a ZIP of all results.
+Multimer runs join the chains with a 20-glycine linker.
+
+Choose one or more seeds in the Seeds section; they apply to every model and weight. AF2Rank gives AlphaFold one sequence and no MSA, so seeds only change the prediction when dropout is on; the notebook asks for dropout when you list several seeds. Every model is scored with each selected weight and seed. The notebook then shows the scores for each model, weight and seed, the rescored structures and PAE maps, and a ZIP of all results.
 
 ## Run locally
 
@@ -38,7 +41,9 @@ python env/download_default_params.py params
 
 The helper downloads just the required file and verifies its checksum. `params/` is excluded from version control. If you already have a parameter directory, use it instead. A different model number or `--model-mode alphafold-multimer` needs its corresponding weight; the [official download script](https://github.com/google-deepmind/alphafold/blob/main/scripts/download_alphafold_params.sh) provides the complete parameter bundle.
 
-AF2Rank passes each input structure to AlphaFold as a template, so only template-capable weights apply: AF2-ptm models 1 and 2, and AF2-multimer v3 models 1–5. AF2-multimer was trained with per-chain templates only. With `--model-mode alphafold-multimer`, the pipeline therefore joins the chains into one chain with a 20-glycine linker, so the whole complex becomes a single intra-chain template. The linker residues carry no template information. They are removed from the scored PDB, the PAE matrix and every metric, and chains and residue numbers are restored. Set the linker length with `--multimer-linker N`; `--multimer-linker 0` scores the chains as separate multimer chains. Linked runs write the joined inputs under `af2rank/<run>/linked_inputs/`.
+AF2Rank passes each input structure to AlphaFold as a template, so only template-capable weights apply: AF2-ptm models 1 and 2, and AF2-multimer models 1–5 from AF2.1, AF2.2 and AF2.3. Pick the multimer release with `--multimer-version v1`, `v2` or `v3` (default v3); each needs its weight file (`params_model_N_multimer.npz`, `_multimer_v2.npz` or `_multimer_v3.npz`) from the matching dated archive, for example `download_weight(params, "params_model_1_multimer.npz", sha256, archive_url("2021-10-27"))` from `env/download_default_params.py`. AF2-multimer was trained with per-chain templates only. With `--model-mode alphafold-multimer`, the pipeline therefore joins the chains into one chain with a 20-glycine linker, so the whole complex becomes a single intra-chain template. The linker residues carry no template information. They are removed from the scored PDB, the PAE matrix and every metric, and chains and residue numbers are restored. Set the linker length with `--multimer-linker N`; `--multimer-linker 0` scores the chains as separate multimer chains. Linked runs write the joined inputs under `af2rank/<run>/linked_inputs/`.
+
+`--seed N` (default 0) sets the random seed for inference, and `--dropout` keeps dropout on during scoring. Without dropout the prediction does not depend on the seed: on the bundled 1BRS example, seeds 0 and 1 give identical structures and scores. With `--dropout`, each seed samples a different prediction. Runs with a non-default seed or dropout get their own output folder (for example `..._seed1_dropout`).
 
 Run the included 1BRS complex:
 

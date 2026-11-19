@@ -39,6 +39,8 @@ def parse_args():
     parser.add_argument("--chain", default=None, help="Comma-separated chain IDs, for example A,B,C.")
     parser.add_argument("--model_mode", default="alphafold", choices=["alphafold", "alphafold-multimer"])
     parser.add_argument("--model_num", type=int, default=2)
+    parser.add_argument("--multimer_version", default="v3", choices=sorted(MULTIMER_SUFFIX),
+                        help="AF2-multimer weights: v1 (AF2.1), v2 (AF2.2) or v3 (AF2.3).")
     parser.add_argument("--recycle", type=int, default=1)
     parser.add_argument("--iterations", type=positive_iterations, default=1)
     parser.add_argument("--params", required=True, help="AlphaFold params dir or parent data dir.")
@@ -55,6 +57,9 @@ def parse_args():
     parser.add_argument("--mask_sidechains", action="store_true")
     parser.add_argument("--mask_interchain", action="store_true")
     parser.add_argument("--keep_raw", action="store_true", help="Save raw PAE/distogram NPZ files for debugging.")
+    parser.add_argument("--seed", type=int, default=0, help="Random seed for AlphaFold inference.")
+    parser.add_argument("--dropout", action="store_true",
+                        help="Keep dropout on during inference, so different seeds give different predictions.")
     parser.add_argument("--linker_length", type=int, default=0,
                         help="Join chains with this many glycines before multimer inference (0 = off).")
     parser.set_defaults(pae_json_gzip=True)
@@ -90,13 +95,17 @@ def get_data_dir(params_path):
     return str(p)
 
 
-def model_name_from_args(model_mode, model_num):
+# Weight file suffix per AF2-multimer release: AF2.1, AF2.2, AF2.3.
+MULTIMER_SUFFIX = {"v1": "multimer", "v2": "multimer_v2", "v3": "multimer_v3"}
+
+
+def model_name_from_args(model_mode, model_num, multimer_version="v3"):
     if model_mode == "alphafold":
         return f"model_{model_num}_ptm"
-    return f"model_{model_num}_multimer_v3"
+    return f"model_{model_num}_{MULTIMER_SUFFIX[multimer_version]}"
 
 
-def validate_params(params_path, model_mode, model_num):
+def validate_params(params_path, model_mode, model_num, multimer_version="v3"):
     """Check that ColabDesign can read the requested params directly from shared storage."""
     params_path = Path(params_path).resolve()
     params_dir = params_path if params_path.name == "params" else params_path / "params"
@@ -106,7 +115,7 @@ def validate_params(params_path, model_mode, model_num):
     if model_mode == "alphafold":
         expected = params_dir / f"params_model_{model_num}_ptm.npz"
     else:
-        expected = params_dir / f"params_model_{model_num}_multimer_v3.npz"
+        expected = params_dir / f"params_{model_name_from_args(model_mode, model_num, multimer_version)}.npz"
 
     if not expected.exists():
         raise FileNotFoundError(f"Expected model parameters not found: {expected}")
@@ -635,7 +644,7 @@ class AF2RankRunner:
         self.wt = self.model._wt_aatype
 
     def predict(self, pdb, chain, recycles, iterations, rm_seq, rm_sc, rm_ic, output_pdb=None,
-                no_template=None):
+                no_template=None, seed=0, dropout=False):
         """Score one structure; `no_template` marks positions (e.g. a linker) with no template."""
         if iterations < 1:
             raise ValueError("iterations must be at least 1")
@@ -657,7 +666,7 @@ class AF2RankRunner:
 
         initial_atoms = self.model._inputs["batch"]["all_atom_positions"].copy()
         for i in range(iterations):
-            self.model.predict(models=self.args["model_name"], verbose=False)
+            self.model.predict(models=self.args["model_name"], verbose=False, seed=seed, dropout=dropout)
             if i < iterations - 1:
                 self.model._inputs["batch"]["all_atom_positions"] = self.model.aux["atom_positions"]
             else:
@@ -745,9 +754,9 @@ def main():
     if args.linker_length:
         linked_dir.mkdir(exist_ok=True)
 
-    version = "v3" if args.model_mode == "alphafold-multimer" else "ptm"
-    model_name = model_name_from_args(args.model_mode, args.model_num)
-    validate_params(args.params, args.model_mode, args.model_num)
+    version = args.multimer_version if args.model_mode == "alphafold-multimer" else "ptm"
+    model_name = model_name_from_args(args.model_mode, args.model_num, args.multimer_version)
+    validate_params(args.params, args.model_mode, args.model_num, args.multimer_version)
     data_dir = get_data_dir(args.params)
     chain_labels = parse_chain_labels(args.chain)
 
@@ -783,6 +792,8 @@ def main():
             rm_ic=args.mask_interchain,
             output_pdb=raw_output_pdb,
             no_template=no_template,
+            seed=args.seed,
+            dropout=args.dropout,
         )
 
         log = deepcopy(aux["log"])
@@ -826,6 +837,8 @@ def main():
             "rm_sc": bool(args.mask_sidechains),
             "rm_ic": bool(args.mask_interchain),
             "linker_length": args.linker_length,
+            "seed": args.seed,
+            "dropout": bool(args.dropout),
             "plddt": round(plddt, 4) if not np.isnan(plddt) else "N/A",
             "ptm": round(ptm, 4) if not np.isnan(ptm) else "N/A",
             "i_ptm": round(iptm, 4) if not np.isnan(iptm) else "N/A",

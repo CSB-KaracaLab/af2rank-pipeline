@@ -52,11 +52,18 @@ def _add_af2rank_args(parser: argparse.ArgumentParser, *, batch_options: bool = 
     parser.add_argument("--recycles", type=int, default=1)
     parser.add_argument("--model-num", type=int, default=2)
     parser.add_argument(
+        "--multimer-version", default="v3", choices=["v1", "v2", "v3"],
+        help="AF2-multimer weights for --model-mode alphafold-multimer: v1 (AF2.1), v2 (AF2.2) or v3 (AF2.3).",
+    )
+    parser.add_argument(
         "--multimer-linker", type=int, default=None, metavar="N",
         help="With --model-mode alphafold-multimer, join the chains with N glycines so the "
              "complex is one intra-chain template (default 20; 0 scores the chains separately).",
     )
     parser.add_argument("--iterations", type=_positive_iterations, default=1)
+    parser.add_argument("--seed", type=int, default=0, help="Random seed for AlphaFold inference (default 0).")
+    parser.add_argument("--dropout", action="store_true",
+                        help="Keep dropout on during inference so that different seeds sample different predictions.")
     parser.add_argument("--no-mask-sequence", action="store_true")
     parser.add_argument("--no-mask-sidechains", action="store_true")
     parser.add_argument("--mask-interchain", action="store_true")
@@ -87,13 +94,15 @@ def _af2rank_config(args: argparse.Namespace) -> AF2RankConfig:
         recycle=args.recycles,
         model_num=args.model_num,
         model_mode=args.model_mode,
-        version="v3" if args.model_mode == "alphafold-multimer" else "ptm",
+        version=args.multimer_version if args.model_mode == "alphafold-multimer" else "ptm",
         iterations=args.iterations,
         mask_sequence=not args.no_mask_sequence,
         mask_sidechains=not args.no_mask_sidechains,
         mask_interchain=args.mask_interchain,
         keep_raw=args.keep_raw,
         linker_length=_linker_length(args),
+        seed=args.seed,
+        dropout=args.dropout,
     )
 
 
