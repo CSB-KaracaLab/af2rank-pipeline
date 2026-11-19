@@ -4,7 +4,7 @@ AF2Rank Pipeline scores existing protein-complex structures. It standardizes cha
 
 ## Try it in Colab
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sahinmtaylan/af2rank-pipeline/blob/main/notebooks/colab_demo.ipynb)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/CSB-KaracaLab/af2rank-pipeline/blob/main/notebooks/colab_demo.ipynb)
 
 Select a GPU runtime to run the included 1BRS example or upload your own FASTA and structures.
 
@@ -27,6 +27,8 @@ python env/download_default_params.py params
 ```
 
 The helper downloads just the required file and verifies its checksum. `params/` is excluded from version control. If you already have a parameter directory, use it instead. A different model number or `--model-mode alphafold-multimer` needs its corresponding weight; the [official download script](https://github.com/google-deepmind/alphafold/blob/main/scripts/download_alphafold_params.sh) provides the complete parameter bundle.
+
+AF2Rank passes each input structure to AlphaFold as a template, so only template-capable weights apply: AF2-ptm models 1 and 2, and AF2-multimer v3 models 1–5. AF2-multimer was trained with per-chain templates only. With `--model-mode alphafold-multimer`, the pipeline therefore joins the chains into one chain with a 20-glycine linker, so the whole complex becomes a single intra-chain template. The linker residues carry no template information. They are removed from the scored PDB, the PAE matrix and every metric, and chains and residue numbers are restored. Set the linker length with `--multimer-linker N`; `--multimer-linker 0` scores the chains as separate multimer chains. Linked runs write the joined inputs under `af2rank/<run>/linked_inputs/`.
 
 Run the included 1BRS complex:
 
