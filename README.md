@@ -6,7 +6,17 @@ AF2Rank Pipeline scores existing protein-complex structures. It standardizes cha
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/CSB-KaracaLab/af2rank-pipeline/blob/main/notebooks/colab_demo.ipynb)
 
-Select a GPU runtime to run the included 1BRS example or upload your own FASTA and structures.
+The notebook opens on a GPU runtime; if Colab gives you a CPU runtime, choose *Runtime → Change runtime type →* a GPU (for example T4) before running. Run the included 1BRS example or upload your own FASTA and structures.
+
+Choose which template-capable AlphaFold2 weights score the models:
+
+| Weight set | Weights |
+|---|---|
+| AF2-ptm 1, 2 (default) | `model_1_ptm`, `model_2_ptm` |
+| AF2-multimer v3 1–5 | `model_1_multimer_v3` … `model_5_multimer_v3`, with the chains joined by a 20-glycine linker |
+| Both | all seven |
+
+Every model is scored with each selected weight. The notebook then shows the scores, a comparison of the weights, the rescored structures and PAE maps, and a ZIP of all results.
 
 ## Run locally
 
