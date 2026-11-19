@@ -55,8 +55,15 @@ def parse_args():
     parser.add_argument("--mask_sidechains", action="store_true")
     parser.add_argument("--mask_interchain", action="store_true")
     parser.add_argument("--keep_raw", action="store_true", help="Save raw PAE/distogram NPZ files for debugging.")
+    parser.add_argument("--linker_length", type=int, default=0,
+                        help="Join chains with this many glycines before multimer inference (0 = off).")
     parser.set_defaults(pae_json_gzip=True)
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.linker_length < 0:
+        parser.error("--linker_length must be 0 or more")
+    if args.linker_length and args.model_mode != "alphafold-multimer":
+        parser.error("--linker_length applies only to --model_mode alphafold-multimer")
+    return args
 
 
 def setup_imports(colabdesign_dir):
@@ -164,6 +171,184 @@ def get_asym_id(af_model, pdb_path, chain):
 
     L = len(batch["aatype"])
     return np.zeros(L, dtype=np.int32)
+
+
+LINKED_CHAIN = "A"
+
+
+def read_pdb_residues(pdb_path, chain_labels=None):
+    """Return ATOM residues in file order as (chain, resseq, atom lines)."""
+    residues = []
+    with open(pdb_path, "r", encoding="utf-8", errors="ignore") as handle:
+        for line in handle:
+            if not line.startswith("ATOM"):
+                continue
+            chain_id = line[21]
+            if chain_labels is not None and chain_id not in chain_labels:
+                continue
+            if line[26].strip():
+                raise ValueError(f"{Path(pdb_path).name}: insertion codes cannot be linked into one chain")
+            resseq = int(line[22:26])
+            if not residues or residues[-1][:2] != (chain_id, resseq):
+                residues.append((chain_id, resseq, []))
+            residues[-1][2].append(line.rstrip("\n"))
+    if chain_labels is not None:
+        order = {label: i for i, label in enumerate(chain_labels)}
+        residues.sort(key=lambda residue: order[residue[0]])
+    return residues
+
+
+def _atom_coord(lines, atom_name):
+    for line in lines:
+        if line[12:16].strip() == atom_name:
+            return np.array([float(line[30:38]), float(line[38:46]), float(line[46:54])])
+    return None
+
+
+def _atom_line(serial, atom_name, resname, chain_id, resseq, xyz, element):
+    return (f"ATOM  {serial:5d}  {atom_name:<3s} {resname:>3s} {chain_id}{resseq:4d}    "
+            f"{xyz[0]:8.3f}{xyz[1]:8.3f}{xyz[2]:8.3f}  1.00  0.00           {element:>1s}")
+
+
+def write_linked_pdb(pdb_path, chain_labels, linker_length, out_path):
+    """Join the chains into one chain separated by poly-glycine linkers.
+
+    AlphaFold-multimer was trained with per-chain templates only. A single
+    linked chain lets the whole complex act as one intra-chain template. Each
+    chain keeps its internal residue-number gaps; linker residues get
+    placeholder backbone atoms whose template information is removed before
+    inference. Returns one (chain, resseq) entry per linked position, with
+    None for linker positions.
+    """
+    residues = read_pdb_residues(pdb_path, chain_labels)
+    chains = list(dict.fromkeys(chain_id for chain_id, _, _ in residues))
+    position_map = []
+    out_lines = []
+    serial = 1
+    next_number = 1
+    previous_residues = None
+    for chain_id in chains:
+        chain_residues = [residue for residue in residues if residue[0] == chain_id]
+        if previous_residues is not None:
+            previous_ca = _atom_coord(previous_residues[-1][2], "CA")
+            next_ca = _atom_coord(chain_residues[0][2], "CA")
+            if previous_ca is None or next_ca is None:
+                raise ValueError(f"{Path(pdb_path).name}: chain ends need CA atoms to place the linker")
+            for k in range(1, linker_length + 1):
+                ca = previous_ca + (next_ca - previous_ca) * k / (linker_length + 1)
+                backbone = (("N", ca + (-1.2, 0.5, 0.0), "N"), ("CA", ca, "C"),
+                            ("C", ca + (1.2, 0.5, 0.0), "C"), ("O", ca + (1.2, 1.7, 0.0), "O"))
+                for atom_name, xyz, element in backbone:
+                    out_lines.append(_atom_line(serial, atom_name, "GLY", LINKED_CHAIN, next_number, xyz, element))
+                    serial += 1
+                position_map.append(None)
+                next_number += 1
+        shift = next_number - chain_residues[0][1]
+        for _, resseq, lines in chain_residues:
+            for line in lines:
+                out_lines.append(f"ATOM  {serial:5d}{line[11:21]}{LINKED_CHAIN}{resseq + shift:4d}{line[26:]}")
+                serial += 1
+            position_map.append((chain_id, resseq))
+        next_number = chain_residues[-1][1] + shift + 1
+        previous_residues = chain_residues
+    if next_number > 10000:
+        raise ValueError(f"{Path(pdb_path).name}: linked chain is too long for PDB residue numbering")
+    Path(out_path).write_text("\n".join(out_lines) + "\nTER\nEND\n")
+    return position_map
+
+
+def unlink_pdb(linked_pdb, position_map, out_path):
+    """Drop linker residues from a ColabDesign PDB and restore chains and numbering.
+
+    Residues are matched by their order in the file, so this works whether
+    ColabDesign keeps the linked numbering or renumbers the chain.
+    """
+    out_lines = []
+    serial = 1
+    previous_chain = None
+    last_line = None
+    position = -1
+    residue_key = None
+    with open(linked_pdb, "r", encoding="utf-8") as handle:
+        for line in handle:
+            if not line.startswith("ATOM"):
+                continue
+            if line[21:27] != residue_key:
+                residue_key = line[21:27]
+                position += 1
+            if position >= len(position_map):
+                raise ValueError(f"{Path(linked_pdb).name} has more residues than the linked input")
+            original = position_map[position]
+            if original is None:
+                continue
+            chain_id, resseq = original
+            if previous_chain is not None and chain_id != previous_chain:
+                out_lines.append(f"TER   {serial:5d}      {last_line[17:20]} {previous_chain}{last_line[22:26]}")
+                serial += 1
+            last_line = f"ATOM  {serial:5d}{line[11:21]}{chain_id}{resseq:4d}{line[26:].rstrip()}"
+            out_lines.append(last_line)
+            serial += 1
+            previous_chain = chain_id
+    if position + 1 != len(position_map):
+        raise ValueError(
+            f"{Path(linked_pdb).name} has {position + 1} residues, the linked input has {len(position_map)}")
+    out_lines.append(f"TER   {serial:5d}      {last_line[17:20]} {previous_chain}{last_line[22:26]}")
+    Path(out_path).write_text("\n".join(out_lines) + "\nEND\n")
+
+
+def linked_asym_id(position_map):
+    """Chain index per non-linker position, in linked order."""
+    chains = list(dict.fromkeys(entry[0] for entry in position_map if entry is not None))
+    return np.array([chains.index(entry[0]) for entry in position_map if entry is not None], dtype=np.int32)
+
+
+def drop_linker_outputs(outputs, keep):
+    """Remove linker rows and columns from the PAE and distogram outputs."""
+    trimmed = {}
+    for name in ("predicted_aligned_error", "distogram"):
+        head = dict(outputs[name])
+        head["logits"] = np.asarray(head["logits"])[keep][:, keep]
+        trimmed[name] = head
+    return trimmed
+
+
+def alphafold_tm_score(logits, breaks, asym_id=None):
+    """AlphaFold's predicted TM-score, as ColabDesign logs it: pTM, or ipTM with asym_id."""
+    logits = np.asarray(logits, dtype=float)
+    breaks = np.asarray(breaks, dtype=float)
+    step = breaks[1] - breaks[0]
+    bin_centers = np.append(breaks + step / 2, breaks[-1] + 1.5 * step)
+    d0 = 1.24 * (max(logits.shape[0], 19) - 15) ** (1.0 / 3) - 1.8
+    tm_per_pair = (softmax(logits, axis=-1) / (1 + np.square(bin_centers / d0))).sum(-1)
+    if asym_id is None:
+        pair_mask = np.ones(tm_per_pair.shape)
+    else:
+        asym_id = np.asarray(asym_id)
+        pair_mask = (asym_id[:, None] != asym_id[None, :]).astype(float)
+    weights = pair_mask / (1e-8 + pair_mask.sum(-1, keepdims=True))
+    return float(np.max((tm_per_pair * pair_mask * weights).sum(-1)))
+
+
+def linked_confidence(aux, outputs, keep, asym_id):
+    """Recompute pLDDT, pTM, ipTM and PAE without the linker residues.
+
+    Values follow ColabDesign's logged definitions so linked and unlinked runs
+    compare directly: mean pLDDT (0-1), AlphaFold pTM/ipTM, and the mean PAE
+    over within-chain residue pairs. `outputs` must already be trimmed with
+    drop_linker_outputs.
+    """
+    pae_head = outputs["predicted_aligned_error"]
+    logits, breaks = pae_head["logits"], pae_head["breaks"]
+    pae = np.asarray(aux["pae"])[keep][:, keep]
+    asym_id = np.asarray(asym_id)
+    same_chain = asym_id[:, None] == asym_id[None, :]
+    return {
+        "plddt": float(np.mean(np.asarray(aux["plddt"])[keep])),
+        "ptm": alphafold_tm_score(logits, breaks),
+        "i_ptm": alphafold_tm_score(logits, breaks, asym_id) if len(np.unique(asym_id)) > 1 else np.nan,
+        "pae": pae,
+        "pae_mean": float(pae[same_chain].mean()),
+    }
 
 
 def chain_ranges_from_asym_id(asym_id, chain_labels=None):
@@ -449,7 +634,9 @@ class AF2RankRunner:
         self.model.set_seq(mode="wildtype")
         self.wt = self.model._wt_aatype
 
-    def predict(self, pdb, chain, recycles, iterations, rm_seq, rm_sc, rm_ic, output_pdb=None):
+    def predict(self, pdb, chain, recycles, iterations, rm_seq, rm_sc, rm_ic, output_pdb=None,
+                no_template=None):
+        """Score one structure; `no_template` marks positions (e.g. a linker) with no template."""
         if iterations < 1:
             raise ValueError("iterations must be at least 1")
         if pdb is not None:
@@ -460,6 +647,13 @@ class AF2RankRunner:
         self.model._inputs["rm_template"][:] = False
         self.model._inputs["rm_template_sc"][:] = rm_sc
         self.model._inputs["rm_template_seq"][:] = rm_seq
+        if no_template is not None:
+            no_template = np.asarray(no_template, dtype=bool)
+            if no_template.shape[0] != len(self.wt):
+                raise ValueError(
+                    f"Linked input has {len(self.wt)} prepared residues, expected {no_template.shape[0]}")
+            self.model._inputs["rm_template"][no_template] = True
+            self.model._inputs["batch"]["all_atom_mask"][no_template] = 0
 
         initial_atoms = self.model._inputs["batch"]["all_atom_positions"].copy()
         for i in range(iterations):
@@ -547,6 +741,9 @@ def main():
     pae_json_dir = Path(args.pae_json_dir) if args.pae_json_dir else out_dir / "pae_json"
     pdb_out_dir = out_dir / "scored_pdbs"
     pdb_out_dir.mkdir(exist_ok=True)
+    linked_dir = out_dir / "linked_inputs"
+    if args.linker_length:
+        linked_dir.mkdir(exist_ok=True)
 
     version = "v3" if args.model_mode == "alphafold-multimer" else "ptm"
     model_name = model_name_from_args(args.model_mode, args.model_num)
@@ -564,30 +761,52 @@ def main():
         print(f"[{args.target}] scoring {pdb_path.name} with {model_name}", flush=True)
 
         output_pdb = str(pdb_out_dir / f"{pdb_id}_scored.pdb")
-        runner = AF2RankRunner(str(pdb_path), args.chain, model_name, data_dir)
+        if args.linker_length:
+            # Score one linked chain so the complex is a single intra-chain template.
+            model_pdb = linked_dir / pdb_path.name
+            position_map = write_linked_pdb(pdb_path, chain_labels, args.linker_length, model_pdb)
+            model_chain = LINKED_CHAIN
+            no_template = np.array([entry is None for entry in position_map])
+            keep = np.flatnonzero(~no_template)
+            raw_output_pdb = str(linked_dir / f"{pdb_id}_scored_linked.pdb")
+        else:
+            model_pdb, model_chain, no_template, keep = pdb_path, args.chain, None, None
+            raw_output_pdb = output_pdb
+        runner = AF2RankRunner(str(model_pdb), model_chain, model_name, data_dir)
         aux = runner.predict(
-            str(pdb_path),
-            args.chain,
+            str(model_pdb),
+            model_chain,
             recycles=args.recycle,
             iterations=args.iterations,
             rm_seq=args.mask_sequence,
             rm_sc=args.mask_sidechains,
             rm_ic=args.mask_interchain,
-            output_pdb=output_pdb,
+            output_pdb=raw_output_pdb,
+            no_template=no_template,
         )
 
-        asym_id = get_asym_id(runner, str(pdb_path), args.chain)
-        outputs = aux["debug"]["outputs"]
-        actif_metrics = compute_pair_metrics(outputs, asym_id, chain_labels)
-
         log = deepcopy(aux["log"])
-        plddt = float(log.get("plddt", np.nan))
-        ptm = float(log.get("ptm", np.nan))
-        iptm = float(log.get("i_ptm", np.nan)) if "i_ptm" in log else np.nan
-
         input_ca = runner.model._inputs["batch"]["all_atom_positions"][:, 1]
         output_ca = np.array(aux["atom_positions"][:, 1])
         native_ca = runner.wt_batch["all_atom_positions"][:, 1]
+        if args.linker_length:
+            unlink_pdb(raw_output_pdb, position_map, output_pdb)
+            asym_id = linked_asym_id(position_map)
+            outputs = drop_linker_outputs(aux["debug"]["outputs"], keep)
+            confidence = linked_confidence(aux, outputs, keep, asym_id)
+            plddt, ptm, iptm = confidence["plddt"], confidence["ptm"], confidence["i_ptm"]
+            pae_mean = confidence["pae_mean"]
+            saved_aux = {"pae": confidence["pae"], "debug": {"outputs": outputs}}
+            input_ca, output_ca, native_ca = input_ca[keep], output_ca[keep], native_ca[keep]
+        else:
+            asym_id = get_asym_id(runner, str(pdb_path), args.chain)
+            outputs = aux["debug"]["outputs"]
+            plddt = float(log.get("plddt", np.nan))
+            ptm = float(log.get("ptm", np.nan))
+            iptm = float(log.get("i_ptm", np.nan)) if "i_ptm" in log else np.nan
+            pae_mean = float(31.0 * log["pae"]) if "pae" in log else np.nan
+            saved_aux = aux
+        actif_metrics = compute_pair_metrics(outputs, asym_id, chain_labels)
         tm_i = tmscore(native_ca, input_ca, args.tm)
         tm_o = tmscore(native_ca, output_ca, args.tm)
         tm_io = tmscore(input_ca, output_ca, args.tm)
@@ -606,6 +825,7 @@ def main():
             "rm_seq": bool(args.mask_sequence),
             "rm_sc": bool(args.mask_sidechains),
             "rm_ic": bool(args.mask_interchain),
+            "linker_length": args.linker_length,
             "plddt": round(plddt, 4) if not np.isnan(plddt) else "N/A",
             "ptm": round(ptm, 4) if not np.isnan(ptm) else "N/A",
             "i_ptm": round(iptm, 4) if not np.isnan(iptm) else "N/A",
@@ -613,14 +833,14 @@ def main():
             "tm_o": round(tm_o, 4) if tm_o is not None else "N/A",
             "tm_io": round(tm_io, 4) if tm_io is not None else "N/A",
             "composite": round(float(composite), 4) if not np.isnan(composite) else "N/A",
-            "pae": round(float(31.0 * log.get("pae", np.nan)), 4) if "pae" in log else "N/A",
+            "pae": round(pae_mean, 4) if not np.isnan(pae_mean) else "N/A",
         }
         row.update(actif_metrics)
         rows.append(row)
 
         if args.keep_raw:
-            maybe_save_raw_npz(out_dir, pdb_id, aux, asym_id)
-        save_pae_json(pae_json_dir, pdb_id, aux, gzip_enabled=args.pae_json_gzip)
+            maybe_save_raw_npz(out_dir, pdb_id, saved_aux, asym_id)
+        save_pae_json(pae_json_dir, pdb_id, saved_aux, gzip_enabled=args.pae_json_gzip)
 
         # Release large arrays between structures.
         del runner, aux, outputs
@@ -643,6 +863,7 @@ def main():
         "pae_json_gzip": bool(args.pae_json_gzip),
         "scored_pdbs_saved": True,
         "actifptm_variant": ACTIFPTM_VARIANT,
+        "linker_length": args.linker_length,
     }
     with open(out_dir / f"{args.target}_metadata.json", "w", encoding="utf-8") as handle:
         json.dump(metadata, handle, indent=2)

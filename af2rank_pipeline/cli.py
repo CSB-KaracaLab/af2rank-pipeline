@@ -9,6 +9,8 @@ from .cleaning import clean_batch, clean_models, merge_clean_batch_manifests
 from .exceptions import PipelineError
 from .target import load_target_spec, load_target_spec_json
 
+DEFAULT_MULTIMER_LINKER = 20
+
 
 def _positive_iterations(value: str) -> int:
     try:
@@ -49,11 +51,27 @@ def _add_af2rank_args(parser: argparse.ArgumentParser, *, batch_options: bool = 
     parser.add_argument("--model-mode", default="alphafold", choices=["alphafold", "alphafold-multimer"])
     parser.add_argument("--recycles", type=int, default=1)
     parser.add_argument("--model-num", type=int, default=2)
+    parser.add_argument(
+        "--multimer-linker", type=int, default=None, metavar="N",
+        help="With --model-mode alphafold-multimer, join the chains with N glycines so the "
+             "complex is one intra-chain template (default 20; 0 scores the chains separately).",
+    )
     parser.add_argument("--iterations", type=_positive_iterations, default=1)
     parser.add_argument("--no-mask-sequence", action="store_true")
     parser.add_argument("--no-mask-sidechains", action="store_true")
     parser.add_argument("--mask-interchain", action="store_true")
     parser.add_argument("--keep-raw", action="store_true", help="Save raw AF2Rank NPZ debug tensors.")
+
+
+def _linker_length(args: argparse.Namespace) -> int:
+    multimer = args.model_mode == "alphafold-multimer"
+    if args.multimer_linker is None:
+        return DEFAULT_MULTIMER_LINKER if multimer else 0
+    if args.multimer_linker < 0:
+        raise PipelineError("--multimer-linker must be 0 or more")
+    if args.multimer_linker and not multimer:
+        raise PipelineError("--multimer-linker requires --model-mode alphafold-multimer")
+    return args.multimer_linker
 
 
 def _af2rank_config(args: argparse.Namespace) -> AF2RankConfig:
@@ -75,6 +93,7 @@ def _af2rank_config(args: argparse.Namespace) -> AF2RankConfig:
         mask_sidechains=not args.no_mask_sidechains,
         mask_interchain=args.mask_interchain,
         keep_raw=args.keep_raw,
+        linker_length=_linker_length(args),
     )
 
 
@@ -169,6 +188,8 @@ def build_parser() -> argparse.ArgumentParser:
 def _run(argv: Optional[list[str]] = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+    if hasattr(args, "multimer_linker"):
+        _linker_length(args)  # Reject a bad linker before cleaning starts.
 
     if args.command == "clean":
         target_spec = load_target_spec(args.target, args.fasta)

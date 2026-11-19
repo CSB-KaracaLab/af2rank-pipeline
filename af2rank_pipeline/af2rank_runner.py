@@ -32,6 +32,7 @@ AF2RANK_FIELDS = [
     "rm_seq",
     "rm_sc",
     "rm_ic",
+    "linker_length",
     "plddt",
     "ptm",
     "i_ptm",
@@ -82,6 +83,8 @@ class AF2RankConfig:
     decoy_dir: str | None = None
     run_label: str | None = None
     partial_manifest: bool = False
+    # Glycines joining the chains for multimer scoring; 0 keeps chains separate.
+    linker_length: int = 0
 
 
 def default_actifptm_script() -> Path:
@@ -89,7 +92,8 @@ def default_actifptm_script() -> Path:
 
 
 def model_subdir(cfg: AF2RankConfig) -> str:
-    return f"{cfg.model_mode}_{cfg.version}_model{cfg.model_num}_rec{cfg.recycle}"
+    linker = f"_link{cfg.linker_length}" if cfg.linker_length else ""
+    return f"{cfg.model_mode}_{cfg.version}_model{cfg.model_num}_rec{cfg.recycle}{linker}"
 
 
 def run_label(target_spec: TargetSpec, cfg: AF2RankConfig) -> str:
@@ -172,6 +176,8 @@ def _run_actifptm_script(
         cmd.append("--mask_interchain")
     if cfg.keep_raw:
         cmd.append("--keep_raw")
+    if cfg.linker_length:
+        cmd.extend(["--linker_length", str(cfg.linker_length)])
     if not cfg.pae_json_gzip:
         cmd.append("--no_pae_json_gzip")
     cmd.extend(cfg.extra_args)
@@ -227,6 +233,7 @@ def _resume_config(target_spec: TargetSpec, cfg: AF2RankConfig, decoy_dir: Path)
         "mask_sequence": cfg.mask_sequence,
         "mask_sidechains": cfg.mask_sidechains,
         "mask_interchain": cfg.mask_interchain,
+        "linker_length": cfg.linker_length,
         "keep_raw": cfg.keep_raw,
         "pae_json_gzip": cfg.pae_json_gzip,
         "extra_args": list(cfg.extra_args),
@@ -289,6 +296,7 @@ def _write_stage_manifests(
         "rm_seq": cfg.mask_sequence,
         "rm_sc": cfg.mask_sidechains,
         "rm_ic": cfg.mask_interchain,
+        "linker_length": cfg.linker_length,
     }
     for score_row in score_rows:
         for key, expected in settings.items():
@@ -371,6 +379,10 @@ def run_af2rank_stage(
         expected_version = "v3" if cfg.model_mode == "alphafold-multimer" else "ptm"
         if cfg.version != expected_version:
             raise ValueError(f"{cfg.model_mode} requires version {expected_version}")
+        if cfg.linker_length < 0:
+            raise ValueError("linker_length must be 0 or more")
+        if cfg.linker_length and cfg.model_mode != "alphafold-multimer":
+            raise ValueError("A chain linker applies only to alphafold-multimer scoring")
         af2rank_manifest, _ = manifest_paths(dirs, cfg)
         config_path = run_dir / "pipeline_run_config.json"
         current_config = _resume_config(target_spec, cfg, decoy_dir)

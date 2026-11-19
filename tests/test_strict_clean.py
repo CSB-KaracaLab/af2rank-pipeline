@@ -117,4 +117,6 @@ def test_notebook_explicitly_requests_strict_clean():
     node = next(n for n in ast.parse("".join(cell["source"])).body
                 if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id == "command" for t in n.targets))
     assert any(isinstance(arg, ast.Constant) and arg.value == "--strict-clean" for arg in node.value.elts)
-    assert cell["metadata"].get("cellView") != "form"
+    # The run cell shows as a titled form; its code is hidden but still runs.
+    assert cell["metadata"].get("cellView") == "form"
+    assert cell["source"][0].startswith("#@title ")
