@@ -802,6 +802,12 @@ def main():
         native_ca = runner.wt_batch["all_atom_positions"][:, 1]
         if args.linker_length:
             unlink_pdb(raw_output_pdb, position_map, output_pdb)
+            # Record which residues of the linked PDBs are linker glycines, for viewers.
+            linker_residues = [resseq for (_, resseq, _), entry in zip(read_pdb_residues(model_pdb), position_map)
+                               if entry is None]
+            (linked_dir / f"{pdb_id}_linker.json").write_text(json.dumps(
+                {"chain": LINKED_CHAIN, "linker_length": args.linker_length,
+                 "linker_residues": linker_residues}) + "\n")
             asym_id = linked_asym_id(position_map)
             outputs = drop_linker_outputs(aux["debug"]["outputs"], keep)
             confidence = linked_confidence(aux, outputs, keep, asym_id)
