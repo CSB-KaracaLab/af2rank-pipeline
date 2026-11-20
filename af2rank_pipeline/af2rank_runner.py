@@ -33,8 +33,6 @@ AF2RANK_FIELDS = [
     "rm_sc",
     "rm_ic",
     "linker_length",
-    "seed",
-    "dropout",
     "plddt",
     "ptm",
     "i_ptm",
@@ -87,9 +85,6 @@ class AF2RankConfig:
     partial_manifest: bool = False
     # Glycines joining the chains for multimer scoring; 0 keeps chains separate.
     linker_length: int = 0
-    seed: int = 0
-    # Dropout during inference; without it the prediction does not depend on the seed.
-    dropout: bool = False
 
 
 # AF2-multimer releases: v1 = AF2.1, v2 = AF2.2, v3 = AF2.3.
@@ -102,8 +97,7 @@ def default_actifptm_script() -> Path:
 
 def model_subdir(cfg: AF2RankConfig) -> str:
     linker = f"_link{cfg.linker_length}" if cfg.linker_length else ""
-    sampling = (f"_seed{cfg.seed}" if cfg.seed else "") + ("_dropout" if cfg.dropout else "")
-    return f"{cfg.model_mode}_{cfg.version}_model{cfg.model_num}_rec{cfg.recycle}{linker}{sampling}"
+    return f"{cfg.model_mode}_{cfg.version}_model{cfg.model_num}_rec{cfg.recycle}{linker}"
 
 
 def run_label(target_spec: TargetSpec, cfg: AF2RankConfig) -> str:
@@ -190,10 +184,6 @@ def _run_actifptm_script(
         cmd.extend(["--multimer_version", cfg.version])
     if cfg.linker_length:
         cmd.extend(["--linker_length", str(cfg.linker_length)])
-    if cfg.seed:
-        cmd.extend(["--seed", str(cfg.seed)])
-    if cfg.dropout:
-        cmd.append("--dropout")
     if not cfg.pae_json_gzip:
         cmd.append("--no_pae_json_gzip")
     cmd.extend(cfg.extra_args)
@@ -250,8 +240,6 @@ def _resume_config(target_spec: TargetSpec, cfg: AF2RankConfig, decoy_dir: Path)
         "mask_sidechains": cfg.mask_sidechains,
         "mask_interchain": cfg.mask_interchain,
         "linker_length": cfg.linker_length,
-        "seed": cfg.seed,
-        "dropout": cfg.dropout,
         "keep_raw": cfg.keep_raw,
         "pae_json_gzip": cfg.pae_json_gzip,
         "extra_args": list(cfg.extra_args),
@@ -315,8 +303,6 @@ def _write_stage_manifests(
         "rm_sc": cfg.mask_sidechains,
         "rm_ic": cfg.mask_interchain,
         "linker_length": cfg.linker_length,
-        "seed": cfg.seed,
-        "dropout": cfg.dropout,
     }
     for score_row in score_rows:
         for key, expected in settings.items():

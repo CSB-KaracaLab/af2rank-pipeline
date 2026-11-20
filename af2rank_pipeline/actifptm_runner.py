@@ -57,9 +57,6 @@ def parse_args():
     parser.add_argument("--mask_sidechains", action="store_true")
     parser.add_argument("--mask_interchain", action="store_true")
     parser.add_argument("--keep_raw", action="store_true", help="Save raw PAE/distogram NPZ files for debugging.")
-    parser.add_argument("--seed", type=int, default=0, help="Random seed for AlphaFold inference.")
-    parser.add_argument("--dropout", action="store_true",
-                        help="Keep dropout on during inference, so different seeds give different predictions.")
     parser.add_argument("--linker_length", type=int, default=0,
                         help="Join chains with this many glycines before multimer inference (0 = off).")
     parser.set_defaults(pae_json_gzip=True)
@@ -644,7 +641,7 @@ class AF2RankRunner:
         self.wt = self.model._wt_aatype
 
     def predict(self, pdb, chain, recycles, iterations, rm_seq, rm_sc, rm_ic, output_pdb=None,
-                no_template=None, seed=0, dropout=False):
+                no_template=None):
         """Score one structure; `no_template` marks positions (e.g. a linker) with no template."""
         if iterations < 1:
             raise ValueError("iterations must be at least 1")
@@ -666,7 +663,7 @@ class AF2RankRunner:
 
         initial_atoms = self.model._inputs["batch"]["all_atom_positions"].copy()
         for i in range(iterations):
-            self.model.predict(models=self.args["model_name"], verbose=False, seed=seed, dropout=dropout)
+            self.model.predict(models=self.args["model_name"], verbose=False)
             if i < iterations - 1:
                 self.model._inputs["batch"]["all_atom_positions"] = self.model.aux["atom_positions"]
             else:
@@ -792,8 +789,6 @@ def main():
             rm_ic=args.mask_interchain,
             output_pdb=raw_output_pdb,
             no_template=no_template,
-            seed=args.seed,
-            dropout=args.dropout,
         )
 
         log = deepcopy(aux["log"])
@@ -843,8 +838,6 @@ def main():
             "rm_sc": bool(args.mask_sidechains),
             "rm_ic": bool(args.mask_interchain),
             "linker_length": args.linker_length,
-            "seed": args.seed,
-            "dropout": bool(args.dropout),
             "plddt": round(plddt, 4) if not np.isnan(plddt) else "N/A",
             "ptm": round(ptm, 4) if not np.isnan(ptm) else "N/A",
             "i_ptm": round(iptm, 4) if not np.isnan(iptm) else "N/A",

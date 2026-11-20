@@ -61,9 +61,6 @@ def _add_af2rank_args(parser: argparse.ArgumentParser, *, batch_options: bool = 
              "complex is one intra-chain template (default 20; 0 scores the chains separately).",
     )
     parser.add_argument("--iterations", type=_positive_iterations, default=1)
-    parser.add_argument("--seed", type=int, default=0, help="Random seed for AlphaFold inference (default 0).")
-    parser.add_argument("--dropout", action="store_true",
-                        help="Keep dropout on during inference so that different seeds sample different predictions.")
     parser.add_argument("--no-mask-sequence", action="store_true")
     parser.add_argument("--no-mask-sidechains", action="store_true")
     parser.add_argument("--mask-interchain", action="store_true")
@@ -101,8 +98,6 @@ def _af2rank_config(args: argparse.Namespace) -> AF2RankConfig:
         mask_interchain=args.mask_interchain,
         keep_raw=args.keep_raw,
         linker_length=_linker_length(args),
-        seed=args.seed,
-        dropout=args.dropout,
     )
 
 

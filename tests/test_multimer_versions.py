@@ -78,23 +78,3 @@ def test_helper_fetches_named_weight_from_either_archive_layout(tmp_path, monkey
     with pytest.raises(RuntimeError, match="Unexpected checksum"):
         helper.download_weight(tmp_path, "params_model_1_multimer.npz", "0" * 64, url)
 
-
-def test_seed_and_dropout_reach_the_inference_script(tmp_path, monkeypatch):
-    from af2rank_pipeline import af2rank_runner
-    from af2rank_pipeline.target import load_target_spec
-
-    args = cli.build_parser().parse_args([
-        "af2rank", "--target-spec", "t.json", "--out", "o", "--params", "p", "--seed", "7", "--dropout"])
-    cfg = cli._af2rank_config(args)
-    assert (cfg.seed, cfg.dropout) == (7, True)
-    assert model_subdir(cfg) == "alphafold_ptm_model2_rec1_seed7_dropout"
-    assert model_subdir(AF2RankConfig()) == "alphafold_ptm_model2_rec1"
-
-    commands = []
-    monkeypatch.setattr(af2rank_runner.subprocess, "run", lambda cmd, check: commands.append(cmd))
-    spec = load_target_spec("1brs", REPO / "examples/1brs/target.fasta")
-    af2rank_runner._run_actifptm_script(spec, tmp_path, tmp_path, tmp_path, cfg)
-    af2rank_runner._run_actifptm_script(spec, tmp_path, tmp_path, tmp_path, AF2RankConfig(params="p"))
-    seeded, default = commands
-    assert seeded[seeded.index("--seed") + 1] == "7" and "--dropout" in seeded
-    assert "--seed" not in default and "--dropout" not in default
