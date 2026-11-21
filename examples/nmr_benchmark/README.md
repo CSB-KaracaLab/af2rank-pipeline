@@ -2,7 +2,7 @@
 
 AF2Rank scores for 65 protein dimers solved by solution NMR, each scored with all 17 template-capable AlphaFold2 weights. The set is a curated subset of the 99-dimer NMR benchmark of B. Savaş's PhD thesis (chapter 4), whose interfaces AlphaFold2 did not see in training. The curation notes are in [`CURATION.md`](CURATION.md).
 
-**One conformer only.** Every score here comes from **model 1 (the first conformer) of each NMR ensemble**. A run over every deposited conformer is in progress, and its results will be added and curated the same way.
+**Conformers.** The main tables and figures use **model 1 (the first conformer) of each NMR ensemble**. Scores for **every deposited conformer** are now complete for NMR-hetero ([below](#all-conformers-nmr-hetero)); NMR-homo is running, and NMR-flexible will follow.
 
 ## How the dimers were scored
 
@@ -41,6 +41,21 @@ With the multimer weights, DockQ input→output is about 0.1 lower for the NMR-f
 
 **NMR-hetero structures** (model 1; first chain teal, second amber). The homodimer and flexible sets are in [`figures/structures_homo.png`](figures/structures_homo.png) and [`figures/structures_flexible.png`](figures/structures_flexible.png).
 
+## All conformers: NMR-hetero
+
+![ipTM against DockQ input→output for every conformer of the 12 NMR heterodimers](figures/iptm_vs_dockq_hetero_all_conformers.png)
+
+**Every conformer of the 12 NMR heterodimers** (210 conformers × 17 weights; small points: one conformer and weight, large points: the dimer mean over conformers and weights of a set). ρ is the Spearman correlation between ipTM and DockQ input→output.
+
+| Weight set | ρ, all conformers | ρ, dimer means | Mean ipTM / DockQ |
+| --- | --- | --- | --- |
+| AF2-ptm | 0.57 | 0.56 | 0.75 / 0.81 |
+| AF2.1 multimer | 0.39 | 0.51 | 0.65 / 0.70 |
+| AF2.2 multimer | 0.50 | 0.52 | 0.77 / 0.65 |
+| AF2.3 multimer | 0.54 | 0.71 | 0.75 / 0.72 |
+
+Averaged over each ensemble, AF2.3 ipTM follows DockQ input→output closely (ρ 0.71). Scores vary little between conformers of one dimer compared with the differences between dimers; 7CSQ is lowest with every weight set. Scores: `results/scores_hetero_all_conformers_all_weights.csv` (one row per conformer and weight); figure: `scripts/plot_all_conformers.py`.
+
 ## Curation in brief
 
 The thesis selected 99 NMR dimers released between March 2016 and December 2025. Each has an interface that AlphaFold2 could not have seen, no mutations, post-translational modifications or covalent interfaces, and secondary structure at the interface. From these, 34 were removed:
@@ -62,8 +77,9 @@ The thesis selected 99 NMR dimers released between March 2016 and December 2025.
 | `kept_*.txt` | PDB IDs per sub-benchmark |
 | `fasta/` | trimmed FASTA files of the 65 kept dimers (model coordinates: model 1 of each PDB entry) |
 | `results/scores_model1_all_weights.csv` | scores for 65 dimers × 17 weights |
+| `results/scores_hetero_all_conformers_all_weights.csv` | NMR-hetero, every conformer × 17 weights |
 | `figures/` | the scatterplot and one page of structures per sub-benchmark |
-| `scripts/` | `plot_subsets_grid.py` (scatterplot), `render_nmr99.py` (PyMOL thumbnails), `make_a4_page.py` (structure pages) |
+| `scripts/` | `plot_subsets_grid.py` (scatterplot), `plot_all_conformers.py` (all-conformer plot), `render_nmr99.py` (PyMOL thumbnails), `make_a4_page.py` (structure pages) |
 
 Redraw the scatterplot from this folder:
 
