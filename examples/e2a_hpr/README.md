@@ -2,6 +2,10 @@
 
 E2A (IIA-Glc) and HPr form the phosphoryl-transfer complex used in the HADDOCK E2A–HPr docking example. Both model files test ensemble input: every model in a multi-model PDB is cleaned and scored on its own.
 
+![E2A–HPr ensembles: the 3 models of 1GGR (left) and the 30-model 1HDN-based ensemble (right)](ensembles.png)
+
+The three 1GGR models differ by at most 0.18 Å (CA RMSD), so they nearly coincide; the 1HDN-based ensemble shows the spread of the HPr NMR models at the same interface.
+
 | File | What it is |
 |---|---|
 | `target.fasta` | SEQRES sequences from 1GGR: chain A = E2A (168 residues), chain B = HPr (85 residues). |
