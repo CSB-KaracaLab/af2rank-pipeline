@@ -2,6 +2,8 @@
 
 AF2Rank Pipeline scores existing protein-complex structures. It standardizes chains and residues against a target FASTA, runs AF2Rank through ColabDesign, calculates actifpTM and interface metrics, and combines the results in a CSV for model comparison.
 
+The [report](docs/af2rank_all_weights.md) explains how the 17 template-capable AlphaFold2 weights and the multimer glycine linker are used, with two worked examples: trypsin–BPTI ([`examples/2ptc`](examples/2ptc)) and the E2A–HPr NMR ensemble ([`examples/e2a_hpr`](examples/e2a_hpr)). Slurm scripts for H100 clusters are in [`examples/marenostrum5`](examples/marenostrum5).
+
 ## Try it in Colab
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/CSB-KaracaLab/af2rank-pipeline/blob/main/notebooks/colab_demo.ipynb)
@@ -55,6 +57,8 @@ af2rank-pipeline run-target \
 ```
 
 The result table is `runs/1brs/manifests/final_models.csv`; the scored structure and PAE data are under `runs/1brs/af2rank/`. The [example notes](examples/1brs/README.md) describe the source of the bundled data. Use a new output directory for each independent run.
+
+More examples: [`examples/2ptc`](examples/2ptc) (a crystal structure with waters and ions to clean) and [`examples/e2a_hpr`](examples/e2a_hpr) (NMR ensembles of 3 and 30 models), each with its scores for all 17 weights.
 
 ### NVIDIA GPU on Linux
 
