@@ -75,6 +75,9 @@ def setup_imports(colabdesign_dir):
             raise FileNotFoundError(f"ColabDesign checkout not found: {checkout}")
         if str(checkout) not in sys.path:
             sys.path.insert(0, str(checkout))
+    # ColabDesign replaces XLA_FLAGS on import; keep the caller's flags too
+    # (for example --xla_gpu_force_compilation_parallelism=1 on H100 GPUs).
+    caller_flags = os.environ.get("XLA_FLAGS", "")
     try:
         import colabdesign  # noqa: F401
     except ImportError as exc:
@@ -82,6 +85,16 @@ def setup_imports(colabdesign_dir):
             "ColabDesign is unavailable. Install the inference extra with "
             "'uv sync --locked --all-extras', or pass --colabdesign to a checkout."
         ) from exc
+    os.environ["XLA_FLAGS"] = merge_xla_flags(os.environ.get("XLA_FLAGS", ""), caller_flags)
+
+
+def merge_xla_flags(*flag_strings):
+    """Combine XLA flag strings; for a flag given more than once, the last value wins."""
+    merged = {}
+    for flags in flag_strings:
+        for flag in flags.split():
+            merged[flag.split("=", 1)[0]] = flag
+    return " ".join(merged.values())
 
 
 def get_data_dir(params_path):
