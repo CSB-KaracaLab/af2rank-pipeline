@@ -162,3 +162,32 @@ def test_full_size_pae_retains_incomplete_residue_without_warning(tmp_path, caps
     assert len(rows) == 12
     assert any(row["scored_chain"] == "A" and row["scored_resnum"] == 20 for row in rows)
     assert capsys.readouterr().err == ""
+
+
+def test_input_without_interface_is_kept_with_empty_dockq(tmp_path: Path, monkeypatch):
+    # Incorrect decoys can have the partners apart: DockQ then finds no interface in the input.
+    spec = _spec(tmp_path)
+
+    def failing_run_dockq(_spec, _path):
+        raise ValueError(
+            "DockQ failed for batch_000/m1.pdb with exit code 1: ERROR:root:"
+            f"{dockq_pae.NO_NATIVE_INTERFACE}. Please double check the inputs."
+        )
+
+    monkeypatch.setattr(dockq_pae, "run_dockq", failing_run_dockq)
+    out = tmp_path / "metrics"
+    assert dockq_pae.process_specs([spec], out) == 0
+    assert (out / dockq_pae.NO_INTERFACE_FILENAME).read_text() == "m1.pdb\n"
+    with (out / "dockq_metrics.csv").open(newline="") as handle:
+        assert list(csv.DictReader(handle)) == []
+
+
+def test_other_dockq_errors_still_fail(tmp_path: Path, monkeypatch):
+    spec = _spec(tmp_path)
+
+    def failing_run_dockq(_spec, _path):
+        raise ValueError("DockQ failed for batch_000/m1.pdb with exit code 1: something else")
+
+    monkeypatch.setattr(dockq_pae, "run_dockq", failing_run_dockq)
+    with pytest.raises(ValueError, match="something else"):
+        dockq_pae.process_specs([spec], tmp_path / "metrics")

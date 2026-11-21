@@ -65,6 +65,11 @@ DOCKQ_INTERFACE_FIELDNAMES = [
 
 AF2RANK_METADATA_FIELDNAMES = ["batch", "model_id", "af2rank_csv"]
 
+# DockQ's message when the reference (here the input model) has no inter-chain contacts.
+NO_NATIVE_INTERFACE = "Could not find interfaces in the native model"
+# Model IDs whose input had no interface, one per line, written next to dockq_metrics.csv.
+NO_INTERFACE_FILENAME = "dockq_no_interface.txt"
+
 
 @dataclass(frozen=True)
 class RunSpec:
@@ -471,9 +476,22 @@ def safe_name(value: str) -> str:
 def process_run(
     spec: RunSpec,
     outdir: Path,
-) -> RunOutput:
+) -> RunOutput | None:
+    """Return None when the input model has no interface (DockQ input->output is undefined)."""
     dockq_json = outdir / "dockq_json" / f"{safe_name(Path(spec.model_id).stem)}.json"
-    run_dockq(spec, dockq_json)
+    try:
+        run_dockq(spec, dockq_json)
+    except ValueError as exc:
+        # Decoy sets (e.g. incorrect CAPRI models) can have the partners apart, so the input has
+        # no interface to compare against. Keep the model's AF2Rank scores and leave DockQ empty.
+        if NO_NATIVE_INTERFACE in str(exc):
+            print(
+                f"af2rank-pipeline: warning: {spec.batch}/{spec.model_id}: the input has no "
+                "interface; DockQ input->output skipped",
+                file=sys.stderr,
+            )
+            return None
+        raise
     with open(dockq_json) as f:
         dockq_data = json.load(f)
     pae_matrix = load_pae_matrix(spec.pae)
@@ -577,7 +595,10 @@ def process_specs(specs: list[RunSpec], outdir: Path, *, jobs: int = 1) -> int:
     else:
         with concurrent.futures.ThreadPoolExecutor(max_workers=jobs) as executor:
             outputs = list(executor.map(lambda spec: process_run(spec, outdir), specs))
+    no_interface = sorted(spec.model_id for spec, output in zip(specs, outputs) if output is None)
+    outputs = [output for output in outputs if output is not None]
     outputs.sort(key=lambda output: (output.spec.batch, output.spec.model_id))
+    (outdir / NO_INTERFACE_FILENAME).write_text("".join(f"{model_id}\n" for model_id in no_interface))
 
     pae_output = outdir / "pae_raw.csv.gz"
     pae_count = write_final_pae_csv(pae_output, outputs)
@@ -597,4 +618,7 @@ def process_specs(specs: list[RunSpec], outdir: Path, *, jobs: int = 1) -> int:
     print(f"Wrote {outdir / 'dockq_metrics.csv'} ({dockq_count} rows)")
     print(f"Wrote {outdir / 'af2rank_metrics.csv'} ({af2rank_count} rows)")
     print(f"Wrote {len(outputs)} DockQ JSON file(s) under {outdir / 'dockq_json'}")
+    if no_interface:
+        print(f"Skipped DockQ for {len(no_interface)} input(s) without an interface "
+              f"(listed in {outdir / NO_INTERFACE_FILENAME})")
     return 0

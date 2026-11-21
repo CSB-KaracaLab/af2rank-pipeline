@@ -95,6 +95,25 @@ def run_dockq_io_stage(
         )
         records_by_model[model_id]["n_interfaces"] += 1
 
+    # Inputs without an interface have no DockQ rows; keep them with an empty DockQ input->output.
+    no_interface_file = metrics_dir / dockq_pae.NO_INTERFACE_FILENAME
+    if no_interface_file.is_file():
+        for line in no_interface_file.read_text().splitlines():
+            model_id = Path(line.strip()).stem
+            if model_id and model_id not in records_by_model:
+                records_by_model[model_id] = {
+                    "stage": "dockq_io",
+                    "status": "ok",
+                    "model_id": model_id,
+                    "dockq_json": "",
+                    "dockq_io": "",
+                    "best_mapping": "",
+                    "n_interfaces": 0,
+                    "note": "input has no interface",
+                    "dockq_metrics_csv": str(metrics_dir / "dockq_metrics.csv"),
+                    "pae_raw_csv": str(metrics_dir / "pae_raw.csv.gz"),
+                }
+
     records = [records_by_model[key] for key in sorted(records_by_model)]
     expected_ids = {Path(spec.model_id).stem for spec in specs}
     if set(records_by_model) != expected_ids:
