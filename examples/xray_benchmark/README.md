@@ -40,7 +40,7 @@ The full criteria, filtering counts and decision log are in [`CURATION.md`](CURA
 
 ![X-ray-hetero structures](figures/structures_hetero.png)
 
-**X-ray-hetero** (biological assembly 1; first chain teal, second amber; + marks the larger complexes). X-ray-homo is in [`figures/structures_homo.png`](figures/structures_homo.png).
+**X-ray-hetero** (biological assembly 1; first chain teal, second amber). X-ray-homo is in [`figures/structures_homo.png`](figures/structures_homo.png).
 
 ## Comparison with Genz et al. 2025
 
