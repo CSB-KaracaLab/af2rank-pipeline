@@ -651,6 +651,7 @@ class AF2RankRunner:
     def set_pdb(self, pdb, chain):
         self.model.prep_inputs(pdb, chain=chain)
         self.model.set_seq(mode="wildtype")
+        self.wt_batch = self.copy_dict(self.model._inputs["batch"])
         self.wt = self.model._wt_aatype
 
     def predict(self, pdb, chain, recycles, iterations, rm_seq, rm_sc, rm_ic, output_pdb=None,
@@ -775,6 +776,9 @@ def main():
         raise SystemExit(f"No .pdb files found in {args.decoy_dir}")
 
     rows = []
+    # One model per weight, reused for every structure: building one per structure reloads the
+    # weights each time and, in long ensembles, keeps growing host memory until the process is killed.
+    runner = None
     for pdb_path in pdb_files:
         pdb_id = pdb_path.stem
         print(f"[{args.target}] scoring {pdb_path.name} with {model_name}", flush=True)
@@ -791,7 +795,8 @@ def main():
         else:
             model_pdb, model_chain, no_template, keep = pdb_path, args.chain, None, None
             raw_output_pdb = output_pdb
-        runner = AF2RankRunner(str(model_pdb), model_chain, model_name, data_dir)
+        if runner is None:
+            runner = AF2RankRunner(str(model_pdb), model_chain, model_name, data_dir)
         aux = runner.predict(
             str(model_pdb),
             model_chain,
@@ -868,7 +873,7 @@ def main():
         save_pae_json(pae_json_dir, pdb_id, saved_aux, gzip_enabled=args.pae_json_gzip)
 
         # Release large arrays between structures.
-        del runner, aux, outputs
+        del aux, outputs
 
     csv_path = out_dir / f"{args.target}_af2rank_actifptm.csv"
     write_csv(rows, csv_path)
