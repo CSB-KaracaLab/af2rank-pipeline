@@ -1,0 +1,100 @@
+pdb_id,status,sub_benchmark,exclusion_reason,dimer,residues_scored,deposited_conformers,interface_residues_model1,long_disordered_segments,no_paper,haddock_listed,interface_ligand,backbone_rmsd_to_mean_A,chainB_spread_A
+2N73,kept,NMR-flexible,,heterodimer,69+80,45,41,True,False,False,,11.13,39.47
+2N9P,kept,NMR-flexible,,heterodimer,42+100,20,26,True,False,False,,5.75,12.58
+5N7Y,kept,NMR-flexible,,homodimer,49+49,20,38,True,False,False,"Zn ions coordinated mainly by one chain, 3 contacts to the partner",2.61,6.37
+5TMX,kept,NMR-flexible,,homodimer,63+63,10,55,True,False,False,,7.41,17.84
+5US5,kept,NMR-flexible,,homodimer,89+89,20,57,True,False,False,,4.99,8.62
+5XV8,kept,NMR-flexible,,heterodimer,45+108,20,50,True,False,False,,4.99,12.13
+6E4H,kept,NMR-flexible,,homodimer,62+62,20,47,True,False,False,,9.5,18.72
+6EVI,kept,NMR-flexible,,homodimer,70+70,20,70,True,False,False,,4.54,9.24
+6FEG,kept,NMR-flexible,,heterodimer,115+148,10,85,True,False,False,,7.38,12.29
+6LQZ,kept,NMR-flexible,,heterodimer,71+58,20,35,True,False,False,,12.18,36.89
+6TDD,kept,NMR-flexible,,homodimer,45+45,25,47,True,False,False,,5.41,8.98
+6TDN,kept,NMR-flexible,,homodimer,87+87,25,59,True,False,False,,4.12,8.5
+6U19,kept,NMR-flexible,,heterodimer,73+64,15,38,True,False,False,,6.4,8.5
+6U4N,kept,NMR-flexible,,heterodimer,94+65,20,26,True,False,False,,1.63,3.49
+6XFL,kept,NMR-flexible,,heterodimer,79+45,20,40,True,False,False,,9.55,28.73
+6ZDB,kept,NMR-flexible,,homodimer,129+129,15,20,True,False,False,,17.26,40.31
+7DTI,kept,NMR-flexible,,heterodimer,127+108,20,44,True,False,False,,10.91,23.9
+7JYN,kept,NMR-flexible,,heterodimer,96+39,20,34,True,False,False,,8.22,18.24
+7JYZ,kept,NMR-flexible,,heterodimer,89+96,20,36,True,False,False,,8.04,27.25
+7PKU,kept,NMR-flexible,,heterodimer,96+73,10,48,True,False,False,,5.94,14.11
+7QRI,kept,NMR-flexible,,homodimer,100+100,20,40,True,False,False,L-Phe bound between the two chains (2 copies),8.59,18.98
+8RAJ,kept,NMR-flexible,,heterodimer,62+49,20,21,True,False,False,,11.74,33.94
+8TT7,kept,NMR-flexible,,homodimer,54+54,20,38,True,False,False,,7.35,13.99
+9R3Y,kept,NMR-flexible,,heterodimer,73+48,20,38,True,False,False,,9.0,29.97
+2N77,kept,NMR-hetero,,heterodimer,73+33,20,45,False,False,False,,1.39,2.43
+2NBW,kept,NMR-hetero,,heterodimer,131+78,10,38,False,False,False,,1.76,2.99
+5L85,kept,NMR-hetero,,heterodimer,75+34,20,46,False,False,False,,2.78,6.34
+5VF0,kept,NMR-hetero,,heterodimer,76+43,20,22,False,False,False,,2.95,8.72
+6B7G,kept,NMR-hetero,,heterodimer,70+33,10,35,False,False,False,,2.88,9.02
+6BUT,kept,NMR-hetero,,heterodimer,148+31,20,49,False,False,False,,7.0,11.62
+6DMP,kept,NMR-hetero,,heterodimer,77+82,10,68,False,False,False,,1.68,3.44
+6DSL,kept,NMR-hetero,,heterodimer,33+118,20,64,False,False,False,,1.99,4.2
+6ES7,kept,NMR-hetero,,heterodimer,44+50,20,68,False,False,False,,2.29,3.17
+6IVU,kept,NMR-hetero,,heterodimer,53+118,20,54,False,False,False,,1.52,3.5
+7CSQ,kept,NMR-hetero,,heterodimer,98+114,10,32,False,False,False,,1.12,2.25
+7QUU,kept,NMR-hetero,,heterodimer,44+49,20,50,False,False,False,,1.2,2.62
+7ZEY,kept,NMR-hetero,,heterodimer,117+64,20,55,False,False,False,,1.54,1.63
+8BA1,kept,NMR-hetero,,heterodimer,119+116,20,96,False,False,False,,1.56,2.47
+2NDP,kept,NMR-homo,,homodimer,99+99,15,104,False,False,False,,2.39,4.71
+5JPW,kept,NMR-homo,,homodimer,143+143,20,52,False,False,False,,3.25,5.45
+5NF8,kept,NMR-homo,,homodimer,159+159,15,52,False,False,False,,2.42,3.92
+5NOC,kept,NMR-homo,,homodimer,54+54,20,70,False,False,False,,0.61,1.3
+5YAM,kept,NMR-homo,,homodimer,69+69,20,41,False,False,False,,1.27,3.6
+6C44,kept,NMR-homo,,homodimer,70+70,20,75,False,False,False,,1.93,2.73
+6D6S,kept,NMR-homo,,homodimer,432+432,20,154,False,False,False,,2.89,6.04
+6LUL,kept,NMR-homo,,homodimer,224+224,15,32,False,False,False,,4.94,8.87
+6LXG,kept,NMR-homo,,homodimer,79+79,21,36,False,False,False,,1.04,1.47
+6N2M,kept,NMR-homo,,homodimer,142+142,20,52,False,False,False,,1.94,3.58
+6Q2Z,kept,NMR-homo,,homodimer,60+60,20,79,False,False,False,,0.29,0.43
+6SAI,kept,NMR-homo,,homodimer,93+93,20,38,False,False,False,,0.47,0.8
+6TDM,kept,NMR-homo,,homodimer,64+64,25,60,False,False,False,,2.33,3.68
+6TV5,kept,NMR-homo,,homodimer,137+137,20,74,False,False,False,,2.27,4.69
+6U6P,kept,NMR-homo,,homodimer,81+81,10,46,False,False,False,,1.3,3.5
+6U6Q,kept,NMR-homo,,homodimer,66+66,10,52,False,False,False,,1.9,3.53
+6U6S,kept,NMR-homo,,homodimer,44+44,10,40,False,False,False,,0.59,1.5
+6UHW,kept,NMR-homo,,homodimer,139+139,20,140,False,False,False,,0.85,1.29
+6V88,kept,NMR-homo,,homodimer,116+116,20,35,False,False,False,,1.26,4.03
+7C4O,kept,NMR-homo,,homodimer,48+48,20,42,False,False,False,,0.78,1.16
+7DFE,kept,NMR-homo,,homodimer,142+142,10,63,False,False,False,,4.52,7.76
+7VU7,kept,NMR-homo,,homodimer,89+89,20,74,False,False,False,,1.02,1.81
+7WJ0,kept,NMR-homo,,homodimer,49+49,20,62,False,False,False,,0.61,1.22
+7YWQ,kept,NMR-homo,,homodimer,79+79,20,59,False,False,True,,2.67,6.24
+8DSB,kept,NMR-homo,,homodimer,43+43,20,54,False,False,False,,0.78,1.19
+8DSX,kept,NMR-homo,,homodimer,65+65,20,44,False,False,False,,1.35,3.0
+8PEK,kept,NMR-homo,,homodimer,98+98,10,84,False,False,False,,0.41,0.74
+8YAP,kept,NMR-homo,,homodimer,36+36,10,31,False,False,False,,1.75,9.65
+8ZU6,kept,NMR-homo,,homodimer,70+70,15,39,False,False,False,,1.17,2.12
+2N23,excluded,,no published paper (PDB primary citation: To be published),heterodimer,115+19,20,18,True,True,False,,1.9,3.87
+2N3K,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,79+17,20,36,False,False,False,,1.32,0.83
+2N4Q,excluded,,no published paper (PDB primary citation: To be published),heterodimer,24+70,10,26,True,True,False,,2.24,16.24
+2N7K,excluded,,no published paper (PDB primary citation: To be published),heterodimer,76+52,11,19,False,True,False,,1.3,2.13
+2NBV,excluded,,"assembled from earlier structures (1J8C, 5IRS) with HADDOCK",heterodimer,110+78,20,29,False,False,True,,0.44,0.94
+2NCZ,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,83+12,20,32,False,False,False,,1.17,2.09
+2ND0,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,83+19,20,37,False,False,False,,2.04,8.34
+5GWM,excluded,,no published paper (PDB primary citation: To be published),heterodimer,53+50,20,44,True,True,False,,3.85,8.4
+5H7P,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,167+29,20,19,False,False,False,,2.27,7.86
+5VTO,excluded,,no published paper (PDB primary citation: To be published),homodimer,163+163,15,75,False,True,False,,1.58,2.64
+5XBO,excluded,,complex built from lanthanide pseudocontact shifts only (no NOESY; methods paper),heterodimer,76+49,30,19,False,False,False,,2.12,4.73
+5ZAU,excluded,,"HADDOCK docking model (docking with NMR restraints), not an experimentally determined complex",heterodimer,57+64,20,35,False,False,True,,0.66,1.52
+6BGG,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,12+88,20,22,True,False,False,,3.7,12.94
+6BNH,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,83+13,20,33,False,False,False,,1.76,2.11
+6CTB,excluded,,no published paper (PDB primary citation: To be published),heterodimer,67+25,4,39,False,True,True,,0.48,1.52
+6E5N,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,82+16,20,33,True,False,False,,1.28,0.72
+6JXU,excluded,,HADDOCK complex from intermolecular NOEs only (SUMO1 coordinates likely from an earlier structure; no intramolecular restraints deposited),heterodimer,77+12,20,25,False,False,True,,0.49,1.41
+6JXW,excluded,,HADDOCK complex from intermolecular NOEs only (SUMO2 coordinates likely from an earlier structure; no intramolecular restraints deposited),heterodimer,77+12,20,27,False,False,True,,0.34,0.77
+6M78,excluded,,"assembled from earlier structures (1ZYO, 6LXF) with HADDOCK",heterodimer,191+57,4,31,True,False,True,,0.44,1.66
+6S3W,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,13+124,20,42,False,False,False,,8.48,14.78
+7JQ8,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,96+23,20,34,True,False,False,,6.92,8.47
+7K3S,excluded,,no published paper (PDB primary citation: To be published),heterodimer,60+68,15,62,False,True,False,,9.49,17.95
+7NQC,excluded,,lipid-modified peptide: farnesyl at the interface (PTM),heterodimer,148+18,30,50,False,False,False,"farnesyl (ULW) covalently on peptide C-terminal Cys (CMF), inserted in calmodulin pocket",4.48,8.76
+7OVC,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,167+27,20,48,False,False,False,,0.73,2.07
+7QDW,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,72+25,20,46,False,False,False,,1.56,1.83
+7SFT,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,95+21,20,40,True,False,False,,2.32,7.84
+7X5C,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,172+14,20,41,True,False,False,,1.9,2.87
+8DGH,excluded,,assembled from an earlier structure (calmodulin lobe from 2F3Y) with HADDOCK,heterodimer,68+12,10,21,False,False,True,,0.47,1.03
+8DGK,excluded,,assembled from an earlier structure (calmodulin lobe from 2F3Y) with HADDOCK,heterodimer,78+12,10,25,False,False,True,,0.68,1.4
+8HEQ,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,10+159,20,58,False,False,False,,0.77,1.76
+8U2Y,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,9+60,10,27,False,False,False,,1.34,6.01
+9ATN,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,98+19,15,41,False,False,False,,0.89,0.74
