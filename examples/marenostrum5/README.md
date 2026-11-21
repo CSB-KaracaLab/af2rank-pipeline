@@ -24,9 +24,9 @@ These scripts ran the E2A–HPr example (`examples/e2a_hpr`, 3 NMR models × 17 
    uv build --wheel -o wheels
    ```
 
-2. **Copy** `wheels/` and these scripts to your work folder on MareNostrum (`alogin1.bsc.es`), then run `AF2RANK_ROOT=<work folder> bash setup_env.sh`.
+2. **Copy** `wheels/` and the files in this folder (including `requirements-lock.txt` and `summarize.py`) to your work folder on MareNostrum (`alogin1.bsc.es`), then run `AF2RANK_ROOT=<work folder> bash setup_env.sh`.
 3. **Weights:** `AF2RANK_PARAMS=<params folder> bash link_weights.sh`, then copy `params_model_{1..5}_multimer.npz` and `params_model_{1..5}_multimer_v2.npz` into the same folder. The notebook's weight cell lists their SHA-256 sums.
-4. **Submit** (the header of `run_target.slurm` shows the full command), with your project as `--account`.
+4. **Submit** from the work folder (the header of `run_target.slurm` shows the full command), with your project as `--account`. Run `mkdir -p logs` first: Slurm does not create the folder for the job's `logs/%x_%j.out` output.
 
 ## H100 notes
 

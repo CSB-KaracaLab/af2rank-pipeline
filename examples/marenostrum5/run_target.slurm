@@ -10,8 +10,10 @@
 #SBATCH --error=logs/%x_%j.err
 # AF2Rank on one target with all 17 template-capable AF2 weights, one weight after another.
 # Same command per weight as the Colab notebook's scoring cell. Submit with, for example:
-#   sbatch --account=<project> --export=ALL,AF2RANK_ROOT=$PWD,AF2RANK_PARAMS=$PWD/../af2rank-weights/params,\
-#TARGET=e2a_hpr,FASTA=$PWD/inputs/e2a_hpr/target.fasta,MODELS=$PWD/inputs/e2a_hpr/models run_target.slurm
+#   mkdir -p logs
+#   sbatch --account=<project> \
+#     --export=ALL,AF2RANK_ROOT=$PWD,AF2RANK_PARAMS=$PWD/../af2rank-weights/params,TARGET=e2a_hpr,FASTA=$PWD/inputs/e2a_hpr/target.fasta,MODELS=$PWD/inputs/e2a_hpr/models \
+#     run_target.slurm
 set -euo pipefail
 ROOT=${AF2RANK_ROOT:?}; PARAMS=${AF2RANK_PARAMS:?}; TARGET=${TARGET:?}; FASTA=${FASTA:?}; MODELS=${MODELS:?}
 OUT=$ROOT/results/${TARGET}-${SLURM_JOB_ID}

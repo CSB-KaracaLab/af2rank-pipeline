@@ -69,7 +69,7 @@ af2rank-pipeline run-target --target T --fasta T.fasta --models models/ --params
   --strict-clean --model-mode alphafold-multimer --multimer-version v3 --model-num 1 --out out/
 ```
 
-Leaving out the three multimer options uses AF2-ptm; the 20-glycine linker is the multimer default (`--multimer-linker`). With JAX 0.4.20 on H100 GPUs, set `XLA_FLAGS=--xla_gpu_force_compilation_parallelism=1`, which avoids an nvlink failure in XLA's parallel compilation. [`examples/marenostrum5`](../examples/marenostrum5) has the Slurm scripts used on MareNostrum 5.
+Without `--model-mode alphafold-multimer` and `--multimer-version`, the command uses AF2-ptm (`--model-num` 1 or 2, default 2); the 20-glycine linker is the multimer default (`--multimer-linker`). With JAX 0.4.20 on H100 GPUs, set `XLA_FLAGS=--xla_gpu_force_compilation_parallelism=1`, which avoids an nvlink failure in XLA's parallel compilation. [`examples/marenostrum5`](../examples/marenostrum5) has the Slurm scripts used on MareNostrum 5.
 
 ## Run times
 
