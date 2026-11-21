@@ -1,6 +1,6 @@
 # NMR dimer benchmark: curation record
 
-Curated 2026-11-21. Start: the 99 NMR dimers of B. Savaş's AF2Rank chapter. Kept: 67; excluded: 32.
+Curated 2026-11-21. Start: the 99 NMR dimers of B. Savaş's AF2Rank chapter. Kept: 65; excluded: 34.
 
 ## Primary curation criteria (B. Savaş, PhD thesis chapter 4.1.2)
 
@@ -20,9 +20,9 @@ Source: B. Savaş, PhD thesis (in preparation), chapter 4; per-target scores of 
 
 2NDP 5JPW 5NF8 5NOC 5YAM 6C44 6D6S 6LUL 6LXG 6N2M 6Q2Z 6SAI 6TDM 6TV5 6U6P 6U6Q 6U6S 6UHW 6V88 7C4O 7DFE 7VU7 7WJ0 7YWQ 8DSB 8DSX 8PEK 8YAP 8ZU6
 
-**NMR-hetero** (14): heterodimers, no long disordered segments
+**NMR-hetero** (12): heterodimers, no long disordered segments
 
-2N77 2NBW 5L85 5VF0 6B7G 6BUT 6DMP 6DSL 6ES7 6IVU 7CSQ 7QUU 7ZEY 8BA1
+2N77 2NBW 5L85 5VF0 6B7G 6BUT 6DSL 6IVU 7CSQ 7QUU 7ZEY 8BA1
 
 **NMR-flexible** (24): homo- and heterodimers with long disordered segments (curators' list)
 
@@ -47,7 +47,9 @@ Source: B. Savaş, PhD thesis (in preparation), chapter 4; per-target scores of 
 | 6BGG | peptide partner (chain shorter than 30 residues) |
 | 6BNH | peptide partner (chain shorter than 30 residues) |
 | 6CTB | no published paper (PDB primary citation: To be published) |
+| 6DMP | de novo designed heterodimer (not a natural protein pair) |
 | 6E5N | peptide partner (chain shorter than 30 residues) |
+| 6ES7 | reconstructed ancestral complex of two intrinsically disordered proteins (low-affinity, dynamic) |
 | 6JXU | HADDOCK complex from intermolecular NOEs only (SUMO1 coordinates likely from an earlier structure; no intramolecular restraints deposited) |
 | 6JXW | HADDOCK complex from intermolecular NOEs only (SUMO2 coordinates likely from an earlier structure; no intramolecular restraints deposited) |
 | 6M78 | assembled from earlier structures (1ZYO, 6LXF) with HADDOCK |
@@ -69,7 +71,7 @@ Source: B. Savaş, PhD thesis (in preparation), chapter 4; per-target scores of 
 
 - 5N7Y: interface ligand/ion: Zn ions coordinated mainly by one chain, 3 contacts to the partner
 - 7QRI: interface ligand/ion: L-Phe bound between the two chains (2 copies)
-- 6ES7, 7CSQ: low AF2.3 ipTM (< 0.6 with all five weights); deposited methods are NOE-based, so kept.
+- 7CSQ: low AF2.3 ipTM (< 0.6 with all five weights); deposited method is NOE-based, so kept.
 - 7YWQ: HADDOCK listed only as a processing step; computed and refined with X-PLOR-NIH from 3D 13C/15N NOESY data.
 
 ## Decision log (2026-11-21)
@@ -83,3 +85,4 @@ Source: B. Savaş, PhD thesis (in preparation), chapter 4; per-target scores of 
 7. 6JXU and 6JXW excluded (SUMO1/SUMO2 with an ICP0 SIM peptide): computed with HADDOCK; the deposited restraints are only 17 and 19 intermolecular NOEs (no intramolecular restraints), so the SUMO coordinates likely come from an earlier structure.
 8. Peptide complexes excluded (a chain shorter than 30 modelled residues), as in the X-ray set: 2N3K, 2NCZ, 2ND0, 5H7P, 6BGG, 6BNH, 6E5N, 6S3W, 7JQ8, 7OVC, 7QDW, 7SFT, 7X5C, 8HEQ, 8U2Y, 9ATN.
 9. Deposited methods checked for the low-ipTM heterodimers: 6ES7 (CYANA, 3D NOESY + RDCs) and 7CSQ (CYANA/Amber, 13C/15N-filtered and 4D NOESY) kept; 5XBO excluded (only HSQC and 49 lanthanide pseudocontact-shift restraints, no NOESY; a lanthanide-tagging methods paper).
+10. Natural proteins only, as in the X-ray set: 6ES7 excluded (reconstructed ancestral CID/NCBD complex of two intrinsically disordered proteins; low-affinity and dynamic) and 6DMP excluded (de novo designed heterodimer).

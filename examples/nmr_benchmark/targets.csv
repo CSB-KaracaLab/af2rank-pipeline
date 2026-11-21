@@ -29,9 +29,7 @@ pdb_id,status,sub_benchmark,exclusion_reason,dimer,residues_scored,deposited_con
 5VF0,kept,NMR-hetero,,heterodimer,76+43,20,22,False,False,False,,2.95,8.72
 6B7G,kept,NMR-hetero,,heterodimer,70+33,10,35,False,False,False,,2.88,9.02
 6BUT,kept,NMR-hetero,,heterodimer,148+31,20,49,False,False,False,,7.0,11.62
-6DMP,kept,NMR-hetero,,heterodimer,77+82,10,68,False,False,False,,1.68,3.44
 6DSL,kept,NMR-hetero,,heterodimer,33+118,20,64,False,False,False,,1.99,4.2
-6ES7,kept,NMR-hetero,,heterodimer,44+50,20,68,False,False,False,,2.29,3.17
 6IVU,kept,NMR-hetero,,heterodimer,53+118,20,54,False,False,False,,1.52,3.5
 7CSQ,kept,NMR-hetero,,heterodimer,98+114,10,32,False,False,False,,1.12,2.25
 7QUU,kept,NMR-hetero,,heterodimer,44+49,20,50,False,False,False,,1.2,2.62
@@ -81,7 +79,9 @@ pdb_id,status,sub_benchmark,exclusion_reason,dimer,residues_scored,deposited_con
 6BGG,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,12+88,20,22,True,False,False,,3.7,12.94
 6BNH,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,83+13,20,33,False,False,False,,1.76,2.11
 6CTB,excluded,,no published paper (PDB primary citation: To be published),heterodimer,67+25,4,39,False,True,True,,0.48,1.52
+6DMP,excluded,,de novo designed heterodimer (not a natural protein pair),heterodimer,77+82,10,68,False,False,False,,1.68,3.44
 6E5N,excluded,,peptide partner (chain shorter than 30 residues),heterodimer,82+16,20,33,True,False,False,,1.28,0.72
+6ES7,excluded,,"reconstructed ancestral complex of two intrinsically disordered proteins (low-affinity, dynamic)",heterodimer,44+50,20,68,False,False,False,,2.29,3.17
 6JXU,excluded,,HADDOCK complex from intermolecular NOEs only (SUMO1 coordinates likely from an earlier structure; no intramolecular restraints deposited),heterodimer,77+12,20,25,False,False,True,,0.49,1.41
 6JXW,excluded,,HADDOCK complex from intermolecular NOEs only (SUMO2 coordinates likely from an earlier structure; no intramolecular restraints deposited),heterodimer,77+12,20,27,False,False,True,,0.34,0.77
 6M78,excluded,,"assembled from earlier structures (1ZYO, 6LXF) with HADDOCK",heterodimer,191+57,4,31,True,False,True,,0.44,1.66
