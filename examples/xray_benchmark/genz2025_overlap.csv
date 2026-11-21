@@ -1,0 +1,263 @@
+pdb_id,their_set,fate_in_our_selection
+6ZH1,benchmark,"in our non-redundant pool, not selected by size matching"
+7AL7,benchmark,modified_residue_or_ptm
+7APZ,benchmark,not in our search: assembly 1 has 4 protein chains
+7B0W,benchmark,seen: both partners in one pre-cutoff X-ray entry
+7B56,benchmark,mutation
+7BDW,benchmark,not in our search: resolution > 2.5 Å
+7EEW,benchmark,not in our search: resolution > 2.5 Å; assembly 1 has 4 protein chains
+7EGS,benchmark,"in our non-redundant pool, not selected by size matching"
+7ENH,benchmark,seen: both partners in one pre-cutoff X-ray entry
+7EXB,benchmark,not in our search: assembly 1 has 4 protein chains
+7F4P,benchmark,not in our search: resolution > 2.5 Å
+7F61,benchmark,not in our search: resolution > 2.5 Å
+7FGM,benchmark,"in our non-redundant pool, not selected by size matching"
+7FIW,benchmark,mutation
+7G83,benchmark,no paper
+7L4E,benchmark,not in our search: assembly 1 has 4 protein chains
+7L5M,benchmark,mutation
+7LD9,benchmark,mutation
+7LY5,benchmark,not in our search: assembly 1 has 4 protein chains
+7MON,benchmark,mutation
+7MRS,benchmark,not in our search: resolution > 2.5 Å
+7MVY,benchmark,not in our search: other
+7MWR,benchmark,"in our non-redundant pool, not selected by size matching"
+7MX4,benchmark,mutation
+7MXN,benchmark,not in our search: resolution > 2.5 Å
+7MYN,benchmark,not in our search: resolution > 2.5 Å
+7NWK,benchmark,not in our search: resolution > 2.5 Å
+7P99,benchmark,mutation
+7PAY,benchmark,not in our search: assembly 1 has 4 protein chains
+7PH1,benchmark,modified_residue_or_ptm
+7PJH,benchmark,"in our non-redundant pool, not selected by size matching"
+7PPB,benchmark,not in our search: assembly 1 has 4 protein chains
+7PPZ,benchmark,not in our search: resolution > 2.5 Å
+7QAA,benchmark,not in our search: resolution > 2.5 Å
+7QBM,benchmark,modified_residue_or_ptm
+7QGS,benchmark,seen: both partners together pre-cutoff (any method)
+7QNP,benchmark,"in our non-redundant pool, not selected by size matching"
+7QOY,benchmark,not in our search: assembly 1 has 4 protein chains
+7QRG,benchmark,not in our search: resolution > 2.5 Å; assembly 1 has 6 protein chains
+7RG8,benchmark,mutation
+7RPK,benchmark,not in our search: resolution > 2.5 Å
+7RX7,benchmark,mutation
+7S50,benchmark,not in our search: assembly 1 has 12 protein chains
+7S5S,benchmark,"in our non-redundant pool, not selected by size matching"
+7S7L,benchmark,mutation
+7S7Q,benchmark,not in our search: resolution > 2.5 Å
+7S8I,benchmark,covalent_interchain_link
+7SCT,benchmark,in our final 28
+7SH3,benchmark,not in our search: resolution > 2.5 Å
+7SJ3,benchmark,not in our search: resolution > 2.5 Å
+7SJZ,benchmark,not in our search: assembly 1 has 4 protein chains
+7SO0,benchmark,mutation
+7SPP,benchmark,modified_residue_or_ptm
+7SQ2,benchmark,not in our search: resolution > 2.5 Å
+7T08,benchmark,seen: both partners in one pre-cutoff X-ray entry
+7THN,benchmark,modified_residue_or_ptm
+7TUI,benchmark,not in our search: resolution > 2.5 Å
+7U0T,xray_test,seen: both partners in one pre-cutoff X-ray entry
+7U0U,benchmark,mutation
+7UCC,benchmark,seen: both partners in one pre-cutoff X-ray entry
+7ULA,benchmark,"in our non-redundant pool, not selected by size matching"
+7UM4,benchmark,not in our search: resolution > 2.5 Å
+7V7L,benchmark,"in our non-redundant pool, not selected by size matching"
+7V8F,benchmark,"in our non-redundant pool, not selected by size matching"
+7VG7,benchmark,mutation
+7VKB,benchmark,"in our non-redundant pool, not selected by size matching"
+7VMX,benchmark,not in our search: resolution > 2.5 Å
+7VVB,benchmark,seen: both partners in one pre-cutoff X-ray entry
+7VVH,benchmark,mutation
+7VW6,benchmark,not in our search: other
+7W4Z,benchmark,modified_residue_or_ptm
+7W7C,benchmark,not in our search: resolution > 2.5 Å; assembly 1 has 4 protein chains
+7W80,xray_test,not in our search: resolution > 2.5 Å
+7WFC,benchmark,not in our search: resolution > 2.5 Å
+7WIV,benchmark,not in our search: resolution > 2.5 Å
+7WJQ,benchmark,not in our search: resolution > 2.5 Å
+7WKO,benchmark,"in our non-redundant pool, not selected by size matching"
+7WR6,benchmark,mutation
+7WRS,benchmark,"in our non-redundant pool, not selected by size matching"
+7XJP,benchmark,not in our search: resolution > 2.5 Å
+7XKY,benchmark,"in our non-redundant pool, not selected by size matching"
+7XVK,benchmark,size
+7XVO,benchmark,no paper
+7XYQ,benchmark,not in our search: resolution > 2.5 Å
+7Y8U,benchmark,"in our non-redundant pool, not selected by size matching"
+7YLS,benchmark,no paper
+7YMF,benchmark,mutation
+7YTU,benchmark,in our final 28
+7YUI,benchmark,not in our search: resolution > 2.5 Å
+7Z3D,benchmark,not in our search: assembly 1 has 4 protein chains
+7Z3R,benchmark,not in our search: resolution > 2.5 Å; assembly 1 has 6 protein chains
+7ZCM,benchmark,not in our search: resolution > 2.5 Å
+7ZDT,benchmark,not in our search: resolution > 2.5 Å
+7ZH4,benchmark,not in our search: other
+7ZHR,benchmark,not in our search: resolution > 2.5 Å
+7ZJM,benchmark,not in our search: resolution > 2.5 Å
+7ZRY,benchmark,not in our search: resolution > 2.5 Å
+7ZYU,benchmark,"in our non-redundant pool, not selected by size matching"
+8A4A,benchmark,not in our search: resolution > 2.5 Å
+8A82,benchmark,"in our non-redundant pool, not selected by size matching"
+8A8F,benchmark,"in our non-redundant pool, not selected by size matching"
+8ADB,benchmark,covalent_interchain_link
+8AIN,benchmark,not in our search: resolution > 2.5 Å
+8AK1,benchmark,"in our non-redundant pool, not selected by size matching"
+8AKO,benchmark,"in our non-redundant pool, not selected by size matching"
+8ALK,benchmark,mutation
+8AYA,benchmark,seen: both partners in one pre-cutoff X-ray entry
+8B08,benchmark,seen: both partners in one pre-cutoff X-ray entry
+8B14,benchmark,not in our search: resolution > 2.5 Å
+8B2Q,benchmark,"in our non-redundant pool, not selected by size matching"
+8B2R,benchmark,mutation
+8B3S,benchmark,no paper
+8B4O,benchmark,not in our search: other
+8BCE,benchmark,size
+8BD1,benchmark,not in our search: assembly 1 has 4 protein chains
+8BJ8,benchmark,mutation
+8BQL,benchmark,size
+8BRS,benchmark,mutation
+8BS3,benchmark,covalent_interchain_link
+8BZR,benchmark,mutation
+8C4Z,benchmark,mutation
+8C8G,benchmark,not in our search: resolution > 2.5 Å
+8CJA,benchmark,not in our search: assembly 1 has 6 protein chains
+8CM0,benchmark,"in our non-redundant pool, not selected by size matching"
+8CQZ,benchmark,not in our search: resolution > 2.5 Å
+8CUU,benchmark,not in our search: resolution > 2.5 Å
+8CWR,benchmark,not in our search: assembly 1 has 6 protein chains
+8DC0,benchmark,"in our non-redundant pool, not selected by size matching"
+8DLE,benchmark,covalent_interchain_link
+8DSO,benchmark,modified_residue_or_ptm
+8E9E,benchmark,not in our search: resolution > 2.5 Å
+8EFX,benchmark,mutation
+8EHE,benchmark,modified_residue_or_ptm
+8EL7,benchmark,not in our search: resolution > 2.5 Å
+8EXW,benchmark,size
+8EY4,benchmark,no paper
+8F2P,benchmark,not in our search: resolution > 2.5 Å
+8FML,benchmark,not in our search: resolution > 2.5 Å
+8FN8,benchmark,"novel and published, dropped by redundancy (another family member kept)"
+8G0P,benchmark,seen: both partners in one pre-cutoff X-ray entry
+8G3K,benchmark,not in our search: other
+8G4K,benchmark,"in our non-redundant pool, not selected by size matching"
+8GBQ,benchmark,mutation
+8GP6,benchmark,not in our search: resolution > 2.5 Å
+8GQE,benchmark,mutation
+8GTI,benchmark,mutation
+8GUO,benchmark,not in our search: resolution > 2.5 Å
+8GXE,benchmark,not in our search: resolution > 2.5 Å
+8GZX,benchmark,"in our non-redundant pool, not selected by size matching"
+8H0N,benchmark,"in our non-redundant pool, not selected by size matching"
+8H1I,benchmark,no paper
+8H62,benchmark,mutation
+8HHJ,benchmark,mutation
+8HL7,benchmark,not in our search: resolution > 2.5 Å
+8HLN,benchmark,mutation
+8HSB,benchmark,not in our search: resolution > 2.5 Å
+8HTC,benchmark,"novel and published, dropped by redundancy (another family member kept)"
+8I5V,benchmark,mutation
+8IEY,benchmark,not in our search: assembly 1 has 4 protein chains
+8IF0,benchmark,no paper
+8IJX,benchmark,not in our search: other
+8IPJ,benchmark,mutation
+8J09,benchmark,not in our search: resolution > 2.5 Å
+8J1I,benchmark,in our final 28
+8JCA,benchmark,mutation
+8JFN,benchmark,not in our search: assembly 1 has 8 protein chains
+8JI0,benchmark,not in our search: resolution > 2.5 Å
+8JTK,benchmark,"in our non-redundant pool, not selected by size matching"
+8ODR,benchmark,not in our search: resolution > 2.5 Å
+8OIZ,benchmark,size
+8OOT,benchmark,not in our search: resolution > 2.5 Å
+8OV1,benchmark,same protein on both chains
+8OWS,benchmark,mutation
+8P81,benchmark,not in our search: resolution > 2.5 Å
+8P97,benchmark,not in our search: resolution > 2.5 Å
+8PDC,benchmark,"in our non-redundant pool, not selected by size matching"
+8PHP,benchmark,not in our search: resolution > 2.5 Å; assembly 1 has 24 protein chains
+8PK5,benchmark,size
+8POD,benchmark,not in our search: resolution > 2.5 Å
+8POZ,benchmark,mutation
+8PU1,benchmark,mutation
+8PWZ,benchmark,not in our search: assembly 1 has 4 protein chains
+8Q5R,benchmark,"in our non-redundant pool, not selected by size matching"
+8Q66,benchmark,"in our non-redundant pool, not selected by size matching"
+8QC1,benchmark,not in our search: other
+8QDI,benchmark,seen: both partners in one pre-cutoff X-ray entry
+8QEL,benchmark,modified_residue_or_ptm
+8QLO,benchmark,not in our search: resolution > 2.5 Å
+8QUS,benchmark,not in our search: resolution > 2.5 Å
+8QVC,benchmark,not in our search: assembly 1 has 4 protein chains
+8QVW,benchmark,not in our search: resolution > 2.5 Å
+8R7A,benchmark,in our final 28
+8RD3,benchmark,modified_residue_or_ptm
+8RGI,benchmark,seen: 'new' partner had a pre-cutoff NMR/EM entry
+8RO6,benchmark,seen: both partners together pre-cutoff (any method)
+8ROH,benchmark,not in our search: resolution > 2.5 Å
+8RQI,benchmark,modified_residue_or_ptm
+8S1X,benchmark,"in our non-redundant pool, not selected by size matching"
+8S2M,benchmark,"in our non-redundant pool, not selected by size matching"
+8SM0,benchmark,modified_residue_or_ptm
+8SM3,benchmark,not in our search: resolution > 2.5 Å; assembly 1 has 8 protein chains
+8SNL,benchmark,not in our search: resolution > 2.5 Å
+8SSP,benchmark,not in our search: resolution > 2.5 Å
+8ST8,benchmark,covalent_interchain_link
+8T1P,benchmark,not in our search: resolution > 2.5 Å
+8T7V,benchmark,modified_residue_or_ptm
+8TK9,benchmark,seen: 'new' partner had a pre-cutoff NMR/EM entry
+8TYX,benchmark,mutation
+8UI2,benchmark,not in our search: resolution > 2.5 Å; assembly 1 has 24 protein chains
+8UMP,benchmark,not in our search: resolution > 2.5 Å; assembly 1 has 24 protein chains
+8V2S,benchmark,not in our search: resolution > 2.5 Å; assembly 1 has 192 protein chains
+8VOF,benchmark,not in our search: resolution > 2.5 Å
+8VX9,benchmark,not in our search: resolution > 2.5 Å
+8W15,benchmark,not in our search: resolution > 2.5 Å
+8WFR,benchmark,same protein on both chains
+8WHM,benchmark,not in our search: assembly 1 has 4 protein chains
+8WT4,benchmark,seen: 'new' partner had a pre-cutoff NMR/EM entry
+8WZO,benchmark,modified_residue_or_ptm
+8X6B,benchmark,mutation
+8X7G,benchmark,not in our search: resolution > 2.5 Å
+8XER,benchmark,not in our search: resolution > 2.5 Å
+8XLD,benchmark,mutation
+8Y9C,benchmark,not in our search: resolution > 2.5 Å
+8Z02,benchmark,seen: both partners in one pre-cutoff X-ray entry
+8ZHT,benchmark,not in our search: resolution > 2.5 Å
+8ZP2,benchmark,not in our search: other
+8ZPW,benchmark,not in our search: resolution > 2.5 Å
+8ZQ3,benchmark,mutation
+9AY7,benchmark,mutation
+9B9T,benchmark,"novel and published, dropped by redundancy (another family member kept)"
+9BFD,benchmark,not in our search: resolution > 2.5 Å
+9BGL,benchmark,seen: 'new' partner had a pre-cutoff NMR/EM entry
+9BIY,benchmark,seen: 'new' partner had a pre-cutoff NMR/EM entry
+9BK5,benchmark,not in our search: resolution > 2.5 Å
+9BK6,benchmark,"in our non-redundant pool, not selected by size matching"
+9BTM,benchmark,not in our search: resolution > 2.5 Å
+9C91,benchmark,not in our search: resolution > 2.5 Å
+9CCV,benchmark,not in our search: resolution > 2.5 Å
+9CQI,benchmark,"in our non-redundant pool, not selected by size matching"
+9CU8,benchmark,"in our non-redundant pool, not selected by size matching"
+9CYS,benchmark,"in our non-redundant pool, not selected by size matching"
+9D84,benchmark,not in our search: assembly 1 has 6 protein chains
+9DK1,benchmark,"novel and published, dropped by redundancy (another family member kept)"
+9DP6,benchmark,not in our search: resolution > 2.5 Å
+9DW9,benchmark,not in our search: resolution > 2.5 Å
+9EI2,benchmark,not in our search: resolution > 2.5 Å
+9EQ6,benchmark,not in our search: resolution > 2.5 Å
+9F28,benchmark,"in our non-redundant pool, not selected by size matching"
+9F6G,benchmark,mutation
+9FNM,benchmark,not in our search: resolution > 2.5 Å; assembly 1 has 4 protein chains
+9FQK,xray_test,not in our search: other
+9G0C,xray_test,mutation
+9GNV,xray_test,modified_residue_or_ptm
+9H8S,benchmark,seen: both partners in one pre-cutoff X-ray entry
+9JU4,benchmark,modified_residue_or_ptm
+9K1L,benchmark,not in our search: resolution > 2.5 Å
+9K3E,benchmark,no paper
+9L14,xray_test,"in our non-redundant pool, not selected by size matching"
+9LGW,benchmark,not in our search: resolution > 2.5 Å
+9LUM,xray_test,not in our search: resolution > 2.5 Å
+9OHL,xray_test,modified_residue_or_ptm
+9OZ0,xray_test,not in our search: resolution > 2.5 Å

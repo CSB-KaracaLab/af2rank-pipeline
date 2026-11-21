@@ -1,0 +1,20 @@
+step,count
+"search: X-ray, res<=2.5 A, released after 2021-09-30, assembly 1 = 2 protein chains, no NA polymer in entry",13278
+assembly 1 = one entity x2 or two entities x1 (protein),13278
+"no engineered mutation (rcsb_mutation_count=0, no pdbx_mutation)",10108
+"no non-standard residue except MSE, no PTM/covalent modification feature",8184
+no covalent/disulfide link between the two chains,7963
+"homo: each chain >= 30; hetero: longer chain >= 30, shorter >= 30 modeled residues; total 69-900",6805
+RCSB reports an interface between the two chains in assembly 1,6792
+two distinct proteins for heterodimers (same-UniProt fragment pairs dropped; same-construct pairs -> homo),6537
+novelty by X-ray: UniProt AND 100% cluster (motif search for unclustered peptides); hetero pairs per Savas rule,3087
+novelty across methods: new chains have no pre-cutoff entry of any method; never-together checked across methods,3050
+published: primary citation is not 'To be published' (and has a journal or DOI),2166
+non-redundant: best resolution per 30% cluster (homo) / 30% cluster pair (hetero),1170
+  of which homodimers,907
+  of which heterodimers,263
+heterodimers: one per 30% cluster of the longer chain,214
+[variant] pool with UniProt on both chains: homo,817
+[variant] pool with UniProt on both chains: hetero (one per long-chain 30% cluster),121
+length-matched selection (homo),39
+length-matched selection (hetero),28

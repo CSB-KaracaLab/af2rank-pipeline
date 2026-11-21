@@ -58,7 +58,7 @@ af2rank-pipeline run-target \
 
 The result table is `runs/1brs/manifests/final_models.csv`; the scored structure and PAE data are under `runs/1brs/af2rank/`. The [example notes](examples/1brs/README.md) describe the source of the bundled data. Use a new output directory for each independent run.
 
-More examples: [`examples/2ptc`](examples/2ptc) (a crystal structure with waters and ions to clean) and [`examples/e2a_hpr`](examples/e2a_hpr) (NMR ensembles of 3 and 30 models), each with scores for all 17 weights (for E2A–HPr, the 3-model ensemble). [`examples/nmr_benchmark`](examples/nmr_benchmark) has a curated benchmark of 65 NMR dimers (model 1 of each ensemble) scored with all 17 weights, split into homodimer, heterodimer and flexible sets, with curation notes.
+More examples: [`examples/2ptc`](examples/2ptc) (a crystal structure with waters and ions to clean) and [`examples/e2a_hpr`](examples/e2a_hpr) (NMR ensembles of 3 and 30 models), each with scores for all 17 weights (for E2A–HPr, the 3-model ensemble). [`examples/nmr_benchmark`](examples/nmr_benchmark) has a curated benchmark of 65 NMR dimers (model 1 of each ensemble) scored with all 17 weights, split into homodimer, heterodimer and flexible sets, with curation notes. [`examples/xray_benchmark`](examples/xray_benchmark) has the matching unseen X-ray dimer benchmark (54 heterodimers, 39 homodimers) with its curation logic.
 
 ### NVIDIA GPU on Linux
 
