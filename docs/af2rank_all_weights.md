@@ -78,7 +78,7 @@ On one H100, scoring 3 models with one weight took 46–47 s, about 16 s per mod
 | Trypsin–BPTI (PDB 2PTC; Marquart et al., 1983) | Laptop CPU, macOS, Colab notebook cells | 1 × 281 | 71.3 min | 240 s (158–594 s) | 240 s |
 | E2A–HPr (PDB 1GGR, NMR; Wang et al., 2000) | 1 × NVIDIA H100 64 GB, MareNostrum 5 | 3 × 253 | 16.1 min | 47 s (45–213 s) | 16 s |
 
-Times per weight include cleaning, loading the weight, XLA compilation, scoring and DockQ; multimer runs score 20 more positions for the linker. Two outliers were not intrinsic: the last CPU weight (594 s) ran alongside a large download, and one H100 weight (AF2-ptm 2, 213 s) took longer once. Because compilation is paid once per weight, the cost per model falls as more models are scored together.
+Times per weight include cleaning, loading the weight, XLA compilation, scoring and DockQ; multimer runs also predict the 20 linker positions, which are then left out of the scores. Two outliers were not intrinsic: the last CPU weight (594 s) ran alongside a large download, and one H100 weight (AF2-ptm 2, 213 s) took longer once. Because compilation is paid once per weight, the cost per model falls as more models are scored together.
 
 ## Notes and limitations
 
