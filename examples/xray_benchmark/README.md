@@ -2,7 +2,7 @@
 
 X-ray protein dimers whose interfaces no AlphaFold2 version could have seen in training, curated as a control for the [NMR dimer benchmark](../nmr_benchmark). The crystal structures pass the same novelty test and the same quality rules as the curated NMR set.
 
-- **X-ray-hetero:** 54 heterodimers. 28 are matched in size to the NMR heterodimers; 26 are larger natural complexes, since X-ray can determine larger complexes than NMR.
+- **X-ray-hetero:** 53 heterodimers. 27 are matched in size to the NMR heterodimers; 26 are larger natural complexes, since X-ray can determine larger complexes than NMR.
 - **X-ray-homo:** 39 homodimers, matched in size to the NMR homodimers.
 
 The full criteria, filtering counts and decision log are in [`CURATION.md`](CURATION.md).
@@ -34,7 +34,7 @@ The full criteria, filtering counts and decision log are in [`CURATION.md`](CURA
 | Published | 2,166 |
 | Non-redundant | 907 homo + 214 hetero |
 | Natural proteins | 817 homo + 121 hetero |
-| Selected | 39 homo + 54 hetero |
+| Selected | 39 homo + 53 hetero (8SJJ, a metastable coiled coil, later removed) |
 
 ## Structures
 
@@ -59,7 +59,7 @@ The heterodimer benchmark of Genz et al. (2025) has 262 heterodimers released af
 | `CURATION.md` | criteria, funnel, size match, decision log, open points |
 | `xray_hetero.csv`, `xray_homo.csv` | one row per dimer: chains, entities, UniProt, residues, resolution, release date, novelty reason, 30%/100% clusters, interface area, citation; `source` gives the size-matched or added group |
 | `kept_xray_hetero.txt`, `kept_xray_homo.txt` | PDB IDs per set |
-| `fasta_hetero/` | trimmed FASTA files of the 54 heterodimers (coordinates: biological assembly 1 of each PDB entry, chains as in the CSV) |
+| `fasta_hetero/` | trimmed FASTA files of the 53 heterodimers (coordinates: biological assembly 1 of each PDB entry, chains as in the CSV) |
 | `interface_ss_hetero.csv` | interface residues and their helix/strand fraction per chain (8PFC chain A: loops only) |
 | `genz2025_overlap.csv` | where each Genz et al. 2025 heterodimer leaves our selection |
 | `funnel.csv` | counts after each selection step |

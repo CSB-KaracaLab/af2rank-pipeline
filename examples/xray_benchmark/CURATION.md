@@ -1,6 +1,6 @@
 # Unseen X-ray dimer benchmark: curation record
 
-Curated 2026-11-21. Two separate sets: **X-ray-homo** (`xray_homo.csv`, 39 homodimers) and **X-ray-hetero** (`xray_hetero.csv`, 54 heterodimers: 28 size-matched to the NMR heterodimers plus 26 larger natural complexes); IDs in `kept_xray_homo.txt` and `kept_xray_hetero.txt`. `xray_dimers.csv` holds both (93 dimers). Selection scripts: `step1_fetch.py` and `step2_select.py` (RCSB metadata only; see `README.md` for queries and columns). The heterodimer swap in step 9 below was done by taking the heterodimers of `xray_dimers_uniprot_only.csv`.
+Curated 2026-11-21. Two separate sets: **X-ray-homo** (`xray_homo.csv`, 39 homodimers) and **X-ray-hetero** (`xray_hetero.csv`, 53 heterodimers: 27 size-matched to the NMR heterodimers plus 26 larger natural complexes); IDs in `kept_xray_homo.txt` and `kept_xray_hetero.txt`. `xray_dimers.csv` holds both (92 dimers). Selection scripts: `step1_fetch.py` and `step2_select.py` (RCSB metadata only; see `README.md` for queries and columns). The heterodimer swap in step 9 below was done by taking the heterodimers of `xray_dimers_uniprot_only.csv`.
 
 ## The logic
 
@@ -64,12 +64,13 @@ The size-matched heterodimers run larger because few novel, published, natural, 
 6. **Homodimers without synthetic chains:** the 9 homodimers with a synthetic-construct chain (8D03, 8D04, 8JVO, 8JVP, 8UPB, 8UTK, 9QDO, 9TLM, 9U9G) were each replaced by the unused natural homodimer from the pool closest in total length (7F9I, 8ZG9, 7YFV, 9IJX, 8CHW, 7WJT, 7RRM, 9N2G, 7Y86); the other 30 homodimers are unchanged. Previous table: `xray_dimers_v4b_with_synthetic_homo.csv`.
 7. **Two sets:** homodimers and heterodimers are kept as separate benchmarks (X-ray-homo, X-ray-hetero), as for the NMR set.
 8. **Larger heterodimers added:** X-ray can determine larger complexes than NMR, so size matching is not required for heterodimers. 38 heterodimers of the benchmark of Genz et al. 2025 (Protein Sci 34:e70327, doi:10.1002/pro.70327) passed all our filters but were not picked by size (161–798 residues). The 11 with a designed binder or a chain without UniProt were excluded and the 27 natural ones added; 8CM0 was then dropped because its chain B coordinates match the SEQRES sequence at only 89% identity, failing the pipeline's strict cleaning. X-ray-hetero is now 54 dimers (`source` column: size-matched or Genz et al. overlap). Three added entries share one partner family with a size-matched entry but with a different partner (8JTK/8PFC, 6ZH1/9MLU, 7V7L/7VNI), which the pair-level and longer-chain redundancy rules allow. The full comparison with their 262 heterodimers is in `genz2025_overlap.csv`.
+9. **8SJJ removed:** the SEPT14–SEPT7 coiled coil is described by its authors as a metastable heterodimer, so its crystal interface is not a stable native complex. X-ray-hetero is now 53 dimers (27 size-matched, 26 larger).
 
 ## Open points
 
 - **9ZDI** (homodimer, 52+52) is nearly all coil in the deposited model; worth checking before it is scored.
 - **Symmetry copies:** 13 dimers are built from one deposited chain plus a crystal-symmetry copy and need the assembly file.
 - **Interface secondary structure:** checked for the earlier inputs, not yet for the new entries.
-- **Entries to look at:** 8SJJ (a long parallel coiled coil) and 7WZ6 (long crossed helices) may be construct or packing arrangements.
+- **Entry to look at:** 7WZ6 (long crossed helices) may be a construct or packing arrangement.
 - **8PFC:** chain A touches its partner only through loops (no helix or strand at the interface); kept.
 - **Runs:** X-ray-hetero inputs are built and pass strict cleaning; AF2Rank runs (17 weights, full resolution, 0 recycles) are under way on MareNostrum. X-ray-homo inputs are not built yet.
