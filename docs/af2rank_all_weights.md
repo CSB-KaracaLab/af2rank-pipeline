@@ -42,7 +42,7 @@ Two classic test complexes were scored as deposited, each with all 17 weights; t
 
 ![Figure 2](figures/figure_e2a_hpr.png)
 
-**Figure 2.** E2A–HPr (PDB 1GGR). (A) The 3 NMR models drawn as overlaid ribbons, one shade per model, E2A in teal and HPr in amber; they differ by at most 0.18 Å (CA RMSD) and nearly coincide. The 30-model ensemble in `examples/e2a_hpr` shows a wider HPr spread. (B) ipTM against DockQ input→output for 3 models × 17 weights; colour gives the weight set and shape the NMR model, with labels at the mean of each weight's three models.
+**Figure 2.** E2A–HPr (PDB 1GGR). (A) The 3 NMR dimer models overlaid as cartoons, E2A in teal and HPr in amber; they differ by at most 0.18 Å (CA RMSD) and nearly coincide. The 30-model ensemble in `examples/e2a_hpr` shows a wider HPr spread. (B) ipTM against DockQ input→output for 3 models × 17 weights; colour gives the weight set and shape the NMR model, with labels at the mean of each weight's three models.
 
 The plotted values are in `examples/2ptc/results/scores_all_weights.csv` and `examples/e2a_hpr/results/scores_all_weights.csv`; [`figures/scripts`](figures/scripts) redraws the figures (structures rendered with PyMOL).
 
