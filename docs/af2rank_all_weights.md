@@ -36,6 +36,10 @@ Two classic test complexes were scored as deposited, each with all 17 weights; t
 - **Trypsin–BPTI, PDB 2PTC** (Marquart et al., 1983): a crystal structure of bovine trypsin (chain E, 223 residues) bound to the bovine pancreatic trypsin inhibitor (chain I, 58 residues), one model. [`examples/2ptc`](../examples/2ptc)
 - **E2A–HPr, PDB 1GGR** (Wang et al., 2000): the 3 deposited NMR structures of the E. coli IIA-Glc (E2A, chain A, 168 residues with coordinates for 19–168) and HPr (chain B, 85 residues) phosphoryl-transfer complex, scored as one ensemble file. It is the reference complex of the HADDOCK E2A–HPr docking example (Dominguez et al., 2003). [`examples/e2a_hpr`](../examples/e2a_hpr)
 
+![E2A–HPr ensembles: the 3 dimer models of 1GGR (left) and the 30-model 1HDN-based ensemble (right), overlaid as cartoons](../examples/e2a_hpr/ensembles.png)
+
+**E2A–HPr input ensembles.** Left: the 3 NMR dimer models of 1GGR, which differ by at most 0.18 Å (CA RMSD). Right: a 30-model test ensemble, E2A from 1GGR with each of the 30 HPr NMR models of 1HDN fitted onto HPr. Both files are in `examples/e2a_hpr`.
+
 ![Figure 1](figures/figure_2ptc.png)
 
 **Figure 1.** Trypsin–BPTI (PDB 2PTC). (A) Input structure, trypsin in teal and BPTI in amber; interface side chains within 4.5 Å of the partner are shown as sticks. (B) ipTM against DockQ input→output for each of the 17 weights; colour and shape give the weight set, labels the model number (v1, v2, v3 = AF2.1, AF2.2, AF2.3 multimer).
