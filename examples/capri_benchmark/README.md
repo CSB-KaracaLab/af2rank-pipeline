@@ -6,7 +6,7 @@ Can AF2Rank tell good docking models from bad ones? We scored the CAPRI Score_se
 
 **Status:**
 - **Full resolution** (sequence and side chains kept, 0 recycles): complete, 9 targets × 17 weights = 153 runs.
-- **Masked** (the AF2Rank paper's setting: sequence and side chains masked, 1 recycle): a pilot with AF2-ptm models 1–2 and AF2.2 multimer models 1–5 is running. The table holds the runs finished so far (58 of 63; AF2.2 models 4 and 5 are still running) and will be updated.
+- **Masked** (the AF2Rank paper's setting: sequence and side chains masked, 1 recycle): the pilot with AF2-ptm models 1–2 and AF2.2 multimer models 1–5 is complete (9 targets × 7 weights = 63 runs). AF2.1 and AF2.3 are running and will be added.
 
 ## Data
 
@@ -65,29 +65,29 @@ T131 and T132 (CEACAM1/HopQ, the two "difficult" targets, with 6 and 9 good deco
 
 **actifpTM against CAPRI DockQ at full resolution**, model 1 of each family. Most decoys sit at actifpTM 0.9–1.0 whatever their quality. The same plot with ipTM is [`figures/fullres_i_ptm_vs_dockq.png`](figures/fullres_i_ptm_vs_dockq.png). Spearman, AUC and top-10 hits for every target × weight are in [`figures/fullres_ranking_summary.png`](figures/fullres_ranking_summary.png).
 
-## Masked pilot (interim, 58 of 63 runs)
+## Masked pilot: AF2-ptm and AF2.2 (63 runs)
 
 The [X-ray benchmark](../xray_benchmark#scores-in-the-af2rank-papers-masked-setting) showed that native interfaces stay confident and in place in the paper's masked setting, except with AF2.1. On the CAPRI decoys, masking lets wrong interfaces drift away while good ones stay.
 
-Median DockQ input→output by CAPRI class, on the 58 runs finished in both settings:
+Median DockQ input→output by CAPRI class, on the 63 pilot runs in both settings:
 
 | CAPRI class | full resolution | masked |
 | --- | --- | --- |
-| incorrect | 0.75 | **0.31** |
-| acceptable | 0.76 | 0.49 |
+| incorrect | 0.75 | **0.33** |
+| acceptable | 0.77 | 0.51 |
 | medium | 0.72 | 0.53 |
 | high | 0.75 | 0.63 |
 
-**Per run** (median over the 58 runs; random picking puts 3.7 good decoys in the top 10):
+**Per run** (median over the 63 runs; random picking puts 3.6 good decoys in the top 10):
 
 | Score | AUC full → masked | Top-1 good, full → masked | Good in top 10, full → masked |
 | --- | --- | --- | --- |
-| actifpTM | 0.70 → **0.87** | 53% → **74%** | 5.6 → **7.7** |
-| PAE at input contacts | 0.78 → 0.87 | 45% → 72% | 5.1 → 7.0 |
-| composite (PAE + actifpTM + fnat) | 0.76 → 0.88 | 64% → 72% | 5.6 → 7.2 |
-| ipTM | 0.72 → 0.85 | 47% → 60% | 5.1 → 6.6 |
-| pLDDT × pTM × DockQ input→output (AF2Rank) | 0.67 → 0.82 | 59% → 78% | 4.7 → 6.5 |
-| DockQ input→output | 0.64 → 0.79 | 50% → 41% | 3.9 → 5.5 |
+| actifpTM | 0.70 → **0.87** | 52% → **76%** | 5.5 → **7.6** |
+| PAE at input contacts | 0.78 → 0.87 | 44% → 73% | 5.0 → 7.0 |
+| composite (PAE + actifpTM + fnat) | 0.76 → 0.89 | 62% → 73% | 5.5 → 7.1 |
+| ipTM | 0.72 → 0.85 | 44% → 59% | 5.0 → 6.5 |
+| pLDDT × pTM × DockQ input→output (AF2Rank) | 0.68 → 0.82 | 57% → 75% | 4.7 → 6.5 |
+| DockQ input→output | 0.64 → 0.79 | 51% → 41% | 4.0 → 5.4 |
 
 Both weight families gain: actifpTM AUC rises from 0.71 to 0.84 with AF2-ptm and from 0.70 to 0.88 with AF2.2.
 
@@ -95,7 +95,7 @@ Both weight families gain: actifpTM AUC rises from 0.71 to 0.84 with AF2-ptm and
 
 | Weights | Score | Good decoy ranked first, full → masked | Median AUC, full → masked |
 | --- | --- | --- | --- |
-| all pilot weights | actifpTM | 4/9 → **8/9** | 0.70 → 0.88 |
+| all pilot weights | actifpTM | 5/9 → **8/9** | 0.70 → 0.88 |
 | all pilot weights | composite | 6/9 → 7/9 | 0.77 → 0.91 |
 | AF2-ptm models 1–2 | composite | 5/9 → 8/9 | 0.74 → 0.89 |
 | AF2.2 models 1–5 | actifpTM | 4/9 → 7/9 | 0.69 → 0.88 |
@@ -104,7 +104,7 @@ Per target (actifpTM, median AUC over the runs of each family), masking raises t
 - **T041** drops from about 0.80 to 0.70. Many of its acceptable decoys (DockQ 0.3–0.5) lose confidence along with the incorrect ones, so masked AlphaFold is strict about partly right interfaces.
 
 Two targets stay weak with one of the families:
-- **T131:** AF2.2 stays near random (0.38 → 0.48), while AF2-ptm separates it (0.55 → 0.80).
+- **T131:** AF2.2 stays near random (0.37 → 0.52), while AF2-ptm separates it (0.55 → 0.80).
 - **T142:** AF2-ptm stays near random (0.46 → 0.51); AF2.2 does a little better (0.67 → 0.74).
 
 ![actifpTM vs CAPRI DockQ, full resolution vs masked, AF2-ptm model 1](figures/masked_vs_fullres_actifptm_model_1_ptm.png)
