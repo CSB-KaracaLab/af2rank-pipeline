@@ -7,13 +7,13 @@ HERE = Path(__file__).resolve().parents[1]
 
 
 def load(setting="fullres"):
-    """One row per decoy x weight. setting: 'fullres' (all 153 runs) or 'masked' (pilot runs finished so far).
+    """One row per decoy x weight. setting: 'fullres' (all 153 runs) or 'masked' (all 153 runs, the paper's setting).
 
     Adds: good (CAPRI acceptable or better), dockq / main_classification (CAPRI's own values), neg_pae_contacts.
     Decoys whose input has no interface (11 of T041/T131, all CAPRI-incorrect) get DockQ_io and fnat_io 0 and the
     maximum PAE (31.75 A).
     """
-    f = {"fullres": "scores_capri_fullres_all_weights.csv", "masked": "scores_capri_masked_pilot.csv"}[setting]
+    f = {"fullres": "scores_capri_fullres_all_weights.csv", "masked": "scores_capri_masked_all_weights.csv"}[setting]
     d = pd.read_csv(HERE / "results" / f)
     d["target"] = d.target.str.replace(".", "_", regex=False)
     d = d.rename(columns={"capri_dockq": "dockq", "capri_class": "main_classification"})

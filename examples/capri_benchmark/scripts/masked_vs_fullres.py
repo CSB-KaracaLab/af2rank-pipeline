@@ -1,9 +1,11 @@
-"""Masked pilot vs full resolution on the same CAPRI runs.
+"""Masked (AF2Rank paper setting) vs full resolution on the same CAPRI runs.
 
 Masked = the AF2Rank paper's setting (sequence and side chains masked, 1 recycle); full resolution = 0 recycles.
-The pilot covers AF2-ptm models 1-2 and AF2.2 multimer models 1-5; only runs finished in both settings are compared.
+All 153 runs (9 targets x 17 weights) in both settings.
 Writes results/masked_vs_fullres_summary.csv (per-run medians of AUC, top-1, good in top 10 for each score),
-and figures/masked_vs_fullres_<score>_<weight>.png (score vs CAPRI DockQ, one row per setting, one column per target).
+results/masked_vs_fullres_by_family.csv (the same per weight family), results/masked_vs_fullres_consensus.csv
+(one ranking per target from each decoy's rank averaged over a set of weights), results/masked_vs_fullres_per_target.csv
+(median AUC per target and family), and figures/masked_vs_fullres_<score>_<weight>.png (score vs CAPRI DockQ, one row per setting, one column per target).
 Usage (from examples/capri_benchmark): python scripts/masked_vs_fullres.py [score] [weight ...]
 """
 import sys
@@ -19,7 +21,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import HERE, load, targets  # noqa: E402
 
 SCORE = sys.argv[1] if len(sys.argv) > 1 else "actifptm"
-WEIGHTS = sys.argv[2:] or ["model_1_ptm", "model_1_multimer_v2"]
+WEIGHTS = sys.argv[2:] or ["model_1_ptm", "model_1_multimer", "model_1_multimer_v2", "model_1_multimer_v3"]
+FAM = {"ptm": "AF2-ptm", "multimer": "AF2.1", "multimer_v2": "AF2.2", "multimer_v3": "AF2.3"}
+SCORES = ["actifptm", "i_ptm", "neg_pae_contacts", "dockq_io", "af2rank", "composite"]
 LABEL = {"actifptm": "actifpTM", "i_ptm": "ipTM", "af2rank": "pLDDT × pTM × DockQ_io"}.get(SCORE, SCORE)
 m = load("masked").assign(setting="masked")
 f = load("fullres").assign(setting="full")
@@ -35,9 +39,9 @@ rows = []
 for (s, t, w), g in D.groupby(["setting", "target", "weight"]):
     if not 0 < g.good.sum() < len(g):
         continue
-    for k in ["actifptm", "i_ptm", "neg_pae_contacts", "dockq_io", "af2rank", "composite"]:
+    for k in SCORES:
         o = g.sort_values(k, ascending=False)
-        rows.append(dict(setting=s, target=t, weight=w, score=k, auc=roc_auc_score(g.good, g[k]),
+        rows.append(dict(setting=s, target=t, weight=w, family=FAM[g.family.iloc[0]], score=k, auc=roc_auc_score(g.good, g[k]),
                          top1=o.good.iloc[0], top10=o.good.head(10).sum(), random_top10=10 * g.good.mean()))
 r = pd.DataFrame(rows)
 summ = r.groupby(["score", "setting"]).agg(median_auc=("auc", "median"), top1_success=("top1", "mean"),
@@ -45,9 +49,37 @@ summ = r.groupby(["score", "setting"]).agg(median_auc=("auc", "median"), top1_su
                                            runs=("auc", "size")).round(3)
 summ.to_csv(HERE / "results/masked_vs_fullres_summary.csv")
 print(len(runs), "runs in both settings\n", summ.unstack("setting").to_string())
+D["fam"] = D.family.map(FAM)
 print("\nmedian DockQ_io by CAPRI class:\n",
-      D.pivot_table(index="main_classification", columns="setting", values="dockq_io", aggfunc="median")
+      D.pivot_table(index="main_classification", columns=["fam", "setting"], values="dockq_io", aggfunc="median")
        .reindex(["incorrect", "acceptable", "medium", "high"]).round(2).to_string())
+
+# per weight family
+fam = r.groupby(["family", "score", "setting"]).agg(median_auc=("auc", "median"), top1_success=("top1", "mean"),
+                                                     good_in_top10=("top10", "mean"), runs=("auc", "size")).round(3)
+fam.to_csv(HERE / "results/masked_vs_fullres_by_family.csv")
+print("\nby family (median AUC / top-1):\n", fam.unstack("setting")[["median_auc", "top1_success"]].to_string())
+
+# one ranking per target: each decoy's percentile rank averaged over a set of weights
+SETS = {"all 17 weights": list(FAM.values()), **{v: [v] for v in FAM.values()}}
+crow = []
+for name, fams in SETS.items():
+    for s in ["full", "masked"]:
+        g0 = D[(D.setting == s) & D.fam.isin(fams)]
+        for k in ["actifptm", "composite", "neg_pae_contacts", "i_ptm"]:
+            rk = g0.assign(rk=g0.groupby(["target", "weight"])[k].rank(pct=True))
+            c = rk.groupby(["target", "model_id"]).agg(rk=("rk", "mean"), good=("good", "first"), dockq=("dockq", "first")).reset_index()
+            for t, g in c.groupby("target"):
+                o = g.sort_values("rk", ascending=False)
+                crow.append(dict(weights=name, setting=s, score=k, target=t, auc=roc_auc_score(g.good, g.rk),
+                                 top1=bool(o.good.iloc[0]), top1_dockq=o.dockq.iloc[0], top10=int(o.good.head(10).sum())))
+cons = pd.DataFrame(crow); cons.round(3).to_csv(HERE / "results/masked_vs_fullres_consensus.csv", index=False)
+print("\nconsensus (targets with a good decoy first, median AUC):\n",
+      cons.groupby(["weights", "score", "setting"]).agg(top1=("top1", "sum"), median_auc=("auc", "median"),
+                                                        good_top10=("top10", "mean")).unstack("setting").round(2).to_string())
+pt = (r[r.score == SCORE].groupby(["target", "family", "setting"]).auc.median().unstack(["family", "setting"]).round(2))
+pt.to_csv(HERE / "results/masked_vs_fullres_per_target.csv")
+print(f"\nper target, median {SCORE} AUC:\n", pt.to_string())
 sel = targets()
 for WEIGHT in WEIGHTS:
     d = D[D.weight == WEIGHT]

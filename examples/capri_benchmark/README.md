@@ -6,7 +6,7 @@ Can AF2Rank tell good docking models from bad ones? We scored the CAPRI Score_se
 
 **Status:**
 - **Full resolution** (sequence and side chains kept, 0 recycles): complete, 9 targets × 17 weights = 153 runs.
-- **Masked** (the AF2Rank paper's setting: sequence and side chains masked, 1 recycle): the pilot with AF2-ptm models 1–2 and AF2.2 multimer models 1–5 is complete (9 targets × 7 weights = 63 runs). AF2.1 and AF2.3 are running and will be added.
+- **Masked** (the AF2Rank paper's setting: sequence and side chains masked, 1 recycle): complete, 153 runs.
 
 ## Data
 
@@ -65,51 +65,67 @@ T131 and T132 (CEACAM1/HopQ, the two "difficult" targets, with 6 and 9 good deco
 
 **actifpTM against CAPRI DockQ at full resolution**, model 1 of each family. Most decoys sit at actifpTM 0.9–1.0 whatever their quality. The same plot with ipTM is [`figures/fullres_i_ptm_vs_dockq.png`](figures/fullres_i_ptm_vs_dockq.png). Spearman, AUC and top-10 hits for every target × weight are in [`figures/fullres_ranking_summary.png`](figures/fullres_ranking_summary.png).
 
-## Masked pilot: AF2-ptm and AF2.2 (63 runs)
+## Masked: the AF2Rank paper's setting (153 runs)
 
 The [X-ray benchmark](../xray_benchmark#scores-in-the-af2rank-papers-masked-setting) showed that native interfaces stay confident and in place in the paper's masked setting, except with AF2.1. On the CAPRI decoys, masking lets wrong interfaces drift away while good ones stay.
 
-Median DockQ input→output by CAPRI class, on the 63 pilot runs in both settings:
+Median DockQ input→output by CAPRI class, full resolution → masked:
 
-| CAPRI class | full resolution | masked |
-| --- | --- | --- |
-| incorrect | 0.75 | **0.33** |
-| acceptable | 0.77 | 0.51 |
-| medium | 0.72 | 0.53 |
-| high | 0.75 | 0.63 |
+| CAPRI class | AF2-ptm | AF2.1 | AF2.2 | AF2.3 |
+| --- | --- | --- | --- | --- |
+| incorrect | 0.85 → 0.46 | 0.82 → **0.02** | 0.70 → 0.27 | 0.79 → 0.20 |
+| acceptable | 0.86 → 0.58 | 0.87 → **0.13** | 0.72 → 0.44 | 0.81 → 0.40 |
+| medium | 0.86 → 0.53 | 0.78 → 0.48 | 0.68 → 0.53 | 0.78 → 0.54 |
+| high | 0.89 → 0.61 | 0.88 → 0.59 | 0.72 → 0.63 | 0.84 → 0.64 |
 
-**Per run** (median over the 63 runs; random picking puts 3.6 good decoys in the top 10):
+AF2.1 pulls apart almost every incorrect decoy, but also most acceptable ones. This matches the X-ray natives, where AF2.1 was the only family that lost native interfaces.
+
+**Per run** (median over the 153 runs; random picking puts 3.6 good decoys in the top 10):
 
 | Score | AUC full → masked | Top-1 good, full → masked | Good in top 10, full → masked |
 | --- | --- | --- | --- |
-| actifpTM | 0.70 → **0.87** | 52% → **76%** | 5.5 → **7.6** |
-| PAE at input contacts | 0.78 → 0.87 | 44% → 73% | 5.0 → 7.0 |
-| composite (PAE + actifpTM + fnat) | 0.76 → 0.89 | 62% → 73% | 5.5 → 7.1 |
-| ipTM | 0.72 → 0.85 | 44% → 59% | 5.0 → 6.5 |
-| pLDDT × pTM × DockQ input→output (AF2Rank) | 0.68 → 0.82 | 57% → 75% | 4.7 → 6.5 |
-| DockQ input→output | 0.64 → 0.79 | 51% → 41% | 4.0 → 5.4 |
+| actifpTM | 0.67 → **0.83** | 44% → **69%** | 5.0 → **6.9** |
+| PAE at input contacts | 0.75 → 0.84 | 43% → 67% | 4.9 → 6.3 |
+| composite (PAE + actifpTM + fnat) | 0.75 → **0.86** | 59% → **69%** | 5.3 → 6.5 |
+| ipTM | 0.63 → 0.82 | 39% → 61% | 4.2 → 6.2 |
+| pLDDT × pTM × DockQ input→output (AF2Rank) | 0.62 → 0.81 | 54% → 67% | 4.3 → 6.1 |
+| DockQ input→output | 0.60 → 0.78 | 48% → 48% | 4.0 → 5.3 |
 
-Both weight families gain: actifpTM AUC rises from 0.71 to 0.84 with AF2-ptm and from 0.70 to 0.88 with AF2.2.
+**By weight family** (median per-run AUC, full → masked):
 
-**One ranking per target.** Averaging each decoy's rank over the pilot weights:
+| Family | actifpTM AUC | actifpTM top-1 | composite AUC | composite top-1 |
+| --- | --- | --- | --- | --- |
+| AF2-ptm (2 models) | 0.71 → 0.85 | 39% → 67% | 0.74 → 0.88 | 50% → 61% |
+| AF2.1 multimer | 0.66 → 0.79 | 31% → 58% | 0.74 → 0.77 | 44% → 62% |
+| AF2.2 multimer | 0.70 → **0.88** | 58% → **80%** | 0.77 → **0.90** | 67% → 78% |
+| AF2.3 multimer | 0.64 → 0.81 | 44% → 69% | 0.76 → 0.80 | 69% → 71% |
 
-| Weights | Score | Good decoy ranked first, full → masked | Median AUC, full → masked |
-| --- | --- | --- | --- |
-| all pilot weights | actifpTM | 5/9 → **8/9** | 0.70 → 0.88 |
-| all pilot weights | composite | 6/9 → 7/9 | 0.77 → 0.91 |
-| AF2-ptm models 1–2 | composite | 5/9 → 8/9 | 0.74 → 0.89 |
-| AF2.2 models 1–5 | actifpTM | 4/9 → 7/9 | 0.69 → 0.88 |
+Every family gains from masking. AF2.2 gains most; AF2.1 and AF2.3 gain less, mostly because the composite's "kept" term (fnat input→output) also drops for good decoys.
 
-Per target (actifpTM, median AUC over the runs of each family), masking raises the AUC on 7 of the 9 targets. T104 was already near perfect (0.96–0.99), and one target gets worse:
-- **T041** drops from about 0.80 to 0.70. Many of its acceptable decoys (DockQ 0.3–0.5) lose confidence along with the incorrect ones, so masked AlphaFold is strict about partly right interfaces.
+**One ranking per target.** Averaging each decoy's rank over a set of weights:
 
-Two targets stay weak with one of the families:
-- **T131:** AF2.2 stays near random (0.37 → 0.52), while AF2-ptm separates it (0.55 → 0.80).
-- **T142:** AF2-ptm stays near random (0.46 → 0.51); AF2.2 does a little better (0.67 → 0.74).
+| Weights | Score | Good decoy ranked first, full → masked | Median AUC, full → masked | Good in top 10, masked |
+| --- | --- | --- | --- | --- |
+| AF2-ptm models 1–2 | composite | 5/9 → **8/9** | 0.74 → 0.89 | 7.1 |
+| AF2.2 models 1–5 | actifpTM | 4/9 → 7/9 | 0.69 → 0.88 | **7.9** |
+| AF2.2 models 1–5 | composite | 7/9 → 7/9 | 0.77 → **0.90** | 7.6 |
+| AF2.3 models 1–5 | composite | 6/9 → 7/9 | 0.75 → 0.74 | 6.8 |
+| AF2.1 models 1–5 | actifpTM | 3/9 → 5/9 | 0.63 → 0.76 | 5.0 |
+| all 17 weights | actifpTM | 4/9 → 5/9 | 0.68 → 0.86 | 6.8 |
+| all 17 weights | composite | 6/9 → 7/9 | 0.77 → 0.78 | 6.9 |
+
+Pooling all 17 weights is worse than AF2-ptm or AF2.2 alone, because AF2.1 and AF2.3 add noise. As before, this choice of family was made on these 9 targets and needs confirming on new ones (CASP15).
+
+Per target (actifpTM, median AUC per family; [`results/masked_vs_fullres_per_target.csv`](results/masked_vs_fullres_per_target.csv)), masking raises the AUC on most targets. T104 was already near perfect (0.96–0.99). Exceptions:
+- **T041** gets worse with every family (about 0.80–0.87 → 0.68–0.77). Many of its acceptable decoys (DockQ 0.3–0.5) lose confidence along with the incorrect ones, so masked AlphaFold is strict about partly right interfaces.
+- **T026** drops with AF2.1 (0.66 → 0.34), where every decoy, good or not, ends at low confidence.
+- **T131** stays weak with AF2.2 (0.37 → 0.52), while the other families separate it (0.71–0.80).
+- **T132** stays weak with AF2.1 (0.40 → 0.46).
+- **T142** stays near random with AF2-ptm and AF2.1 (about 0.51); AF2.2 and AF2.3 reach 0.71–0.74.
 
 ![actifpTM vs CAPRI DockQ, full resolution vs masked, AF2-ptm model 1](figures/masked_vs_fullres_actifptm_model_1_ptm.png)
 
-**actifpTM against CAPRI DockQ, full resolution (top) and masked (bottom)**, AF2-ptm model 1, the paper's weight. Masked, the incorrect decoys (grey) drop while the good ones stay confident. T131 and T132 become separable (AUC 0.81 and 0.92); with this weight AlphaFold loses confidence in almost every T142 decoy. AF2.2 multimer model 1 is in [`figures/masked_vs_fullres_actifptm_model_1_multimer_v2.png`](figures/masked_vs_fullres_actifptm_model_1_multimer_v2.png).
+**actifpTM against CAPRI DockQ, full resolution (top) and masked (bottom)**, AF2-ptm model 1, the paper's weight. Masked, the incorrect decoys (grey) drop while the good ones stay confident. T131 and T132 become separable (AUC 0.81 and 0.92); with this weight AlphaFold loses confidence in almost every T142 decoy. The same plot for model 1 of the multimer families: [AF2.1](figures/masked_vs_fullres_actifptm_model_1_multimer.png), [AF2.2](figures/masked_vs_fullres_actifptm_model_1_multimer_v2.png), [AF2.3](figures/masked_vs_fullres_actifptm_model_1_multimer_v3.png).
 
 ## Reproduce
 
@@ -119,7 +135,7 @@ From `examples/capri_benchmark`:
 python scripts/analyze_scores.py      # single scores, pooled thresholds, logistic regression
 python scripts/strategies.py          # composites, gates, consensus over weights and families
 python scripts/plot_fullres.py        # full-resolution scatter plots and heatmaps
-python scripts/masked_vs_fullres.py   # masked pilot vs full resolution: summary and scatter plots
+python scripts/masked_vs_fullres.py   # masked vs full resolution: summaries, consensus and scatter plots
 ```
 
 The runs used Slurm scripts like those in [`../marenostrum5`](../marenostrum5): full resolution with `--strict-clean --no-mask-sequence --no-mask-sidechains --recycles 0`, masked with `--strict-clean --recycles 1`, and the 20-glycine linker for multimer weights.
@@ -131,11 +147,11 @@ The runs used Slurm scripts like those in [`../marenostrum5`](../marenostrum5): 
 | `capri_targets.csv` | the 9 targets: PDB, chains, lengths, CAPRI difficulty, interaction type, description |
 | `capri_decoys.csv` | the 1,340 decoys: scoreset model and source IDs, MD5, CAPRI DockQ, fnat, iRMS, LRMS and class |
 | `results/scores_capri_fullres_all_weights.csv` | full resolution, one row per decoy × weight (22,780): pLDDT, pTM, ipTM, actifpTM, PAE, PAE at input contacts, DockQ / fnat / iRMSD input→output, ipSAE, LIS, min inter-chain PAE, pDockQ, CAPRI DockQ and class |
-| `results/scores_capri_masked_pilot.csv` | masked pilot, same layout without the interface PAE scores (runs finished so far) |
+| `results/scores_capri_masked_all_weights.csv` | masked setting, same layout without the interface PAE scores |
 | `results/summary_by_score.csv`, `per_run_metrics.csv`, `pooled_by_score.csv`, `loto_logistic.csv` | output of `analyze_scores.py` |
 | `results/strategies_*.csv` | output of `strategies.py` |
 | `results/ranking_summary.csv` | per target × weight ranking metrics behind the heatmaps |
-| `results/masked_vs_fullres_summary.csv` | output of `masked_vs_fullres.py` |
+| `results/masked_vs_fullres_*.csv` | output of `masked_vs_fullres.py`: per-run summary, by family, consensus, per target |
 | `figures/` | the figures above |
 | `scripts/` | `common.py` (table loader) and the four analysis scripts |
 
