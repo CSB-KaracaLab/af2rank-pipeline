@@ -1,0 +1,10 @@
+tid,pdb,chains,lengths,difficulty,itype,dtype,desc
+T026.1,2HQS,A:H,412:108,Easy,receptor/ligand,unbound,TolB/Pal
+T029.1,2VDU,D:F,377:194,Easy,enzyme/activator,bound/unbound,Trm8/Trm82 tRNA guanine-N(7)-methyltrans
+T041.1,2WPT,B:A,113:82,Easy,enzyme/inhibitor,unbound,Colicin E9 Dnase and Im2 immunity protei
+T089.1,4QT8,B:D,629:231,Easy,enzyme/activator,unbound,RON Sema-PSI-IPT1 extracellular domains 
+T104.1,4UHP,E:F,132:94,Easy,enzyme/inhibitor,unbound,Pyocin AP41 DNase-Immunity complex
+T131.1,6GBG,A:D,321:110,Difficult,host/pathogen,unbound,CEACAM1/HopQ-Type-I
+T132.1,6GBH,C:D,318:108,Difficult,host/pathogen,unbound,CEACAM1/HopQ-Type-II
+T142.1,6TRI,A:B,80:69,Easy,repressor/antirepressor,unbound,CI-MOR repressor-antirepressor complex
+T166.1,6XOD,B:A,166:154,Easy,ligase/transport,unbound,PEX4/PEX22 complex

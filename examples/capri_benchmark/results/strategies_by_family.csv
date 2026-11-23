@@ -1,0 +1,33 @@
+family,level,score,median AUC,PR-AUC/base,top1,top5,good in top10,random top10,n
+multimer,per run,PAE@contacts,0.702,1.213,0.356,0.6,4.822,3.583,45
+multimer,per run,actifpTM×DockQ_io,0.628,1.15,0.533,0.622,4.956,3.583,45
+multimer,per run,z(PAEc)+z(actifpTM)+z(fnat_io),0.737,1.263,0.444,0.644,5.0,3.583,45
+multimer,per run,Gaudreault z(pLDDT)+z(pTM),0.576,1.049,0.444,0.444,3.467,3.583,45
+multimer,family consensus,PAE@contacts,0.689,1.204,0.333,0.667,4.667,3.583,9
+multimer,family consensus,actifpTM×DockQ_io,0.636,1.164,0.556,0.556,5.111,3.583,9
+multimer,family consensus,z(PAEc)+z(actifpTM)+z(fnat_io),0.748,1.191,0.333,0.667,5.111,3.583,9
+multimer,family consensus,Gaudreault z(pLDDT)+z(pTM),0.575,1.025,0.444,0.444,3.444,3.583,9
+multimer_v2,per run,PAE@contacts,0.792,1.386,0.511,0.556,5.067,3.583,45
+multimer_v2,per run,actifpTM×DockQ_io,0.718,1.502,0.578,0.689,5.111,3.583,45
+multimer_v2,per run,z(PAEc)+z(actifpTM)+z(fnat_io),0.768,1.873,0.667,0.822,5.822,3.583,45
+multimer_v2,per run,Gaudreault z(pLDDT)+z(pTM),0.735,1.483,0.6,0.8,5.911,3.583,45
+multimer_v2,family consensus,PAE@contacts,0.803,1.362,0.556,0.556,5.111,3.583,9
+multimer_v2,family consensus,actifpTM×DockQ_io,0.725,1.719,0.556,0.778,5.444,3.583,9
+multimer_v2,family consensus,z(PAEc)+z(actifpTM)+z(fnat_io),0.773,2.003,0.778,0.778,6.0,3.583,9
+multimer_v2,family consensus,Gaudreault z(pLDDT)+z(pTM),0.732,1.466,0.667,0.889,6.111,3.583,9
+multimer_v3,per run,PAE@contacts,0.772,1.396,0.467,0.622,4.844,3.583,45
+multimer_v3,per run,actifpTM×DockQ_io,0.656,1.338,0.6,0.644,5.067,3.583,45
+multimer_v3,per run,z(PAEc)+z(actifpTM)+z(fnat_io),0.757,1.541,0.689,0.733,5.289,3.583,45
+multimer_v3,per run,Gaudreault z(pLDDT)+z(pTM),0.654,1.257,0.511,0.6,4.333,3.583,45
+multimer_v3,family consensus,PAE@contacts,0.778,1.293,0.556,0.556,5.0,3.583,9
+multimer_v3,family consensus,actifpTM×DockQ_io,0.655,1.307,0.556,0.556,4.889,3.583,9
+multimer_v3,family consensus,z(PAEc)+z(actifpTM)+z(fnat_io),0.748,1.698,0.667,0.778,5.333,3.583,9
+multimer_v3,family consensus,Gaudreault z(pLDDT)+z(pTM),0.656,1.378,0.556,0.667,4.222,3.583,9
+ptm,per run,PAE@contacts,0.741,1.423,0.278,0.611,4.722,3.583,18
+ptm,per run,actifpTM×DockQ_io,0.669,1.352,0.611,0.667,4.389,3.583,18
+ptm,per run,z(PAEc)+z(actifpTM)+z(fnat_io),0.739,1.405,0.5,0.722,4.722,3.583,18
+ptm,per run,Gaudreault z(pLDDT)+z(pTM),0.703,1.383,0.389,0.833,3.944,3.583,18
+ptm,family consensus,PAE@contacts,0.747,1.43,0.222,0.667,5.0,3.583,9
+ptm,family consensus,actifpTM×DockQ_io,0.68,1.39,0.556,0.667,4.444,3.583,9
+ptm,family consensus,z(PAEc)+z(actifpTM)+z(fnat_io),0.743,1.448,0.556,0.778,4.556,3.583,9
+ptm,family consensus,Gaudreault z(pLDDT)+z(pTM),0.722,1.395,0.333,0.889,4.111,3.583,9

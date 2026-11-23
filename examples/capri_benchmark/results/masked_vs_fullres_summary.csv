@@ -1,0 +1,13 @@
+score,setting,median_auc,top1_success,good_in_top10,random_top10,runs
+actifptm,full,0.769,0.543,5.657,3.934,35
+actifptm,masked,0.869,0.743,7.857,3.934,35
+af2rank,full,0.656,0.657,4.543,3.934,35
+af2rank,masked,0.828,0.829,6.714,3.934,35
+composite,full,0.752,0.629,5.4,3.934,35
+composite,masked,0.878,0.714,7.371,3.934,35
+dockq_io,full,0.63,0.543,3.629,3.934,35
+dockq_io,masked,0.816,0.4,5.8,3.934,35
+i_ptm,full,0.718,0.514,4.857,3.934,35
+i_ptm,masked,0.845,0.657,6.743,3.934,35
+neg_pae_contacts,full,0.778,0.457,5.2,3.934,35
+neg_pae_contacts,masked,0.874,0.743,7.143,3.934,35
