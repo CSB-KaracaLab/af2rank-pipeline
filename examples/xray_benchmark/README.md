@@ -84,6 +84,10 @@ At full resolution AlphaFold reproduces almost any template interface, right or 
 
 ![Masked DockQ input→output per dimer and weight](figures/masked_dockq_io_heatmap.png)
 
+The right-hand column is the buried surface area of each input complex, over both sides (`interface_bsa_hetero.csv`). Interface size does not explain which natives are lost:
+- the lost AF2.1 interfaces bury 1,000–2,200 Å², in the middle of the range;
+- the Spearman correlation between buried surface area and the median masked DockQ_io is −0.10 over all weights and −0.16 for AF2.1.
+
 Scores: `results/scores_xray_hetero_masked_all_weights.csv`; figures: `scripts/plot_masked.py`.
 
 ## Structures
@@ -110,11 +114,12 @@ The heterodimer benchmark of Genz et al. (2025) has 262 heterodimers released af
 | `xray_hetero.csv`, `xray_homo.csv` | one row per dimer: chains, entities, UniProt, residues, resolution, release date, novelty reason, 30%/100% clusters, interface area, citation; `source` gives the size-matched or added group |
 | `kept_xray_hetero.txt`, `kept_xray_homo.txt` | PDB IDs per set |
 | `fasta_hetero/` | trimmed FASTA files of the 53 heterodimers (coordinates: biological assembly 1 of each PDB entry, chains as in the CSV) |
+| `interface_bsa_hetero.csv` | buried surface area of each input complex (Shrake-Rupley, heavy atoms, probe 1.4 Å): SASA per chain and of the complex, `bsa_total` over both sides and `bsa_per_side` (RCSB's `interface_area_A2` matches `bsa_per_side`) |
 | `interface_ss_hetero.csv` | interface residues and their helix/strand fraction per chain (8PFC chain A: loops only) |
 | `genz2025_overlap.csv` | where each Genz et al. 2025 heterodimer leaves our selection |
 | `funnel.csv` | counts after each selection step |
 | `results/scores_xray_hetero_all_weights.csv` | AF2Rank scores at full resolution, 0 recycles; one row per heterodimer and weight (53 × 17) |
 | `results/scores_xray_hetero_masked_all_weights.csv` | AF2Rank scores in the paper's masked setting (sequence and side chains masked, 1 recycle); same layout |
-| `scripts/` | `step1_fetch.py` and `step2_select.py` (RCSB search and selection), `rcsb_util.py`, `prep/` (input building, strict-cleaning check, interface secondary structure), `plot_scores.py` and `plot_masked.py` (figures) |
+| `scripts/` | `step1_fetch.py` and `step2_select.py` (RCSB search and selection), `rcsb_util.py`, `prep/` (input building, strict-cleaning check, interface secondary structure, buried surface area), `plot_scores.py` and `plot_masked.py` (figures) |
 
 The selection uses the public RCSB APIs (metadata only) and reflects the PDB on 2026-11-21. The PDB archive data are [CC0](https://www.rcsb.org/pages/usage-policy).

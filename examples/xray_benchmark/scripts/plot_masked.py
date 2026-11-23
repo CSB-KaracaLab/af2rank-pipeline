@@ -4,7 +4,7 @@ Full resolution: sequence and side chains kept, 0 recycles (results/scores_xray_
 Masked: sequence and side chains masked, 1 recycle, as in Roney & Ovchinnikov 2022 and the authors'
 AF2Rank notebook (results/scores_xray_hetero_masked_all_weights.csv).
 Usage (from examples/xray_benchmark): python scripts/plot_masked.py
-Writes figures/natives_masked_vs_fullres.png and figures/masked_dockq_io_heatmap.png and prints a summary.
+Writes figures/natives_masked_vs_fullres.png and figures/masked_dockq_io_heatmap.png (with the buried surface area\nfrom interface_bsa_hetero.csv, made by scripts/prep/buried_surface.py) and prints a summary.
 """
 from pathlib import Path
 
@@ -71,7 +71,10 @@ WL = {w: ("ptm " if "ptm" in w else {"multimer": "2.1 ", "multimer_v2": "2.2 ", 
 piv = m.pivot_table(index="target", columns="weight", values="dockq_io").reindex(columns=ORDER)
 piv = piv.loc[piv.median(axis=1).sort_values(ascending=False).index]
 cmap = LinearSegmentedColormap.from_list("blues", ["#cde2fb", "#86b6ef", "#3987e5", "#1c5cab", "#0d366b"])
-fig, ax = plt.subplots(figsize=(8.2, 13))
+bsa = pd.read_csv(HERE / "interface_bsa_hetero.csv").set_index("pdb_id").bsa_total.reindex(piv.index)
+fig = plt.figure(figsize=(10.2, 13))
+gs = fig.add_gridspec(1, 3, width_ratios=[17, 4.2, 0.45], wspace=0.06)
+ax, axb, cax = fig.add_subplot(gs[0]), fig.add_subplot(gs[1]), fig.add_subplot(gs[2])
 im = ax.imshow(piv.values, cmap=cmap, vmin=0, vmax=1, aspect="auto")
 bad = np.argwhere(piv.values < 0.23)
 ax.scatter(bad[:, 1], bad[:, 0], marker="x", s=28, color="#d03b3b", lw=1.6, zorder=3)
@@ -81,12 +84,27 @@ ax.set_xticks(range(len(ORDER)), [WL[w] for w in ORDER], rotation=90, fontsize=8
 ax.set_yticks(range(len(piv)), piv.index, fontsize=7.5)
 for s in ax.spines.values():
     s.set_visible(False)
-cb = fig.colorbar(im, ax=ax, shrink=0.35, pad=0.02); cb.set_label("DockQ input → output (masked)"); cb.outline.set_visible(False)
 ax.set_title("Masked setting: how much of each native interface AF2 keeps\n"
              "(targets sorted by median; × = DockQ_io < 0.23, native no longer acceptable)", fontsize=10, color=INK)
-fig.tight_layout(); fig.savefig(OUT / "masked_dockq_io_heatmap.png", dpi=170, bbox_inches="tight"); plt.close(fig)
+# buried surface area of the input complex, both sides together
+y = np.arange(len(piv))
+axb.barh(y, bsa.values, height=0.68, color="#898781", zorder=2)
+for yi, v in zip(y, bsa.values):
+    axb.text(v + 120, yi, f"{v:,.0f}", va="center", ha="left", fontsize=6.5, color=INK2)
+axb.set_ylim(len(piv) - 0.5, -0.5); axb.set_yticks([])
+axb.set_xlim(0, bsa.max() * 1.35); axb.set_xticks([0, 4000, 8000], ["0", "4,000", "8,000"], fontsize=7)
+axb.grid(axis="x", color=GRID, lw=0.6); axb.set_axisbelow(True)
+for s in ["top", "right", "left"]:
+    axb.spines[s].set_visible(False)
+axb.set_title("Buried surface\narea (Å²)", fontsize=9, color=INK)
+cb = fig.colorbar(im, cax=cax); cb.set_label("DockQ input → output (masked)"); cb.outline.set_visible(False)
+cax.set_position([cax.get_position().x0, 0.4, cax.get_position().width, 0.22])
+fig.savefig(OUT / "masked_dockq_io_heatmap.png", dpi=170, bbox_inches="tight"); plt.close(fig)
 m = d[d.setting == "masked_rec1"]
 print(d.groupby(["family", "setting"])[["i_ptm", "dockq_io"]].median().round(2).to_string())
 print(m.groupby("family").agg(runs=("dockq_io", "size"), iptm_ge_0_6=("i_ptm", lambda x: (x >= 0.6).mean()),
                               lost=("dockq_io", lambda x: int((x < 0.23).sum()))).round(2).to_string())
+from scipy.stats import spearmanr
+med = piv.median(axis=1); v1 = piv[[c for c in ORDER if c.endswith("_multimer")]].median(axis=1)
+print("Spearman BSA vs median masked DockQ_io: all weights %.2f, AF2.1 only %.2f" % (spearmanr(bsa, med)[0], spearmanr(bsa, v1)[0]))
 print("wrote", OUT)
