@@ -34,8 +34,6 @@ Eleven decoys (10 of T041, 1 of T131) have no interface in the input. All are CA
 
 ## Full resolution: which score separates good from bad decoys?
 
-![AUC per score](figures/auc_by_score.png)
-
 Median over the 153 runs (one run = one target × one weight); top-1 = how often the best-ranked decoy is good.
 
 | Score | Median AUC | Top-1 |
@@ -100,7 +98,7 @@ Per-run medians on the same 35 runs:
 From `examples/capri_benchmark`:
 
 ```bash
-python scripts/analyze_scores.py      # single scores, pooled thresholds, logistic regression, auc_by_score.png
+python scripts/analyze_scores.py      # single scores, pooled thresholds, logistic regression
 python scripts/strategies.py          # composites, gates, consensus over weights and families
 python scripts/plot_fullres.py        # full-resolution scatter plots and heatmaps
 python scripts/masked_vs_fullres.py   # masked pilot vs full resolution: summary and scatter plots

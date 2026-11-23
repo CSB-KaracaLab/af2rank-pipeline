@@ -5,14 +5,12 @@ Scores (higher = better; PAE and iRMSD are negated): pLDDT, pTM, ipTM, actifpTM,
 DockQ / fnat / iRMSD input->output, ipSAE, LIS, pDockQ, min inter-chain PAE, and AF2Rank-style products of
 confidence x how well AlphaFold kept the decoy's interface.
 Writes results/per_run_metrics.csv, results/summary_by_score.csv, results/pooled_by_score.csv,
-results/loto_logistic.csv and figures/auc_by_score.png.
+and results/loto_logistic.csv.
 Usage (from examples/capri_benchmark): python scripts/analyze_scores.py
 """
 import sys
 from pathlib import Path
 
-import matplotlib; matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from scipy.stats import spearmanr
@@ -24,7 +22,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import HERE, load  # noqa: E402
 
 OUT = HERE / "results"
-FIG = HERE / "figures"
 d = load("fullres")
 HAVE_IFACE = True
 S = {  # name -> (column or expression, label)
@@ -110,23 +107,4 @@ print(lo.groupby("weight")[["auc", "top1_good", "good_in_top10"]].mean().round(2
 print("median AUC", round(lo.auc.median(), 3), " top-1 success", round(lo.top1_good.mean(), 3))
 print("mean standardized coefficients:\n", lo.filter(like="coef_").mean().sort_values().round(2).to_string())
 
-# ---- figures ----
-INK, MUTED = "#2b2b29", "#76746e"
-plt.rcParams.update({"font.size": 9, "axes.edgecolor": "#b5b3ad", "xtick.color": MUTED, "ytick.color": MUTED})
-order = summ.index.tolist()
-fig, ax = plt.subplots(figsize=(8.5, 0.32 * len(order) + 1.4))
-vals = [pr[pr.score == k].auc.dropna().values for k in order]
-ax.axvline(0.5, color="#c9c7c1", lw=1, ls=(0, (3, 3)))
-bp = ax.boxplot(vals, vert=False, widths=0.55, patch_artist=True, showfliers=False,
-                medianprops=dict(color=INK, lw=1.5), boxprops=dict(facecolor="#cde2fb", edgecolor="#5598e7"),
-                whiskerprops=dict(color="#5598e7"), capprops=dict(color="#5598e7"))
-for i, v in enumerate(vals):
-    ax.scatter(v, np.full(len(v), i + 1) + np.random.default_rng(i).uniform(-0.18, 0.18, len(v)),
-               s=9, color="#256abf", alpha=0.55, lw=0, zorder=3)
-ax.set_yticks(range(1, len(order) + 1), [LABEL[k] for k in order])
-ax.invert_yaxis(); ax.set_xlim(0.2, 1.0)
-ax.set_xlabel("AUC, acceptable-or-better vs incorrect (one dot per target × weight run)")
-ax.set_title("Which AF2Rank output separates good CAPRI decoys? (sorted by median AUC)", fontsize=10, color=INK)
-fig.tight_layout(); fig.savefig(FIG / "auc_by_score.png", dpi=170); plt.close(fig)
-
-print("\nwrote", OUT, "and", FIG / "auc_by_score.png")
+print("\nwrote", OUT)
