@@ -85,6 +85,8 @@ class AF2RankConfig:
     partial_manifest: bool = False
     # Glycines joining the chains for multimer scoring; 0 keeps chains separate.
     linker_length: int = 0
+    # AlphaFold 2.3 multimer features.pkl with an MSA; None = single sequence (standard AF2Rank).
+    msa_features: str | None = None
 
 
 # AF2-multimer releases: v1 = AF2.1, v2 = AF2.2, v3 = AF2.3.
@@ -97,7 +99,8 @@ def default_actifptm_script() -> Path:
 
 def model_subdir(cfg: AF2RankConfig) -> str:
     linker = f"_link{cfg.linker_length}" if cfg.linker_length else ""
-    return f"{cfg.model_mode}_{cfg.version}_model{cfg.model_num}_rec{cfg.recycle}{linker}"
+    msa = "_msa" if cfg.msa_features else ""
+    return f"{cfg.model_mode}_{cfg.version}_model{cfg.model_num}_rec{cfg.recycle}{linker}{msa}"
 
 
 def run_label(target_spec: TargetSpec, cfg: AF2RankConfig) -> str:
@@ -184,6 +187,8 @@ def _run_actifptm_script(
         cmd.extend(["--multimer_version", cfg.version])
     if cfg.linker_length:
         cmd.extend(["--linker_length", str(cfg.linker_length)])
+    if cfg.msa_features:
+        cmd.extend(["--msa_features", str(cfg.msa_features)])
     if not cfg.pae_json_gzip:
         cmd.append("--no_pae_json_gzip")
     cmd.extend(cfg.extra_args)
@@ -240,6 +245,7 @@ def _resume_config(target_spec: TargetSpec, cfg: AF2RankConfig, decoy_dir: Path)
         "mask_sidechains": cfg.mask_sidechains,
         "mask_interchain": cfg.mask_interchain,
         "linker_length": cfg.linker_length,
+        "msa_features": resolved(cfg.msa_features),
         "keep_raw": cfg.keep_raw,
         "pae_json_gzip": cfg.pae_json_gzip,
         "extra_args": list(cfg.extra_args),

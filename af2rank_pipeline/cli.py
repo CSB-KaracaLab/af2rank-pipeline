@@ -60,6 +60,11 @@ def _add_af2rank_args(parser: argparse.ArgumentParser, *, batch_options: bool = 
         help="With --model-mode alphafold-multimer, join the chains with N glycines so the "
              "complex is one intra-chain template (default 20; 0 scores the chains separately).",
     )
+    parser.add_argument(
+        "--msa-features", default=None, metavar="PKL",
+        help="AlphaFold 2.3 multimer features.pkl giving an MSA for the target (default: single sequence, "
+             "as in AF2Rank). The scored model stays the only template.",
+    )
     parser.add_argument("--iterations", type=_positive_iterations, default=1)
     parser.add_argument("--no-mask-sequence", action="store_true")
     parser.add_argument("--no-mask-sidechains", action="store_true")
@@ -98,6 +103,7 @@ def _af2rank_config(args: argparse.Namespace) -> AF2RankConfig:
         mask_interchain=args.mask_interchain,
         keep_raw=args.keep_raw,
         linker_length=_linker_length(args),
+        msa_features=getattr(args, "msa_features", None),
     )
 
 

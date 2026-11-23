@@ -59,6 +59,11 @@ def parse_args():
     parser.add_argument("--keep_raw", action="store_true", help="Save raw PAE/distogram NPZ files for debugging.")
     parser.add_argument("--linker_length", type=int, default=0,
                         help="Join chains with this many glycines before multimer inference (0 = off).")
+    parser.add_argument("--msa_features", default=None,
+                        help="AlphaFold 2.3 multimer features.pkl with the MSA for this target (default: single sequence).")
+    parser.add_argument("--msa_clusters", type=int, default=508, help="MSA cluster rows, query included (default 508).")
+    parser.add_argument("--msa_extra", type=int, default=None,
+                        help="Extra MSA rows (default 5120 for AF2-ptm, 2048 for AF-multimer, as in AlphaFold 2.3).")
     parser.set_defaults(pae_json_gzip=True)
     args = parser.parse_args()
     if args.linker_length < 0:
@@ -623,18 +628,33 @@ def write_ca_pdb(xyz, filename):
         handle.write("TER\nEND\n")
 
 
+def _msa_pre_callback(inputs):
+    """Inside the compiled model: replace ColabDesign's single-sequence MSA rows with the real MSA.
+
+    Row 0 keeps ColabDesign's query one-hot (so sequence masking still applies) but takes the MSA profile.
+    """
+    if "ext_msa_feat" in inputs:
+        ext = inputs["ext_msa_feat"]
+        inputs["msa_feat"] = inputs["msa_feat"].at[0, :, 22:].set(ext[0, :, 22:]).at[1:].set(ext[1:])
+
+
 class AF2RankRunner:
-    def __init__(self, pdb, chain, model_name, data_dir):
+    def __init__(self, pdb, chain, model_name, data_dir, msa=None):
+        """`msa`: optional dict(feats=load_msa_features(...), clusters=int, extra=int, positions=callable)."""
         from colabdesign import mk_af_model
         from colabdesign.shared.utils import copy_dict
 
         self.copy_dict = copy_dict
+        self.msa = msa
         self.args = {
             "pdb": pdb,
             "chain": chain,
             "model_name": model_name,
             "use_multimer": "multimer" in model_name,
         }
+        extra = {}
+        if msa is not None:
+            extra = {"num_seq": msa["clusters"], "pre_callback": _msa_pre_callback}
         self.model = mk_af_model(
             protocol="fixbb",
             use_templates=True,
@@ -642,17 +662,46 @@ class AF2RankRunner:
             debug=True,
             model_names=[model_name],
             data_dir=data_dir,
+            **extra,
         )
-        self.model.prep_inputs(pdb, chain=chain)
-        self.model.set_seq(mode="wildtype")
-        self.wt_batch = copy_dict(self.model._inputs["batch"])
-        self.wt = self.model._wt_aatype
+        if msa is not None:
+            # Fixed extra-MSA size, set before the model is compiled; unused rows are masked.
+            n_rows = msa["feats"]["msa"].shape[0]
+            self.n_extra = max(1, min(msa["extra"], n_rows - min(msa["clusters"], n_rows)))
+            if self.args["use_multimer"]:
+                self.model._cfg.model.embeddings_and_evoformer.num_extra_msa = self.n_extra
+        self.set_pdb(pdb, chain)
 
     def set_pdb(self, pdb, chain):
         self.model.prep_inputs(pdb, chain=chain)
         self.model.set_seq(mode="wildtype")
+        if self.msa is not None:
+            self._set_msa(pdb)
         self.wt_batch = self.copy_dict(self.model._inputs["batch"])
         self.wt = self.model._wt_aatype
+
+    def _set_msa(self, pdb):
+        from af2rank_pipeline.msa_input import build_msa_inputs, column_map
+
+        positions = self.msa["positions"](pdb)
+        L = len(self.model._inputs["seq_mask"])
+        if len(positions) != L:
+            raise ValueError(f"{Path(pdb).name}: {len(positions)} positions for the MSA, ColabDesign has {L}")
+        cols = column_map(positions, self.msa["chain_order"], self.msa["feats"])
+        built = build_msa_inputs(self.msa["feats"], cols, self.msa["clusters"], self.msa["extra"],
+                                 multimer=self.args["use_multimer"])
+        n_seq = self.msa["clusters"]
+        pad = n_seq - built["msa_feat"].shape[0]  # fewer MSA rows than cluster slots: pad with masked rows
+        inputs = self.model._inputs
+        inputs["ext_msa_feat"] = np.pad(built["msa_feat"], [[0, pad], [0, 0], [0, 0]])
+        inputs["msa_mask"] = np.pad(built["msa_mask"], [[0, pad], [0, 0]])
+        inputs["msa_row_mask"] = np.pad(built["msa_row_mask"], [[0, pad]])
+        e_pad = self.n_extra - built["extra_msa"].shape[0]
+        for k in ("extra_msa", "extra_has_deletion", "extra_deletion_value", "extra_msa_mask"):
+            fill = 21 if k == "extra_msa" else 0
+            inputs[k] = np.pad(built[k], [[0, e_pad], [0, 0]], constant_values=fill)
+        inputs["extra_msa_row_mask"] = np.pad(built["extra_msa_row_mask"], [[0, e_pad]])
+        self.msa_rows = built["n_rows"]
 
     def predict(self, pdb, chain, recycles, iterations, rm_seq, rm_sc, rm_ic, output_pdb=None,
                 no_template=None):
@@ -778,6 +827,16 @@ def main():
     rows = []
     # One model per weight, reused for every structure: building one per structure reloads the
     # weights each time and, in long ensembles, keeps growing host memory until the process is killed.
+    msa_spec = None
+    if args.msa_features:
+        from af2rank_pipeline.msa_input import THREE_TO_ONE, load_msa_features
+        if not chain_labels:
+            raise SystemExit("--msa_features needs --chain to order the chains as in the MSA")
+        multimer = args.model_mode == "alphafold-multimer"
+        msa_spec = {"feats": load_msa_features(args.msa_features), "chain_order": chain_labels,
+                    "clusters": args.msa_clusters,
+                    "extra": args.msa_extra if args.msa_extra is not None else (2048 if multimer else 5120)}
+        print(f"[{args.target}] MSA: {msa_spec['feats']['msa'].shape[0]} rows from {args.msa_features}", flush=True)
     runner = None
     for pdb_path in pdb_files:
         pdb_id = pdb_path.stem
@@ -795,8 +854,15 @@ def main():
         else:
             model_pdb, model_chain, no_template, keep = pdb_path, args.chain, None, None
             raw_output_pdb = output_pdb
+        if msa_spec is not None:
+            # MSA columns follow the scored positions of this structure (linker positions get gaps).
+            letters = {(c, r): THREE_TO_ONE.get(lines[0][17:20].strip(), "X")
+                       for c, r, lines in read_pdb_residues(pdb_path, chain_labels)}
+            entries = position_map if args.linker_length else list(letters)
+            positions = [None if e is None else (e[0], letters[e]) for e in entries]
+            msa_spec["positions"] = lambda _pdb, positions=positions: positions
         if runner is None:
-            runner = AF2RankRunner(str(model_pdb), model_chain, model_name, data_dir)
+            runner = AF2RankRunner(str(model_pdb), model_chain, model_name, data_dir, msa=msa_spec)
         aux = runner.predict(
             str(model_pdb),
             model_chain,
