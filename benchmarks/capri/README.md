@@ -5,6 +5,7 @@ Can AF2Rank tell good docking models from bad ones? We scored the CAPRI Score_se
 **Result.**
 - **Masked (the AF2Rank paper's setting), AlphaFold's interface confidence separates good from incorrect decoys.** actifpTM ranks a good decoy first in 69% of runs (random picking: 36%), with median AUC 0.83.
 - **Combining the models of one AlphaFold version works best.** Averaging each decoy's rank over the AF2.2 or AF2-ptm models puts a good decoy first for 7 of 9 targets and within the top 5 for all 9.
+- **Clustering the decoys first, as HADDOCK does, helps further:** ranking interface clusters by their best members' actifpTM puts a good decoy first in 81% of runs, and for 8 of 9 targets with AF2-ptm, AF2.2, AF2.3 or all 17 models ([below](#clustering-the-decoys-haddock-style)).
 - **At full resolution AlphaFold copies the decoys,** and the same scores are close to random (actifpTM top-1 44%).
 
 **This is a best case.** Every target predates the AlphaFold2 training cutoff, so AlphaFold may have seen these complexes. CASP15 multimer models (post-cutoff) are the planned follow-up.
@@ -107,6 +108,51 @@ Per target (actifpTM, median AUC per version; [`results/masked_vs_fullres_per_ta
 
 **actifpTM against CAPRI DockQ, full resolution (top) and masked (bottom)**, AF2-ptm model 1, the paper's weight; one column per target, one point per decoy coloured by CAPRI class, with Spearman ρ and AUC in each panel. Masked, the incorrect decoys (grey) drop while the good ones stay confident. T131 and T132 become separable (AUC 0.81 and 0.92); with this weight AlphaFold loses confidence in almost every T142 decoy. The same plot for model 1 of the multimer versions: [AF2.1](figures/masked_vs_fullres_actifptm_model_1_multimer.png), [AF2.2](figures/masked_vs_fullres_actifptm_model_1_multimer_v2.png), [AF2.3](figures/masked_vs_fullres_actifptm_model_1_multimer_v3.png).
 
+## Clustering the decoys (HADDOCK-style)
+
+HADDOCK does not rank single models: it clusters them by interface similarity and ranks the clusters by the average score of their best 4 members (cluster size only names the clusters). We did the same with masked actifpTM in place of the HADDOCK score:
+- **Similarity:** fraction of common contacts (FCC; Rodrigues et al., Proteins 2012), with contacts = residue pairs across the chains with heavy atoms within 5 Å. Two decoys are neighbours when each shares at least 60% of the other's contacts.
+- **Clusters:** greedy, taking the decoy with most neighbours as a centre each time; clusters with fewer than 4 members are dropped, and their decoys are not ranked.
+- **Ranking:** clusters by the mean actifpTM of their best 4 members. Top-1 is the best decoy of the best cluster; top-5 the best decoy of each of the 5 best clusters.
+
+**Per run** (masked; random picking: top-1 36%, top-5 74%):
+
+| Version | Runs | Top-1, actifpTM alone → clustered | Top-5, alone → clustered | Top-1 medium or high, alone → clustered | Mean CAPRI DockQ of the top-1 decoy, alone → clustered |
+| --- | --- | --- | --- | --- | --- |
+| AF2-ptm | 18 | 67% → **89%** | 94% → 89% | 61% → **72%** | 0.47 → 0.56 |
+| AF2.1 | 45 | 58% → 67% | 73% → 82% | 58% → 56% | 0.44 → 0.45 |
+| AF2.2 | 45 | **80%** → 87% | 93% → 89% | **73%** → 60% | **0.59** → 0.55 |
+| AF2.3 | 45 | 69% → 87% | 82% → 89% | 64% → 60% | 0.49 → 0.55 |
+| all 17 | 153 | 69% → 81% | 84% → 87% | 65% → 60% | 0.50 → 0.52 |
+
+**One ranking per version** (actifpTM averaged over the version's models, then ranked once per target; targets out of 9, random picking 3.2 first):
+
+| Version | Top-1, alone → clustered | Top-5, alone → clustered | Mean CAPRI DockQ of the top-1 decoy, alone → clustered |
+| --- | --- | --- | --- |
+| AF2-ptm | 5 → **8** | 9 → 8 | 0.43 → **0.58** |
+| AF2.1 | 5 → 6 | 8 → 8 | 0.43 → 0.45 |
+| AF2.2 | 7 → **8** | 9 → 8 | 0.57 → 0.56 |
+| AF2.3 | 6 → **8** | 8 → 8 | 0.48 → 0.54 |
+| all 17 | 6 → **8** | 8 → 8 | 0.51 → **0.58** |
+
+Averaging actifpTM values gives slightly different counts from the rank averaging used above (e.g. AF2-ptm alone 5 here, 7 above).
+
+- **With clustering, AF2-ptm, AF2.2 and AF2.3 perform alike;** AF2.1 stays weakest, because it pulls good decoys apart too. 10 of the 17 weights reach 8 of 9 targets at top-1.
+- **8 of 9 is the ceiling:** T131's 6 good decoys never form a cluster of 4, so no version can pick them. Without clustering, actifpTM alone has a good T131 decoy in the top 5 in 53% of runs.
+- **Clustering mainly rejects lone decoys** that AlphaFold scores high but that no other decoy resembles: T026 goes from 24% to 100% of weights at top-1, T089 from 76% to 100%, T132 from 35% to 59%.
+- **It can give up the best model:** on T041 actifpTM alone often picks a lone high-quality decoy, clustering a medium one from the large cluster (top-1 94% → 88%).
+- **The cutoff matters little:** at FCC 0.75 top-1 is 82% and top-5 88%.
+
+Clustering works here because the Scorer decoys pool models from many docking groups, so the right interface is usually found more than once. It needs the same kind of decoy set, for example the many predictors' models of a CASP15 target.
+
+![Top-1 and top-5 per target, actifpTM alone vs HADDOCK-style clustering](figures/clustering_per_target.png)
+
+**Top-1 and top-5 success per target**, as the share of the 17 weights; black dashes are random picking.
+
+![actifpTM vs CAPRI DockQ with clusters, AF2.2 model 1](figures/clustering_scatter_model_1_multimer_v2.png)
+
+**Masked actifpTM against CAPRI DockQ, AF2.2 model 1.** Decoys in clusters of at least 4 are solid, the others faded; thin black outlines mark the top cluster; the orange ring is the top-1 by actifpTM alone, the black ring the HADDOCK-style top-1. Model 1 of the other versions: [AF2-ptm](figures/clustering_scatter_model_1_ptm.png), [AF2.1](figures/clustering_scatter_model_1_multimer.png), [AF2.3](figures/clustering_scatter_model_1_multimer_v3.png).
+
 ## Reproduce
 
 From `benchmarks/capri`:
@@ -116,7 +162,11 @@ python scripts/analyze_scores.py      # single scores, pooled thresholds, logist
 python scripts/strategies.py          # composites, gates, consensus over weights and families
 python scripts/plot_fullres.py        # full-resolution scatter plots and heatmaps
 python scripts/masked_vs_fullres.py   # masked vs full resolution: summaries, consensus and scatter plots
+python scripts/clustering.py          # HADDOCK-style clustering vs actifpTM alone (optional: FCC cutoff, default 0.6)
+python scripts/plot_clustering.py     # clustering figures
 ```
+
+`scripts/compute_fcc.py` rebuilds `results/fcc/` from the decoy structures, which are not included.
 
 The runs used Slurm scripts like those in [`cluster/marenostrum5`](../../cluster/marenostrum5): full resolution with `--strict-clean --no-mask-sequence --no-mask-sidechains --recycles 0`, masked with `--strict-clean --recycles 1`, and the 20-glycine linker for multimer weights.
 
@@ -132,7 +182,9 @@ The runs used Slurm scripts like those in [`cluster/marenostrum5`](../../cluster
 | `results/strategies_*.csv` | output of `strategies.py` |
 | `results/ranking_summary.csv` | per target × weight ranking metrics behind the heatmaps |
 | `results/masked_vs_fullres_*.csv` | output of `masked_vs_fullres.py`: per-run summary, by family, consensus, per target |
+| `results/fcc/fcc_<target>.npz` | decoy × decoy FCC matrices (`ids`, `fcc`, `ncontacts`), from `compute_fcc.py` |
+| `results/clustering_*.csv` | output of `clustering.py`: per run, by version, one ranking per version |
 | `figures/` | the figures above |
-| `scripts/` | `common.py` (table loader) and the four analysis scripts |
+| `scripts/` | `common.py` (table loader), the four analysis scripts, and `compute_fcc.py`, `clustering.py` and `plot_clustering.py` for the clustering analysis |
 
 The decoy structures are not included; they are available from [scoreset.org](https://scoreset.org). Please cite the CAPRI Score_set when using the CAPRI classes and DockQ values.

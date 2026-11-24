@@ -1,0 +1,11 @@
+version,method,runs,top1,top5,top1_medium_or_high,mean_dockq_top1
+AF2-ptm,actifpTM alone,18,0.667,0.944,0.611,0.468
+AF2-ptm,clustered,18,0.889,0.889,0.722,0.562
+AF2.1,actifpTM alone,45,0.578,0.733,0.578,0.44
+AF2.1,clustered,45,0.667,0.822,0.556,0.449
+AF2.2,actifpTM alone,45,0.8,0.933,0.733,0.585
+AF2.2,clustered,45,0.867,0.889,0.6,0.546
+AF2.3,actifpTM alone,45,0.689,0.822,0.644,0.493
+AF2.3,clustered,45,0.867,0.889,0.6,0.548
+all 17,actifpTM alone,153,0.686,0.843,0.647,0.502
+all 17,clustered,153,0.81,0.869,0.601,0.52

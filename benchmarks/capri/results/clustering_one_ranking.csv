@@ -1,0 +1,91 @@
+version,method,target,top1,top5,top1_class,top1_medium_or_high,top1_dockq
+AF2-ptm,clustered,T026_1,True,True,medium,True,0.6782
+AF2-ptm,actifpTM alone,T026_1,False,True,incorrect,False,0.017
+AF2-ptm,clustered,T029_1,True,True,medium,True,0.7571
+AF2-ptm,actifpTM alone,T029_1,True,True,medium,True,0.7571
+AF2-ptm,clustered,T041_1,True,True,medium,True,0.7326
+AF2-ptm,actifpTM alone,T041_1,True,True,high,True,0.8903
+AF2-ptm,clustered,T089_1,True,True,medium,True,0.6801
+AF2-ptm,actifpTM alone,T089_1,False,True,incorrect,False,0.0075
+AF2-ptm,clustered,T104_1,True,True,medium,True,0.7034
+AF2-ptm,actifpTM alone,T104_1,True,True,medium,True,0.7034
+AF2-ptm,clustered,T131_1,False,False,incorrect,False,0.0267
+AF2-ptm,actifpTM alone,T131_1,False,True,incorrect,False,0.0361
+AF2-ptm,clustered,T132_1,True,True,acceptable,False,0.2439
+AF2-ptm,actifpTM alone,T132_1,False,True,incorrect,False,0.014
+AF2-ptm,clustered,T142_1,True,True,medium,True,0.7577
+AF2-ptm,actifpTM alone,T142_1,True,True,medium,True,0.7577
+AF2-ptm,clustered,T166_1,True,True,medium,True,0.6554
+AF2-ptm,actifpTM alone,T166_1,True,True,medium,True,0.6554
+AF2.1,clustered,T026_1,True,True,acceptable,False,0.3695
+AF2.1,actifpTM alone,T026_1,False,False,incorrect,False,0.0166
+AF2.1,clustered,T029_1,True,True,medium,True,0.6914
+AF2.1,actifpTM alone,T029_1,True,True,medium,True,0.6914
+AF2.1,clustered,T041_1,False,True,incorrect,False,0.0602
+AF2.1,actifpTM alone,T041_1,True,True,high,True,0.9255
+AF2.1,clustered,T089_1,True,True,medium,True,0.6453
+AF2.1,actifpTM alone,T089_1,True,True,medium,True,0.6453
+AF2.1,clustered,T104_1,True,True,high,True,0.8174
+AF2.1,actifpTM alone,T104_1,True,True,high,True,0.8174
+AF2.1,clustered,T131_1,False,False,incorrect,False,0.0133
+AF2.1,actifpTM alone,T131_1,False,True,incorrect,False,0.0055
+AF2.1,clustered,T132_1,False,True,incorrect,False,0.0261
+AF2.1,actifpTM alone,T132_1,False,True,incorrect,False,0.0056
+AF2.1,clustered,T142_1,True,True,medium,True,0.7577
+AF2.1,actifpTM alone,T142_1,False,True,incorrect,False,0.0581
+AF2.1,clustered,T166_1,True,True,medium,True,0.6768
+AF2.1,actifpTM alone,T166_1,True,True,medium,True,0.6768
+AF2.2,clustered,T026_1,True,True,medium,True,0.6782
+AF2.2,actifpTM alone,T026_1,True,True,medium,True,0.6782
+AF2.2,clustered,T029_1,True,True,high,True,0.7768
+AF2.2,actifpTM alone,T029_1,True,True,high,True,0.7768
+AF2.2,clustered,T041_1,True,True,medium,True,0.5363
+AF2.2,actifpTM alone,T041_1,True,True,high,True,0.9255
+AF2.2,clustered,T089_1,True,True,acceptable,False,0.5752
+AF2.2,actifpTM alone,T089_1,True,True,acceptable,False,0.5752
+AF2.2,clustered,T104_1,True,True,medium,True,0.7528
+AF2.2,actifpTM alone,T104_1,True,True,medium,True,0.7528
+AF2.2,clustered,T131_1,False,False,incorrect,False,0.0194
+AF2.2,actifpTM alone,T131_1,False,True,incorrect,False,0.0073
+AF2.2,clustered,T132_1,True,True,acceptable,False,0.2439
+AF2.2,actifpTM alone,T132_1,False,True,incorrect,False,0.014
+AF2.2,clustered,T142_1,True,True,medium,True,0.7577
+AF2.2,actifpTM alone,T142_1,True,True,medium,True,0.7577
+AF2.2,clustered,T166_1,True,True,medium,True,0.6854
+AF2.2,actifpTM alone,T166_1,True,True,medium,True,0.6854
+AF2.3,clustered,T026_1,True,True,high,True,0.7098
+AF2.3,actifpTM alone,T026_1,False,True,incorrect,False,0.018
+AF2.3,clustered,T029_1,True,True,high,True,0.7768
+AF2.3,actifpTM alone,T029_1,True,True,high,True,0.7768
+AF2.3,clustered,T041_1,True,True,acceptable,False,0.4993
+AF2.3,actifpTM alone,T041_1,True,True,high,True,0.9255
+AF2.3,clustered,T089_1,True,True,acceptable,False,0.5752
+AF2.3,actifpTM alone,T089_1,True,True,medium,True,0.5471
+AF2.3,clustered,T104_1,True,True,medium,True,0.7076
+AF2.3,actifpTM alone,T104_1,True,True,medium,True,0.7076
+AF2.3,clustered,T131_1,False,False,incorrect,False,0.0194
+AF2.3,actifpTM alone,T131_1,False,False,incorrect,False,0.0078
+AF2.3,clustered,T132_1,True,True,acceptable,False,0.2439
+AF2.3,actifpTM alone,T132_1,False,True,incorrect,False,0.005
+AF2.3,clustered,T142_1,True,True,medium,True,0.7577
+AF2.3,actifpTM alone,T142_1,True,True,medium,True,0.7577
+AF2.3,clustered,T166_1,True,True,acceptable,False,0.5805
+AF2.3,actifpTM alone,T166_1,True,True,acceptable,False,0.5707
+all 17,clustered,T026_1,True,True,high,True,0.7098
+all 17,actifpTM alone,T026_1,False,True,incorrect,False,0.0166
+all 17,clustered,T029_1,True,True,high,True,0.7768
+all 17,actifpTM alone,T029_1,True,True,high,True,0.7768
+all 17,clustered,T041_1,True,True,medium,True,0.5363
+all 17,actifpTM alone,T041_1,True,True,high,True,0.9255
+all 17,clustered,T089_1,True,True,medium,True,0.6453
+all 17,actifpTM alone,T089_1,True,True,medium,True,0.5471
+all 17,clustered,T104_1,True,True,high,True,0.8307
+all 17,actifpTM alone,T104_1,True,True,high,True,0.8307
+all 17,clustered,T131_1,False,False,incorrect,False,0.0194
+all 17,actifpTM alone,T131_1,False,False,incorrect,False,0.0078
+all 17,clustered,T132_1,True,True,acceptable,False,0.2439
+all 17,actifpTM alone,T132_1,False,True,incorrect,False,0.014
+all 17,clustered,T142_1,True,True,medium,True,0.7577
+all 17,actifpTM alone,T142_1,True,True,medium,True,0.7577
+all 17,clustered,T166_1,True,True,medium,True,0.6854
+all 17,actifpTM alone,T166_1,True,True,medium,True,0.6854

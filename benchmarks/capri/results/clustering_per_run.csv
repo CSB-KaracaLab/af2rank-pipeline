@@ -1,0 +1,307 @@
+target,weight,version,method,random_top1,random_top5,top1,top5,top1_class,top1_medium_or_high,top1_dockq
+T026_1,model_1_multimer,AF2.1,clustered,0.4,0.9302948175568482,True,True,high,True,0.7067
+T026_1,model_1_multimer,AF2.1,actifpTM alone,0.4,0.9302948175568482,False,False,incorrect,False,0.0166
+T026_1,model_1_multimer_v2,AF2.2,clustered,0.4,0.9302948175568482,True,True,high,True,0.7098
+T026_1,model_1_multimer_v2,AF2.2,actifpTM alone,0.4,0.9302948175568482,True,True,high,True,0.7098
+T026_1,model_1_multimer_v3,AF2.3,clustered,0.4,0.9302948175568482,True,True,high,True,0.7098
+T026_1,model_1_multimer_v3,AF2.3,actifpTM alone,0.4,0.9302948175568482,False,True,incorrect,False,0.1885
+T026_1,model_1_ptm,AF2-ptm,clustered,0.4,0.9302948175568482,True,True,acceptable,False,0.3914
+T026_1,model_1_ptm,AF2-ptm,actifpTM alone,0.4,0.9302948175568482,False,True,incorrect,False,0.017
+T026_1,model_2_multimer,AF2.1,clustered,0.4,0.9302948175568482,True,True,acceptable,False,0.425
+T026_1,model_2_multimer,AF2.1,actifpTM alone,0.4,0.9302948175568482,False,False,incorrect,False,0.0166
+T026_1,model_2_multimer_v2,AF2.2,clustered,0.4,0.9302948175568482,True,True,medium,True,0.6782
+T026_1,model_2_multimer_v2,AF2.2,actifpTM alone,0.4,0.9302948175568482,False,True,incorrect,False,0.1885
+T026_1,model_2_multimer_v3,AF2.3,clustered,0.4,0.9302948175568482,True,True,high,True,0.7098
+T026_1,model_2_multimer_v3,AF2.3,actifpTM alone,0.4,0.9302948175568482,False,True,incorrect,False,0.018
+T026_1,model_2_ptm,AF2-ptm,clustered,0.4,0.9302948175568482,True,True,medium,True,0.6782
+T026_1,model_2_ptm,AF2-ptm,actifpTM alone,0.4,0.9302948175568482,False,True,incorrect,False,0.017
+T026_1,model_3_multimer,AF2.1,clustered,0.4,0.9302948175568482,True,True,acceptable,False,0.4321
+T026_1,model_3_multimer,AF2.1,actifpTM alone,0.4,0.9302948175568482,False,False,incorrect,False,0.0166
+T026_1,model_3_multimer_v2,AF2.2,clustered,0.4,0.9302948175568482,True,True,medium,True,0.6782
+T026_1,model_3_multimer_v2,AF2.2,actifpTM alone,0.4,0.9302948175568482,True,True,medium,True,0.6782
+T026_1,model_3_multimer_v3,AF2.3,clustered,0.4,0.9302948175568482,True,True,high,True,0.7098
+T026_1,model_3_multimer_v3,AF2.3,actifpTM alone,0.4,0.9302948175568482,False,True,incorrect,False,0.018
+T026_1,model_4_multimer,AF2.1,clustered,0.4,0.9302948175568482,True,True,acceptable,False,0.3695
+T026_1,model_4_multimer,AF2.1,actifpTM alone,0.4,0.9302948175568482,False,True,incorrect,False,0.0166
+T026_1,model_4_multimer_v2,AF2.2,clustered,0.4,0.9302948175568482,True,True,high,True,0.7098
+T026_1,model_4_multimer_v2,AF2.2,actifpTM alone,0.4,0.9302948175568482,True,True,high,True,0.7098
+T026_1,model_4_multimer_v3,AF2.3,clustered,0.4,0.9302948175568482,True,True,high,True,0.7098
+T026_1,model_4_multimer_v3,AF2.3,actifpTM alone,0.4,0.9302948175568482,False,True,incorrect,False,0.0166
+T026_1,model_5_multimer,AF2.1,clustered,0.4,0.9302948175568482,True,True,acceptable,False,0.425
+T026_1,model_5_multimer,AF2.1,actifpTM alone,0.4,0.9302948175568482,False,False,incorrect,False,0.0166
+T026_1,model_5_multimer_v2,AF2.2,clustered,0.4,0.9302948175568482,True,True,high,True,0.6907
+T026_1,model_5_multimer_v2,AF2.2,actifpTM alone,0.4,0.9302948175568482,True,True,high,True,0.6907
+T026_1,model_5_multimer_v3,AF2.3,clustered,0.4,0.9302948175568482,True,True,high,True,0.7098
+T026_1,model_5_multimer_v3,AF2.3,actifpTM alone,0.4,0.9302948175568482,False,False,incorrect,False,0.018
+T029_1,model_1_multimer,AF2.1,clustered,0.2,0.6784854717609585,True,True,medium,True,0.6914
+T029_1,model_1_multimer,AF2.1,actifpTM alone,0.2,0.6784854717609585,True,True,medium,True,0.6914
+T029_1,model_1_multimer_v2,AF2.2,clustered,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_1_multimer_v2,AF2.2,actifpTM alone,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_1_multimer_v3,AF2.3,clustered,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_1_multimer_v3,AF2.3,actifpTM alone,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_1_ptm,AF2-ptm,clustered,0.2,0.6784854717609585,True,True,medium,True,0.6067
+T029_1,model_1_ptm,AF2-ptm,actifpTM alone,0.2,0.6784854717609585,True,True,medium,True,0.6067
+T029_1,model_2_multimer,AF2.1,clustered,0.2,0.6784854717609585,True,True,medium,True,0.71
+T029_1,model_2_multimer,AF2.1,actifpTM alone,0.2,0.6784854717609585,True,True,medium,True,0.71
+T029_1,model_2_multimer_v2,AF2.2,clustered,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_2_multimer_v2,AF2.2,actifpTM alone,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_2_multimer_v3,AF2.3,clustered,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_2_multimer_v3,AF2.3,actifpTM alone,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_2_ptm,AF2-ptm,clustered,0.2,0.6784854717609585,True,True,medium,True,0.7571
+T029_1,model_2_ptm,AF2-ptm,actifpTM alone,0.2,0.6784854717609585,True,True,medium,True,0.7571
+T029_1,model_3_multimer,AF2.1,clustered,0.2,0.6784854717609585,True,True,medium,True,0.71
+T029_1,model_3_multimer,AF2.1,actifpTM alone,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_3_multimer_v2,AF2.2,clustered,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_3_multimer_v2,AF2.2,actifpTM alone,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_3_multimer_v3,AF2.3,clustered,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_3_multimer_v3,AF2.3,actifpTM alone,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_4_multimer,AF2.1,clustered,0.2,0.6784854717609585,True,True,medium,True,0.6914
+T029_1,model_4_multimer,AF2.1,actifpTM alone,0.2,0.6784854717609585,True,True,medium,True,0.6914
+T029_1,model_4_multimer_v2,AF2.2,clustered,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_4_multimer_v2,AF2.2,actifpTM alone,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_4_multimer_v3,AF2.3,clustered,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_4_multimer_v3,AF2.3,actifpTM alone,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_5_multimer,AF2.1,clustered,0.2,0.6784854717609585,True,True,medium,True,0.71
+T029_1,model_5_multimer,AF2.1,actifpTM alone,0.2,0.6784854717609585,True,True,medium,True,0.71
+T029_1,model_5_multimer_v2,AF2.2,clustered,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_5_multimer_v2,AF2.2,actifpTM alone,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_5_multimer_v3,AF2.3,clustered,0.2,0.6784854717609585,True,True,high,True,0.7768
+T029_1,model_5_multimer_v3,AF2.3,actifpTM alone,0.2,0.6784854717609585,True,True,high,True,0.7768
+T041_1,model_1_multimer,AF2.1,clustered,0.5692307692307692,0.9866553744735397,True,True,medium,True,0.5227
+T041_1,model_1_multimer,AF2.1,actifpTM alone,0.5692307692307692,0.9866553744735397,True,True,high,True,0.9255
+T041_1,model_1_multimer_v2,AF2.2,clustered,0.5692307692307692,0.9866553744735397,True,True,medium,True,0.5363
+T041_1,model_1_multimer_v2,AF2.2,actifpTM alone,0.5692307692307692,0.9866553744735397,True,True,high,True,0.9255
+T041_1,model_1_multimer_v3,AF2.3,clustered,0.5692307692307692,0.9866553744735397,True,True,medium,True,0.5459
+T041_1,model_1_multimer_v3,AF2.3,actifpTM alone,0.5692307692307692,0.9866553744735397,True,True,high,True,0.9255
+T041_1,model_1_ptm,AF2-ptm,clustered,0.5692307692307692,0.9866553744735397,True,True,medium,True,0.7326
+T041_1,model_1_ptm,AF2-ptm,actifpTM alone,0.5692307692307692,0.9866553744735397,True,True,high,True,0.9255
+T041_1,model_2_multimer,AF2.1,clustered,0.5692307692307692,0.9866553744735397,False,True,incorrect,False,0.0602
+T041_1,model_2_multimer,AF2.1,actifpTM alone,0.5692307692307692,0.9866553744735397,True,True,high,True,0.8903
+T041_1,model_2_multimer_v2,AF2.2,clustered,0.5692307692307692,0.9866553744735397,True,True,acceptable,False,0.4302
+T041_1,model_2_multimer_v2,AF2.2,actifpTM alone,0.5692307692307692,0.9866553744735397,True,True,high,True,0.8903
+T041_1,model_2_multimer_v3,AF2.3,clustered,0.5692307692307692,0.9866553744735397,True,True,medium,True,0.5363
+T041_1,model_2_multimer_v3,AF2.3,actifpTM alone,0.5692307692307692,0.9866553744735397,False,True,incorrect,False,0.0653
+T041_1,model_2_ptm,AF2-ptm,clustered,0.5692307692307692,0.9866553744735397,True,True,medium,True,0.7326
+T041_1,model_2_ptm,AF2-ptm,actifpTM alone,0.5692307692307692,0.9866553744735397,True,True,high,True,0.8903
+T041_1,model_3_multimer,AF2.1,clustered,0.5692307692307692,0.9866553744735397,False,True,incorrect,False,0.06
+T041_1,model_3_multimer,AF2.1,actifpTM alone,0.5692307692307692,0.9866553744735397,True,True,high,True,0.8903
+T041_1,model_3_multimer_v2,AF2.2,clustered,0.5692307692307692,0.9866553744735397,True,True,medium,True,0.5363
+T041_1,model_3_multimer_v2,AF2.2,actifpTM alone,0.5692307692307692,0.9866553744735397,True,True,high,True,0.9255
+T041_1,model_3_multimer_v3,AF2.3,clustered,0.5692307692307692,0.9866553744735397,True,True,acceptable,False,0.3299
+T041_1,model_3_multimer_v3,AF2.3,actifpTM alone,0.5692307692307692,0.9866553744735397,True,True,high,True,0.9255
+T041_1,model_4_multimer,AF2.1,clustered,0.5692307692307692,0.9866553744735397,True,True,medium,True,0.6819
+T041_1,model_4_multimer,AF2.1,actifpTM alone,0.5692307692307692,0.9866553744735397,True,True,high,True,0.8903
+T041_1,model_4_multimer_v2,AF2.2,clustered,0.5692307692307692,0.9866553744735397,True,True,medium,True,0.5363
+T041_1,model_4_multimer_v2,AF2.2,actifpTM alone,0.5692307692307692,0.9866553744735397,True,True,high,True,0.8903
+T041_1,model_4_multimer_v3,AF2.3,clustered,0.5692307692307692,0.9866553744735397,True,True,acceptable,False,0.4993
+T041_1,model_4_multimer_v3,AF2.3,actifpTM alone,0.5692307692307692,0.9866553744735397,True,True,high,True,0.9255
+T041_1,model_5_multimer,AF2.1,clustered,0.5692307692307692,0.9866553744735397,True,True,acceptable,False,0.4145
+T041_1,model_5_multimer,AF2.1,actifpTM alone,0.5692307692307692,0.9866553744735397,True,True,high,True,0.8903
+T041_1,model_5_multimer_v2,AF2.2,clustered,0.5692307692307692,0.9866553744735397,True,True,acceptable,False,0.3299
+T041_1,model_5_multimer_v2,AF2.2,actifpTM alone,0.5692307692307692,0.9866553744735397,True,True,high,True,0.9255
+T041_1,model_5_multimer_v3,AF2.3,clustered,0.5692307692307692,0.9866553744735397,True,True,acceptable,False,0.4993
+T041_1,model_5_multimer_v3,AF2.3,actifpTM alone,0.5692307692307692,0.9866553744735397,True,True,high,True,0.8903
+T089_1,model_1_multimer,AF2.1,clustered,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.6453
+T089_1,model_1_multimer,AF2.1,actifpTM alone,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.6453
+T089_1,model_1_multimer_v2,AF2.2,clustered,0.41818181818181815,0.9377039203744848,True,True,acceptable,False,0.5752
+T089_1,model_1_multimer_v2,AF2.2,actifpTM alone,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.5471
+T089_1,model_1_multimer_v3,AF2.3,clustered,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.6801
+T089_1,model_1_multimer_v3,AF2.3,actifpTM alone,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.5471
+T089_1,model_1_ptm,AF2-ptm,clustered,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.6801
+T089_1,model_1_ptm,AF2-ptm,actifpTM alone,0.41818181818181815,0.9377039203744848,False,False,incorrect,False,0.0075
+T089_1,model_2_multimer,AF2.1,clustered,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.6453
+T089_1,model_2_multimer,AF2.1,actifpTM alone,0.41818181818181815,0.9377039203744848,False,True,incorrect,False,0.014
+T089_1,model_2_multimer_v2,AF2.2,clustered,0.41818181818181815,0.9377039203744848,True,True,acceptable,False,0.5752
+T089_1,model_2_multimer_v2,AF2.2,actifpTM alone,0.41818181818181815,0.9377039203744848,False,True,incorrect,False,0.014
+T089_1,model_2_multimer_v3,AF2.3,clustered,0.41818181818181815,0.9377039203744848,True,True,acceptable,False,0.5752
+T089_1,model_2_multimer_v3,AF2.3,actifpTM alone,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.5471
+T089_1,model_2_ptm,AF2-ptm,clustered,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.6453
+T089_1,model_2_ptm,AF2-ptm,actifpTM alone,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.5471
+T089_1,model_3_multimer,AF2.1,clustered,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.6453
+T089_1,model_3_multimer,AF2.1,actifpTM alone,0.41818181818181815,0.9377039203744848,False,True,incorrect,False,0.014
+T089_1,model_3_multimer_v2,AF2.2,clustered,0.41818181818181815,0.9377039203744848,True,True,acceptable,False,0.5752
+T089_1,model_3_multimer_v2,AF2.2,actifpTM alone,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.5471
+T089_1,model_3_multimer_v3,AF2.3,clustered,0.41818181818181815,0.9377039203744848,True,True,acceptable,False,0.5752
+T089_1,model_3_multimer_v3,AF2.3,actifpTM alone,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.5471
+T089_1,model_4_multimer,AF2.1,clustered,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.6453
+T089_1,model_4_multimer,AF2.1,actifpTM alone,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.6453
+T089_1,model_4_multimer_v2,AF2.2,clustered,0.41818181818181815,0.9377039203744848,True,True,acceptable,False,0.5752
+T089_1,model_4_multimer_v2,AF2.2,actifpTM alone,0.41818181818181815,0.9377039203744848,True,True,acceptable,False,0.5752
+T089_1,model_4_multimer_v3,AF2.3,clustered,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.6801
+T089_1,model_4_multimer_v3,AF2.3,actifpTM alone,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.5471
+T089_1,model_5_multimer,AF2.1,clustered,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.6453
+T089_1,model_5_multimer,AF2.1,actifpTM alone,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.6453
+T089_1,model_5_multimer_v2,AF2.2,clustered,0.41818181818181815,0.9377039203744848,True,True,acceptable,False,0.5752
+T089_1,model_5_multimer_v2,AF2.2,actifpTM alone,0.41818181818181815,0.9377039203744848,True,True,acceptable,False,0.5752
+T089_1,model_5_multimer_v3,AF2.3,clustered,0.41818181818181815,0.9377039203744848,True,True,acceptable,False,0.5752
+T089_1,model_5_multimer_v3,AF2.3,actifpTM alone,0.41818181818181815,0.9377039203744848,True,True,medium,True,0.5471
+T104_1,model_1_multimer,AF2.1,clustered,0.8176470588235294,0.9998476181383495,True,True,high,True,0.8174
+T104_1,model_1_multimer,AF2.1,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,high,True,0.8174
+T104_1,model_1_multimer_v2,AF2.2,clustered,0.8176470588235294,0.9998476181383495,True,True,high,True,0.7781
+T104_1,model_1_multimer_v2,AF2.2,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,high,True,0.7781
+T104_1,model_1_multimer_v3,AF2.3,clustered,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7528
+T104_1,model_1_multimer_v3,AF2.3,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7528
+T104_1,model_1_ptm,AF2-ptm,clustered,0.8176470588235294,0.9998476181383495,True,True,high,True,0.7781
+T104_1,model_1_ptm,AF2-ptm,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,high,True,0.7781
+T104_1,model_2_multimer,AF2.1,clustered,0.8176470588235294,0.9998476181383495,True,True,high,True,0.8307
+T104_1,model_2_multimer,AF2.1,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,high,True,0.8307
+T104_1,model_2_multimer_v2,AF2.2,clustered,0.8176470588235294,0.9998476181383495,True,True,high,True,0.7781
+T104_1,model_2_multimer_v2,AF2.2,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,high,True,0.7781
+T104_1,model_2_multimer_v3,AF2.3,clustered,0.8176470588235294,0.9998476181383495,True,True,high,True,0.7946
+T104_1,model_2_multimer_v3,AF2.3,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7076
+T104_1,model_2_ptm,AF2-ptm,clustered,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7034
+T104_1,model_2_ptm,AF2-ptm,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7034
+T104_1,model_3_multimer,AF2.1,clustered,0.8176470588235294,0.9998476181383495,True,True,high,True,0.8421
+T104_1,model_3_multimer,AF2.1,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,high,True,0.8421
+T104_1,model_3_multimer_v2,AF2.2,clustered,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7528
+T104_1,model_3_multimer_v2,AF2.2,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7528
+T104_1,model_3_multimer_v3,AF2.3,clustered,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7528
+T104_1,model_3_multimer_v3,AF2.3,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7528
+T104_1,model_4_multimer,AF2.1,clustered,0.8176470588235294,0.9998476181383495,True,True,high,True,0.8433
+T104_1,model_4_multimer,AF2.1,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,high,True,0.8433
+T104_1,model_4_multimer_v2,AF2.2,clustered,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7288
+T104_1,model_4_multimer_v2,AF2.2,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7288
+T104_1,model_4_multimer_v3,AF2.3,clustered,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7076
+T104_1,model_4_multimer_v3,AF2.3,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7076
+T104_1,model_5_multimer,AF2.1,clustered,0.8176470588235294,0.9998476181383495,True,True,high,True,0.8174
+T104_1,model_5_multimer,AF2.1,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,high,True,0.8174
+T104_1,model_5_multimer_v2,AF2.2,clustered,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7528
+T104_1,model_5_multimer_v2,AF2.2,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7528
+T104_1,model_5_multimer_v3,AF2.3,clustered,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7076
+T104_1,model_5_multimer_v3,AF2.3,actifpTM alone,0.8176470588235294,0.9998476181383495,True,True,medium,True,0.7076
+T131_1,model_1_multimer,AF2.1,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0133
+T131_1,model_1_multimer,AF2.1,actifpTM alone,0.032432432432432434,0.15354005441150986,False,True,incorrect,False,0.0055
+T131_1,model_1_multimer_v2,AF2.2,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0202
+T131_1,model_1_multimer_v2,AF2.2,actifpTM alone,0.032432432432432434,0.15354005441150986,False,True,incorrect,False,0.0073
+T131_1,model_1_multimer_v3,AF2.3,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0194
+T131_1,model_1_multimer_v3,AF2.3,actifpTM alone,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0073
+T131_1,model_1_ptm,AF2-ptm,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.042
+T131_1,model_1_ptm,AF2-ptm,actifpTM alone,0.032432432432432434,0.15354005441150986,False,True,incorrect,False,0.0361
+T131_1,model_2_multimer,AF2.1,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0322
+T131_1,model_2_multimer,AF2.1,actifpTM alone,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0055
+T131_1,model_2_multimer_v2,AF2.2,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0194
+T131_1,model_2_multimer_v2,AF2.2,actifpTM alone,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0073
+T131_1,model_2_multimer_v3,AF2.3,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0194
+T131_1,model_2_multimer_v3,AF2.3,actifpTM alone,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0073
+T131_1,model_2_ptm,AF2-ptm,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0322
+T131_1,model_2_ptm,AF2-ptm,actifpTM alone,0.032432432432432434,0.15354005441150986,False,True,incorrect,False,0.0166
+T131_1,model_3_multimer,AF2.1,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0133
+T131_1,model_3_multimer,AF2.1,actifpTM alone,0.032432432432432434,0.15354005441150986,False,True,incorrect,False,0.0055
+T131_1,model_3_multimer_v2,AF2.2,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0194
+T131_1,model_3_multimer_v2,AF2.2,actifpTM alone,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0194
+T131_1,model_3_multimer_v3,AF2.3,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0202
+T131_1,model_3_multimer_v3,AF2.3,actifpTM alone,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0078
+T131_1,model_4_multimer,AF2.1,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0285
+T131_1,model_4_multimer,AF2.1,actifpTM alone,0.032432432432432434,0.15354005441150986,False,True,incorrect,False,0.0055
+T131_1,model_4_multimer_v2,AF2.2,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0202
+T131_1,model_4_multimer_v2,AF2.2,actifpTM alone,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0055
+T131_1,model_4_multimer_v3,AF2.3,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0202
+T131_1,model_4_multimer_v3,AF2.3,actifpTM alone,0.032432432432432434,0.15354005441150986,True,True,medium,True,0.6038
+T131_1,model_5_multimer,AF2.1,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0267
+T131_1,model_5_multimer,AF2.1,actifpTM alone,0.032432432432432434,0.15354005441150986,False,True,incorrect,False,0.0055
+T131_1,model_5_multimer_v2,AF2.2,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0322
+T131_1,model_5_multimer_v2,AF2.2,actifpTM alone,0.032432432432432434,0.15354005441150986,True,True,medium,True,0.6038
+T131_1,model_5_multimer_v3,AF2.3,clustered,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0285
+T131_1,model_5_multimer_v3,AF2.3,actifpTM alone,0.032432432432432434,0.15354005441150986,False,False,incorrect,False,0.0055
+T132_1,model_1_multimer,AF2.1,clustered,0.047619047619047616,0.2185781693634251,False,True,incorrect,False,0.0261
+T132_1,model_1_multimer,AF2.1,actifpTM alone,0.047619047619047616,0.2185781693634251,False,False,incorrect,False,0.0119
+T132_1,model_1_multimer_v2,AF2.2,clustered,0.047619047619047616,0.2185781693634251,False,True,incorrect,False,0.0213
+T132_1,model_1_multimer_v2,AF2.2,actifpTM alone,0.047619047619047616,0.2185781693634251,False,True,incorrect,False,0.014
+T132_1,model_1_multimer_v3,AF2.3,clustered,0.047619047619047616,0.2185781693634251,True,True,acceptable,False,0.2639
+T132_1,model_1_multimer_v3,AF2.3,actifpTM alone,0.047619047619047616,0.2185781693634251,False,False,incorrect,False,0.005
+T132_1,model_1_ptm,AF2-ptm,clustered,0.047619047619047616,0.2185781693634251,True,True,acceptable,False,0.2439
+T132_1,model_1_ptm,AF2-ptm,actifpTM alone,0.047619047619047616,0.2185781693634251,True,True,acceptable,False,0.2439
+T132_1,model_2_multimer,AF2.1,clustered,0.047619047619047616,0.2185781693634251,False,False,incorrect,False,0.0264
+T132_1,model_2_multimer,AF2.1,actifpTM alone,0.047619047619047616,0.2185781693634251,True,True,medium,True,0.5527
+T132_1,model_2_multimer_v2,AF2.2,clustered,0.047619047619047616,0.2185781693634251,True,True,acceptable,False,0.2639
+T132_1,model_2_multimer_v2,AF2.2,actifpTM alone,0.047619047619047616,0.2185781693634251,True,True,medium,True,0.5527
+T132_1,model_2_multimer_v3,AF2.3,clustered,0.047619047619047616,0.2185781693634251,False,True,incorrect,False,0.0213
+T132_1,model_2_multimer_v3,AF2.3,actifpTM alone,0.047619047619047616,0.2185781693634251,False,False,incorrect,False,0.014
+T132_1,model_2_ptm,AF2-ptm,clustered,0.047619047619047616,0.2185781693634251,True,True,acceptable,False,0.2439
+T132_1,model_2_ptm,AF2-ptm,actifpTM alone,0.047619047619047616,0.2185781693634251,False,True,incorrect,False,0.014
+T132_1,model_3_multimer,AF2.1,clustered,0.047619047619047616,0.2185781693634251,False,True,incorrect,False,0.0264
+T132_1,model_3_multimer,AF2.1,actifpTM alone,0.047619047619047616,0.2185781693634251,False,False,incorrect,False,0.005
+T132_1,model_3_multimer_v2,AF2.2,clustered,0.047619047619047616,0.2185781693634251,True,True,acceptable,False,0.2439
+T132_1,model_3_multimer_v2,AF2.2,actifpTM alone,0.047619047619047616,0.2185781693634251,False,True,incorrect,False,0.014
+T132_1,model_3_multimer_v3,AF2.3,clustered,0.047619047619047616,0.2185781693634251,True,True,acceptable,False,0.2439
+T132_1,model_3_multimer_v3,AF2.3,actifpTM alone,0.047619047619047616,0.2185781693634251,False,True,incorrect,False,0.05
+T132_1,model_4_multimer,AF2.1,clustered,0.047619047619047616,0.2185781693634251,False,False,incorrect,False,0.0261
+T132_1,model_4_multimer,AF2.1,actifpTM alone,0.047619047619047616,0.2185781693634251,True,True,medium,True,0.5527
+T132_1,model_4_multimer_v2,AF2.2,clustered,0.047619047619047616,0.2185781693634251,True,True,acceptable,False,0.2439
+T132_1,model_4_multimer_v2,AF2.2,actifpTM alone,0.047619047619047616,0.2185781693634251,False,True,incorrect,False,0.014
+T132_1,model_4_multimer_v3,AF2.3,clustered,0.047619047619047616,0.2185781693634251,True,True,acceptable,False,0.2439
+T132_1,model_4_multimer_v3,AF2.3,actifpTM alone,0.047619047619047616,0.2185781693634251,True,True,medium,True,0.5527
+T132_1,model_5_multimer,AF2.1,clustered,0.047619047619047616,0.2185781693634251,False,False,incorrect,False,0.0269
+T132_1,model_5_multimer,AF2.1,actifpTM alone,0.047619047619047616,0.2185781693634251,False,False,incorrect,False,0.016
+T132_1,model_5_multimer_v2,AF2.2,clustered,0.047619047619047616,0.2185781693634251,True,True,acceptable,False,0.2439
+T132_1,model_5_multimer_v2,AF2.2,actifpTM alone,0.047619047619047616,0.2185781693634251,True,True,medium,True,0.5527
+T132_1,model_5_multimer_v3,AF2.3,clustered,0.047619047619047616,0.2185781693634251,True,True,acceptable,False,0.2439
+T132_1,model_5_multimer_v3,AF2.3,actifpTM alone,0.047619047619047616,0.2185781693634251,False,False,incorrect,False,0.005
+T142_1,model_1_multimer,AF2.1,clustered,0.2710843373493976,0.7988857019178515,False,True,incorrect,False,0.0515
+T142_1,model_1_multimer,AF2.1,actifpTM alone,0.2710843373493976,0.7988857019178515,False,False,incorrect,False,0.0581
+T142_1,model_1_multimer_v2,AF2.2,clustered,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_1_multimer_v2,AF2.2,actifpTM alone,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_1_multimer_v3,AF2.3,clustered,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_1_multimer_v3,AF2.3,actifpTM alone,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_1_ptm,AF2-ptm,clustered,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_1_ptm,AF2-ptm,actifpTM alone,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_2_multimer,AF2.1,clustered,0.2710843373493976,0.7988857019178515,False,True,incorrect,False,0.0515
+T142_1,model_2_multimer,AF2.1,actifpTM alone,0.2710843373493976,0.7988857019178515,False,False,incorrect,False,0.0581
+T142_1,model_2_multimer_v2,AF2.2,clustered,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_2_multimer_v2,AF2.2,actifpTM alone,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_2_multimer_v3,AF2.3,clustered,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_2_multimer_v3,AF2.3,actifpTM alone,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.6538
+T142_1,model_2_ptm,AF2-ptm,clustered,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_2_ptm,AF2-ptm,actifpTM alone,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_3_multimer,AF2.1,clustered,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.6551
+T142_1,model_3_multimer,AF2.1,actifpTM alone,0.2710843373493976,0.7988857019178515,False,False,incorrect,False,0.0581
+T142_1,model_3_multimer_v2,AF2.2,clustered,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_3_multimer_v2,AF2.2,actifpTM alone,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_3_multimer_v3,AF2.3,clustered,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_3_multimer_v3,AF2.3,actifpTM alone,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_4_multimer,AF2.1,clustered,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_4_multimer,AF2.1,actifpTM alone,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_4_multimer_v2,AF2.2,clustered,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_4_multimer_v2,AF2.2,actifpTM alone,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_4_multimer_v3,AF2.3,clustered,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_4_multimer_v3,AF2.3,actifpTM alone,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.6538
+T142_1,model_5_multimer,AF2.1,clustered,0.2710843373493976,0.7988857019178515,False,True,incorrect,False,0.0515
+T142_1,model_5_multimer,AF2.1,actifpTM alone,0.2710843373493976,0.7988857019178515,False,False,incorrect,False,0.0581
+T142_1,model_5_multimer_v2,AF2.2,clustered,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_5_multimer_v2,AF2.2,actifpTM alone,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_5_multimer_v3,AF2.3,clustered,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T142_1,model_5_multimer_v3,AF2.3,actifpTM alone,0.2710843373493976,0.7988857019178515,True,True,medium,True,0.7577
+T166_1,model_1_multimer,AF2.1,clustered,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6844
+T166_1,model_1_multimer,AF2.1,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6844
+T166_1,model_1_multimer_v2,AF2.2,clustered,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6533
+T166_1,model_1_multimer_v2,AF2.2,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6533
+T166_1,model_1_multimer_v3,AF2.3,clustered,0.46842105263157896,0.959521298434966,True,True,acceptable,False,0.5555
+T166_1,model_1_multimer_v3,AF2.3,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,acceptable,False,0.5555
+T166_1,model_1_ptm,AF2-ptm,clustered,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6554
+T166_1,model_1_ptm,AF2-ptm,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6554
+T166_1,model_2_multimer,AF2.1,clustered,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6768
+T166_1,model_2_multimer,AF2.1,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6768
+T166_1,model_2_multimer_v2,AF2.2,clustered,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6854
+T166_1,model_2_multimer_v2,AF2.2,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6854
+T166_1,model_2_multimer_v3,AF2.3,clustered,0.46842105263157896,0.959521298434966,True,True,acceptable,False,0.5805
+T166_1,model_2_multimer_v3,AF2.3,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,acceptable,False,0.5805
+T166_1,model_2_ptm,AF2-ptm,clustered,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6854
+T166_1,model_2_ptm,AF2-ptm,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6854
+T166_1,model_3_multimer,AF2.1,clustered,0.46842105263157896,0.959521298434966,True,True,medium,True,0.751
+T166_1,model_3_multimer,AF2.1,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,medium,True,0.751
+T166_1,model_3_multimer_v2,AF2.2,clustered,0.46842105263157896,0.959521298434966,True,True,acceptable,False,0.5707
+T166_1,model_3_multimer_v2,AF2.2,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,acceptable,False,0.5707
+T166_1,model_3_multimer_v3,AF2.3,clustered,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6854
+T166_1,model_3_multimer_v3,AF2.3,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6854
+T166_1,model_4_multimer,AF2.1,clustered,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6768
+T166_1,model_4_multimer,AF2.1,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6768
+T166_1,model_4_multimer_v2,AF2.2,clustered,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6854
+T166_1,model_4_multimer_v2,AF2.2,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6854
+T166_1,model_4_multimer_v3,AF2.3,clustered,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6368
+T166_1,model_4_multimer_v3,AF2.3,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6368
+T166_1,model_5_multimer,AF2.1,clustered,0.46842105263157896,0.959521298434966,True,True,medium,True,0.611
+T166_1,model_5_multimer,AF2.1,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,medium,True,0.611
+T166_1,model_5_multimer_v2,AF2.2,clustered,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6854
+T166_1,model_5_multimer_v2,AF2.2,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6854
+T166_1,model_5_multimer_v3,AF2.3,clustered,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6368
+T166_1,model_5_multimer_v3,AF2.3,actifpTM alone,0.46842105263157896,0.959521298434966,True,True,medium,True,0.6368
