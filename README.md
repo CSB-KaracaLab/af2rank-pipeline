@@ -2,7 +2,7 @@
 
 AF2Rank Pipeline scores existing protein-complex structures. It standardizes chains and residues against a target FASTA, runs AF2Rank through ColabDesign, calculates actifpTM and interface metrics, and combines the results in a CSV for model comparison.
 
-The [report](docs/af2rank_all_weights.md) explains how the 17 template-capable AlphaFold2 weights and the multimer glycine linker are used, with two worked examples: trypsin–BPTI ([`examples/2ptc`](examples/2ptc)) and the E2A–HPr NMR ensemble ([`examples/e2a_hpr`](examples/e2a_hpr)). Slurm scripts for H100 clusters are in [`examples/marenostrum5`](examples/marenostrum5).
+The [report](docs/af2rank_all_weights.md) explains how the 17 template-capable AlphaFold2 weights and the multimer glycine linker are used. Worked examples and benchmarks are listed under [Examples and benchmarks](#examples-and-benchmarks); the scores they report are defined under [Scores and settings](#scores-and-settings).
 
 ## Try it in Colab
 
@@ -41,9 +41,14 @@ Full scoring needs AlphaFold model parameters, but not AlphaFold's sequence data
 python env/download_default_params.py params
 ```
 
-The helper downloads just the required file and verifies its checksum. `params/` is excluded from version control. If you already have a parameter directory, use it instead. A different model number or `--model-mode alphafold-multimer` needs its corresponding weight; the [official download script](https://github.com/google-deepmind/alphafold/blob/main/scripts/download_alphafold_params.sh) provides the complete parameter bundle.
+The helper downloads just the required file and verifies its checksum. `params/` is excluded from version control. If you already have a parameter directory, use it instead. Other weights are fetched by name, for example `python env/download_default_params.py params --weight model_1_ptm --weight model_1_multimer_v2`; the [official download script](https://github.com/google-deepmind/alphafold/blob/main/scripts/download_alphafold_params.sh) provides the complete parameter bundle.
 
-AF2Rank passes each input structure to AlphaFold as a template, so only template-capable weights apply: AF2-ptm models 1 and 2, and AF2-multimer models 1–5 from AF2.1, AF2.2 and AF2.3. Pick the multimer release with `--multimer-version v1`, `v2` or `v3` (default v3); each needs its weight file (`params_model_N_multimer.npz`, `_multimer_v2.npz` or `_multimer_v3.npz`) from the matching dated archive, for example `download_weight(params, "params_model_1_multimer.npz", sha256, archive_url("2021-10-27"))` from `env/download_default_params.py`. AF2-multimer was trained with per-chain templates only. With `--model-mode alphafold-multimer`, the pipeline therefore joins the chains into one chain with a 20-glycine linker, so the whole complex becomes a single intra-chain template. The linker residues carry no template information. They are removed from the scored PDB, the PAE matrix and every metric, and chains and residue numbers are restored. Set the linker length with `--multimer-linker N`; `--multimer-linker 0` scores the chains as separate multimer chains. Linked runs keep the joined input (`<model>.pdb`), AlphaFold's output with the linker (`<model>_scored_linked.pdb`) and the linker residue numbers (`<model>_linker.json`) under `af2rank/<run>/linked_inputs/`; the Colab structure viewer can show that output with the linker highlighted.
+AF2Rank passes each input structure to AlphaFold as a template, so only template-capable weights apply:
+
+- **Weights:** AF2-ptm models 1 and 2 (`--model-num 1` or `2`), and AF2-multimer models 1–5 from AF2.1, AF2.2 and AF2.3 (`--model-mode alphafold-multimer --multimer-version v1`, `v2` or `v3`, default v3). Each needs its weight file (`params_model_N_multimer.npz`, `_multimer_v2.npz` or `_multimer_v3.npz`), which `--weight` above fetches.
+- **Glycine linker:** AF2-multimer was trained with per-chain templates only, so multimer runs join the chains into one chain with a 20-glycine linker and the whole complex becomes a single intra-chain template. The linker residues carry no template information. They are removed from the scored PDB, the PAE matrix and every metric, and chains and residue numbers are restored.
+- **Separate chains instead:** `--multimer-linker N` sets the linker length; `--multimer-linker 0` gives the chains as separate templates, as in the original af2rank-pipeline.
+- **Linker outputs:** linked runs keep the joined input (`<model>.pdb`), AlphaFold's output with the linker (`<model>_scored_linked.pdb`) and the linker residue numbers (`<model>_linker.json`) under `af2rank/<run>/linked_inputs/`. The Colab structure viewer can show that output with the linker highlighted.
 
 Run the included 1BRS complex:
 
@@ -58,7 +63,6 @@ af2rank-pipeline run-target \
 
 The result table is `runs/1brs/manifests/final_models.csv`; the scored structure and PAE data are under `runs/1brs/af2rank/`. The [example notes](examples/1brs/README.md) describe the source of the bundled data. Use a new output directory for each independent run.
 
-More examples: [`examples/2ptc`](examples/2ptc) (a crystal structure with waters and ions to clean) and [`examples/e2a_hpr`](examples/e2a_hpr) (NMR ensembles of 3 and 30 models), each with scores for all 17 weights (for E2A–HPr, the 3-model ensemble). [`examples/nmr_benchmark`](examples/nmr_benchmark) has a curated benchmark of 65 NMR dimers (model 1 of each ensemble) scored with all 17 weights, split into homodimer, heterodimer and flexible sets, with curation notes. [`examples/xray_benchmark`](examples/xray_benchmark) has the matching unseen X-ray dimer benchmark (53 heterodimers, 39 homodimers) with its curation logic. [`examples/capri_benchmark`](examples/capri_benchmark) scores 1,340 CAPRI docking decoys of 9 targets with all 17 weights and asks which AF2Rank score separates good models from bad ones, at full resolution and in the paper's masked setting.
 
 ### NVIDIA GPU on Linux
 
@@ -112,7 +116,35 @@ The default run uses pTM model 2, one recycle, and one inference iteration. It m
 | `manifests/final_models.csv` | Combined scores and provenance for each model |
 | `logs/failures.jsonl` | Stage errors, if any |
 
-DockQ uses the cleaned input as its reference, so a high value means the interface remained similar after AF2Rank inference. It does not establish docking accuracy. Check the output row count and any failure log before comparing models.
+DockQ uses the cleaned input as its reference, so a high value means the interface remained similar after AF2Rank inference; it does not establish docking accuracy (see [Scores and settings](#scores-and-settings)). Check the output row count and any failure log before comparing models.
+
+## Examples and benchmarks
+
+Each folder except `examples/1brs` (the quick-start run, default weight only) reports scores for all 17 template-capable weights. [Scores and settings](#scores-and-settings) defines the two settings.
+
+| Folder | What | Setting | Size |
+| --- | --- | --- | --- |
+| [`examples/1brs`](examples/1brs) | barnase–barstar, the quick-start example | masked | 1 model |
+| [`examples/2ptc`](examples/2ptc) | trypsin–BPTI crystal structure with waters and ions to clean | masked | 1 model |
+| [`examples/e2a_hpr`](examples/e2a_hpr) | E2A–HPr NMR ensembles | masked | 3 and 30 models |
+| [`benchmarks/nmr`](benchmarks/nmr) | curated NMR dimers: homodimer, heterodimer and flexible sets | full resolution | 65 dimers |
+| [`benchmarks/xray`](benchmarks/xray) | unseen X-ray dimers matched to the NMR set | heterodimers: both settings; homodimers: not scored yet | 53 hetero, 39 homo |
+| [`benchmarks/capri`](benchmarks/capri) | CAPRI docking decoys: which score separates good models from bad ones | both settings | 9 targets, 1,340 decoys |
+| [`cluster/marenostrum5`](cluster/marenostrum5) | Slurm scripts for H100 clusters | – | – |
+
+## Scores and settings
+
+**Settings.**
+- **Masked** (the pipeline default and the AF2Rank paper's setting): the template's sequence and side chains are hidden from AlphaFold, 1 recycle. AlphaFold sees only the backbone, so it can move a wrong interface away.
+- **Full resolution:** sequence and side chains kept, 0 recycles (`--no-mask-sequence --no-mask-sidechains --recycles 0`). AlphaFold tends to copy the template, right or wrong.
+
+**AlphaFold confidence** (higher is better): pLDDT (per residue), pTM (whole complex), ipTM (interface), actifpTM (ipTM restricted to the residues actually at the interface; Varga et al., 2025). PAE is AlphaFold's predicted aligned error in Å (lower is better); *PAE at input contacts* averages it over the residue pairs in contact in the input.
+
+**How much AlphaFold kept the input** (the input is the reference, not the true structure): *DockQ input→output* (DockQ_io in tables) is the DockQ of AlphaFold's output against the cleaned input; below 0.23 the input interface counts as lost. *fnat input→output* is the fraction of input interface contacts kept in the output, and *iRMSD input→output* the interface RMSD in Å. When the input is the native structure, as in the X-ray benchmark, DockQ input→output is the true DockQ of the output.
+
+**Other interface scores** used in the CAPRI benchmark: ipSAE, LIS and minimum inter-chain PAE (built from the inter-chain PAE), and pDockQ (built from pLDDT and contact count).
+
+**Decoy benchmarks.** *CAPRI classes* are CAPRI's quality classes from fnat, ligand RMSD and interface RMSD to the native: incorrect, acceptable, medium, high. A *good* decoy is acceptable or better. *AUC* is the ROC AUC for good vs incorrect decoys within one target and weight (0.5 = random). *Top-1* or *top-5 success* means a good decoy is ranked first or within the first five.
 
 ## Other workflows
 

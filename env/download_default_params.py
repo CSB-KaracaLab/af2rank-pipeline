@@ -2,7 +2,9 @@
 
 Each archive is about 5.3 GB; this helper uses HTTP byte ranges to fetch only
 the requested weight file and checks its SHA-256. Run as a script, it fetches
-the default params_model_2_ptm.npz. No third-party Python packages are required.
+the default params_model_2_ptm.npz, or the weights named with --weight
+(repeatable), e.g. --weight model_1_multimer_v2. No third-party Python packages
+are required.
 """
 
 from __future__ import annotations
@@ -23,6 +25,27 @@ def archive_url(release: str) -> str:
 ARCHIVE_URL = archive_url("2022-12-06")
 WEIGHT_NAME = "params_model_2_ptm.npz"
 WEIGHT_SHA256 = "23645d9a82c4af2ed54cd48a7b3c1c2575dc6aa9fe931adb4d7203ca5f0dc398"
+
+# The 17 template-capable weights: name -> (archive release, SHA-256 of params_<name>.npz).
+WEIGHTS = {
+    "model_1_ptm": ("2022-12-06", "5e564f79af5bcd54ccef6e2a6bb0ff01015d01650ebc41d4575e35f0de9ecc84"),
+    "model_2_ptm": ("2022-12-06", WEIGHT_SHA256),
+    "model_1_multimer": ("2021-10-27", "e12c732731fa2f4957979180c01f78be4bd20c64a615ae59902d811ccb6cfb17"),
+    "model_2_multimer": ("2021-10-27", "a15017e8665da8811611381fb8c8e8e23d7244f7c72b25742b7674219e014ec0"),
+    "model_3_multimer": ("2021-10-27", "3d9738bc14bfba44d4584d7afc37bcb52e6cb83412eecb23c9e2e45619bfec85"),
+    "model_4_multimer": ("2021-10-27", "a6b00af878c13594023c7920005c5be7e470343df6745e702faec65a19d44a22"),
+    "model_5_multimer": ("2021-10-27", "371dfdea9efdfa8b70d40a267d61286e6b1b85c822b7bfaba292c2e960f43b2d"),
+    "model_1_multimer_v2": ("2022-03-02", "69e20de3e265c22d4b1616a210f0715cdc969b8c1f59d7ff882635f1e6c986d6"),
+    "model_2_multimer_v2": ("2022-03-02", "7d78b62d75fed71b0688e4ea434fbb385fad29b2544dfbdc0457ed4a95990e27"),
+    "model_3_multimer_v2": ("2022-03-02", "349e8b4ec8758f9348a05418e6c0105ccafd811641451baa2250ab0209e6bf32"),
+    "model_4_multimer_v2": ("2022-03-02", "5f68bbf95ad633734b8ef8a3633d5d2b3d821bfe923bf1e72b8d06177ea7fb69"),
+    "model_5_multimer_v2": ("2022-03-02", "73d4ed49917a5058e6d113ecf5af31799db7fd5a3c051539d292064d11e2e53b"),
+    "model_1_multimer_v3": ("2022-12-06", "611da8fc7478928f68de12e8b226260ef1f4ce62bcc29b008572e52f4f212959"),
+    "model_2_multimer_v3": ("2022-12-06", "51362b0844382ae0f5720c59b81dd13a43eea40fbf9995dd2573bdab88865378"),
+    "model_3_multimer_v3": ("2022-12-06", "46d9bcad288edc7ad5a6362ee8e5f84307a69712e00e6c36b1ef9daf96ebc9ce"),
+    "model_4_multimer_v3": ("2022-12-06", "59bdabd2d69c07fe26b37882d544acbd1b9f89f196828f4220da49e0610b572c"),
+    "model_5_multimer_v3": ("2022-12-06", "917742be5a105d6b80f13f1f13f20459f27ec3fdcd34ea088b359f4502d6177f"),
+}
 
 
 def get_range(start: int, end: int, url: str = ARCHIVE_URL):
@@ -94,8 +117,12 @@ def download_weight(params_dir: Path, weight_name: str = WEIGHT_NAME,
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("params_dir", type=Path, help="Destination params directory")
+    parser.add_argument("--weight", action="append", choices=sorted(WEIGHTS), metavar="NAME",
+                        help="Weight to fetch, e.g. model_1_multimer_v2 (repeatable; default model_2_ptm)")
     args = parser.parse_args()
-    download_weight(args.params_dir)
+    for name in args.weight or ["model_2_ptm"]:
+        release, sha256 = WEIGHTS[name]
+        download_weight(args.params_dir, f"params_{name}.npz", sha256, archive_url(release))
 
 
 if __name__ == "__main__":

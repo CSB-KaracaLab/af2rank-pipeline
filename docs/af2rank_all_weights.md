@@ -27,7 +27,7 @@ Each model is scored with each selected weight in five steps:
 4. **Unlink and trim.** The output is split back into the original chains and numbering. The linker rows and columns are removed from the predicted aligned error (PAE) and distogram outputs before any score is computed.
 5. **Score.** Mean pLDDT, pTM, ipTM (with the original chain labels) and actifpTM (Varga et al., 2025) are computed from the trimmed outputs; pTM uses the length without the linker. DockQ (Basu and Wallner, 2016) compares the cleaned input with the unlinked output, and contact PAE is the mean PAE over interface contacts.
 
-On runs without a linker, these recomputed scores match ColabDesign's own values exactly, so linked and unlinked runs are on one scale.
+On runs without a linker, these recomputed scores match ColabDesign's own values exactly, so scores are computed the same way with and without the linker.
 
 ## Input structures
 
@@ -69,11 +69,11 @@ af2rank-pipeline run-target --target T --fasta T.fasta --models models/ --params
   --strict-clean --model-mode alphafold-multimer --multimer-version v3 --model-num 1 --out out/
 ```
 
-Without `--model-mode alphafold-multimer` and `--multimer-version`, the command uses AF2-ptm (`--model-num` 1 or 2, default 2); the 20-glycine linker is the multimer default (`--multimer-linker`). With JAX 0.4.20 on H100 GPUs, set `XLA_FLAGS=--xla_gpu_force_compilation_parallelism=1`, which avoids an nvlink failure in XLA's parallel compilation. [`examples/marenostrum5`](../examples/marenostrum5) has the Slurm scripts used on MareNostrum 5.
+Without `--model-mode alphafold-multimer` and `--multimer-version`, the command uses AF2-ptm (`--model-num` 1 or 2, default 2); the 20-glycine linker is the multimer default (`--multimer-linker`). With JAX 0.4.20 on H100 GPUs, set `XLA_FLAGS=--xla_gpu_force_compilation_parallelism=1`, which avoids an nvlink failure in XLA's parallel compilation. [`cluster/marenostrum5`](../cluster/marenostrum5) has the Slurm scripts used on MareNostrum 5.
 
 ## Run times
 
-On one H100, scoring 3 models with one weight took 46–47 s, about 16 s per model and weight; on a laptop CPU, one model took about 4 min per weight.
+On one H100, scoring 3 models with one weight took a median of 47 s (Table 2), about 16 s per model and weight; on a laptop CPU, one model took about 4 min per weight.
 
 **Table 2.** Run times for the two reported runs, all 17 weights each.
 
