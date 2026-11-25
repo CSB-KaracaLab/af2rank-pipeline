@@ -1,0 +1,9 @@
+version,decoys,n,pulled_apart_linker,pulled_apart_separate
+AF2.1,good,2305,0.332,0.615
+AF2.1,incorrect,4395,0.858,0.962
+AF2.2,good,2305,0.193,0.308
+AF2.2,incorrect,4395,0.467,0.818
+AF2.3,good,2305,0.198,0.433
+AF2.3,incorrect,4395,0.523,0.907
+all multimer,good,6915,0.241,0.452
+all multimer,incorrect,13185,0.616,0.896

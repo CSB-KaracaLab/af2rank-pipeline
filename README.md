@@ -129,7 +129,7 @@ Each folder except `examples/1brs` (the quick-start run, default weight only) re
 | [`examples/e2a_hpr`](examples/e2a_hpr) | E2A–HPr NMR ensembles | masked | 3 and 30 models |
 | [`benchmarks/nmr`](benchmarks/nmr) | curated NMR dimers: homodimer, heterodimer and flexible sets | full resolution | 65 dimers |
 | [`benchmarks/xray`](benchmarks/xray) | unseen X-ray dimers matched to the NMR set | heterodimers: both settings; homodimers: not scored yet | 53 hetero, 39 homo |
-| [`benchmarks/capri`](benchmarks/capri) | CAPRI docking decoys: which score separates good models from bad ones | both settings | 9 targets, 1,340 decoys |
+| [`benchmarks/capri`](benchmarks/capri) | CAPRI docking decoys: which score and ranking strategy separate good models from bad ones (clustering, linker vs separate chains) | both settings; masked also with separate chains | 9 targets, 1,340 decoys |
 | [`cluster/marenostrum5`](cluster/marenostrum5) | Slurm scripts for H100 clusters | – | – |
 
 ## Scores and settings

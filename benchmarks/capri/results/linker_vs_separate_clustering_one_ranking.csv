@@ -1,0 +1,217 @@
+version,target,mode,strategy,top1,top5,first_class
+AF2.1,T026_1,linker,alone,False,False,incorrect
+AF2.1,T026_1,linker,clustered,True,True,acceptable
+AF2.1,T026_1,separate,alone,False,True,incorrect
+AF2.1,T026_1,separate,clustered,True,True,high
+AF2.1,T026_1,product,alone,False,False,incorrect
+AF2.1,T026_1,product,clustered,True,True,acceptable
+AF2.1,T029_1,linker,alone,True,True,medium
+AF2.1,T029_1,linker,clustered,True,True,medium
+AF2.1,T029_1,separate,alone,False,False,incorrect
+AF2.1,T029_1,separate,clustered,False,True,incorrect
+AF2.1,T029_1,product,alone,True,True,medium
+AF2.1,T029_1,product,clustered,True,True,medium
+AF2.1,T041_1,linker,alone,True,True,high
+AF2.1,T041_1,linker,clustered,False,True,incorrect
+AF2.1,T041_1,separate,alone,False,True,incorrect
+AF2.1,T041_1,separate,clustered,True,True,acceptable
+AF2.1,T041_1,product,alone,True,True,high
+AF2.1,T041_1,product,clustered,True,True,acceptable
+AF2.1,T089_1,linker,alone,True,True,medium
+AF2.1,T089_1,linker,clustered,True,True,medium
+AF2.1,T089_1,separate,alone,False,True,incorrect
+AF2.1,T089_1,separate,clustered,True,True,acceptable
+AF2.1,T089_1,product,alone,False,True,incorrect
+AF2.1,T089_1,product,clustered,True,True,medium
+AF2.1,T104_1,linker,alone,True,True,high
+AF2.1,T104_1,linker,clustered,True,True,high
+AF2.1,T104_1,separate,alone,True,True,high
+AF2.1,T104_1,separate,clustered,True,True,high
+AF2.1,T104_1,product,alone,True,True,high
+AF2.1,T104_1,product,clustered,True,True,high
+AF2.1,T131_1,linker,alone,False,True,incorrect
+AF2.1,T131_1,linker,clustered,False,False,incorrect
+AF2.1,T131_1,separate,alone,True,True,medium
+AF2.1,T131_1,separate,clustered,False,False,incorrect
+AF2.1,T131_1,product,alone,True,True,medium
+AF2.1,T131_1,product,clustered,False,False,incorrect
+AF2.1,T132_1,linker,alone,False,True,incorrect
+AF2.1,T132_1,linker,clustered,False,True,incorrect
+AF2.1,T132_1,separate,alone,True,True,acceptable
+AF2.1,T132_1,separate,clustered,True,True,acceptable
+AF2.1,T132_1,product,alone,True,True,acceptable
+AF2.1,T132_1,product,clustered,True,True,acceptable
+AF2.1,T142_1,linker,alone,False,True,incorrect
+AF2.1,T142_1,linker,clustered,True,True,medium
+AF2.1,T142_1,separate,alone,False,True,incorrect
+AF2.1,T142_1,separate,clustered,True,True,medium
+AF2.1,T142_1,product,alone,False,True,incorrect
+AF2.1,T142_1,product,clustered,True,True,medium
+AF2.1,T166_1,linker,alone,True,True,medium
+AF2.1,T166_1,linker,clustered,True,True,medium
+AF2.1,T166_1,separate,alone,True,True,medium
+AF2.1,T166_1,separate,clustered,True,True,medium
+AF2.1,T166_1,product,alone,True,True,medium
+AF2.1,T166_1,product,clustered,True,True,medium
+AF2.2,T026_1,linker,alone,True,True,medium
+AF2.2,T026_1,linker,clustered,True,True,medium
+AF2.2,T026_1,separate,alone,True,True,medium
+AF2.2,T026_1,separate,clustered,True,True,medium
+AF2.2,T026_1,product,alone,True,True,medium
+AF2.2,T026_1,product,clustered,True,True,medium
+AF2.2,T029_1,linker,alone,True,True,high
+AF2.2,T029_1,linker,clustered,True,True,high
+AF2.2,T029_1,separate,alone,True,True,medium
+AF2.2,T029_1,separate,clustered,True,True,medium
+AF2.2,T029_1,product,alone,True,True,medium
+AF2.2,T029_1,product,clustered,True,True,medium
+AF2.2,T041_1,linker,alone,True,True,high
+AF2.2,T041_1,linker,clustered,True,True,medium
+AF2.2,T041_1,separate,alone,True,True,high
+AF2.2,T041_1,separate,clustered,True,True,acceptable
+AF2.2,T041_1,product,alone,True,True,high
+AF2.2,T041_1,product,clustered,True,True,medium
+AF2.2,T089_1,linker,alone,True,True,acceptable
+AF2.2,T089_1,linker,clustered,True,True,acceptable
+AF2.2,T089_1,separate,alone,True,True,medium
+AF2.2,T089_1,separate,clustered,True,True,acceptable
+AF2.2,T089_1,product,alone,True,True,medium
+AF2.2,T089_1,product,clustered,True,True,acceptable
+AF2.2,T104_1,linker,alone,True,True,medium
+AF2.2,T104_1,linker,clustered,True,True,medium
+AF2.2,T104_1,separate,alone,True,True,medium
+AF2.2,T104_1,separate,clustered,True,True,medium
+AF2.2,T104_1,product,alone,True,True,high
+AF2.2,T104_1,product,clustered,True,True,high
+AF2.2,T131_1,linker,alone,False,True,incorrect
+AF2.2,T131_1,linker,clustered,False,False,incorrect
+AF2.2,T131_1,separate,alone,True,True,medium
+AF2.2,T131_1,separate,clustered,False,False,incorrect
+AF2.2,T131_1,product,alone,True,True,medium
+AF2.2,T131_1,product,clustered,False,False,incorrect
+AF2.2,T132_1,linker,alone,False,True,incorrect
+AF2.2,T132_1,linker,clustered,True,True,acceptable
+AF2.2,T132_1,separate,alone,True,True,acceptable
+AF2.2,T132_1,separate,clustered,True,True,acceptable
+AF2.2,T132_1,product,alone,False,True,incorrect
+AF2.2,T132_1,product,clustered,True,True,acceptable
+AF2.2,T142_1,linker,alone,True,True,medium
+AF2.2,T142_1,linker,clustered,True,True,medium
+AF2.2,T142_1,separate,alone,True,True,medium
+AF2.2,T142_1,separate,clustered,True,True,medium
+AF2.2,T142_1,product,alone,True,True,medium
+AF2.2,T142_1,product,clustered,True,True,medium
+AF2.2,T166_1,linker,alone,True,True,medium
+AF2.2,T166_1,linker,clustered,True,True,medium
+AF2.2,T166_1,separate,alone,True,True,medium
+AF2.2,T166_1,separate,clustered,True,True,medium
+AF2.2,T166_1,product,alone,True,True,medium
+AF2.2,T166_1,product,clustered,True,True,medium
+AF2.3,T026_1,linker,alone,False,True,incorrect
+AF2.3,T026_1,linker,clustered,True,True,high
+AF2.3,T026_1,separate,alone,True,True,high
+AF2.3,T026_1,separate,clustered,True,True,high
+AF2.3,T026_1,product,alone,True,True,high
+AF2.3,T026_1,product,clustered,True,True,high
+AF2.3,T029_1,linker,alone,True,True,high
+AF2.3,T029_1,linker,clustered,True,True,high
+AF2.3,T029_1,separate,alone,True,True,medium
+AF2.3,T029_1,separate,clustered,True,True,medium
+AF2.3,T029_1,product,alone,True,True,medium
+AF2.3,T029_1,product,clustered,True,True,medium
+AF2.3,T041_1,linker,alone,True,True,high
+AF2.3,T041_1,linker,clustered,True,True,acceptable
+AF2.3,T041_1,separate,alone,False,True,incorrect
+AF2.3,T041_1,separate,clustered,True,True,acceptable
+AF2.3,T041_1,product,alone,True,True,high
+AF2.3,T041_1,product,clustered,True,True,acceptable
+AF2.3,T089_1,linker,alone,True,True,medium
+AF2.3,T089_1,linker,clustered,True,True,acceptable
+AF2.3,T089_1,separate,alone,True,True,medium
+AF2.3,T089_1,separate,clustered,True,True,acceptable
+AF2.3,T089_1,product,alone,True,True,medium
+AF2.3,T089_1,product,clustered,True,True,acceptable
+AF2.3,T104_1,linker,alone,True,True,medium
+AF2.3,T104_1,linker,clustered,True,True,medium
+AF2.3,T104_1,separate,alone,True,True,medium
+AF2.3,T104_1,separate,clustered,True,True,medium
+AF2.3,T104_1,product,alone,True,True,medium
+AF2.3,T104_1,product,clustered,True,True,medium
+AF2.3,T131_1,linker,alone,False,False,incorrect
+AF2.3,T131_1,linker,clustered,False,False,incorrect
+AF2.3,T131_1,separate,alone,True,True,medium
+AF2.3,T131_1,separate,clustered,False,False,incorrect
+AF2.3,T131_1,product,alone,True,True,medium
+AF2.3,T131_1,product,clustered,False,False,incorrect
+AF2.3,T132_1,linker,alone,False,True,incorrect
+AF2.3,T132_1,linker,clustered,True,True,acceptable
+AF2.3,T132_1,separate,alone,True,True,acceptable
+AF2.3,T132_1,separate,clustered,True,True,acceptable
+AF2.3,T132_1,product,alone,True,True,acceptable
+AF2.3,T132_1,product,clustered,True,True,acceptable
+AF2.3,T142_1,linker,alone,True,True,medium
+AF2.3,T142_1,linker,clustered,True,True,medium
+AF2.3,T142_1,separate,alone,True,True,medium
+AF2.3,T142_1,separate,clustered,True,True,medium
+AF2.3,T142_1,product,alone,True,True,medium
+AF2.3,T142_1,product,clustered,True,True,medium
+AF2.3,T166_1,linker,alone,True,True,acceptable
+AF2.3,T166_1,linker,clustered,True,True,acceptable
+AF2.3,T166_1,separate,alone,True,True,medium
+AF2.3,T166_1,separate,clustered,True,True,medium
+AF2.3,T166_1,product,alone,True,True,medium
+AF2.3,T166_1,product,clustered,True,True,medium
+all multimer,T026_1,linker,alone,False,True,incorrect
+all multimer,T026_1,linker,clustered,True,True,high
+all multimer,T026_1,separate,alone,True,True,high
+all multimer,T026_1,separate,clustered,True,True,high
+all multimer,T026_1,product,alone,True,True,high
+all multimer,T026_1,product,clustered,True,True,high
+all multimer,T029_1,linker,alone,True,True,high
+all multimer,T029_1,linker,clustered,True,True,high
+all multimer,T029_1,separate,alone,True,True,medium
+all multimer,T029_1,separate,clustered,True,True,medium
+all multimer,T029_1,product,alone,True,True,medium
+all multimer,T029_1,product,clustered,True,True,medium
+all multimer,T041_1,linker,alone,True,True,high
+all multimer,T041_1,linker,clustered,True,True,acceptable
+all multimer,T041_1,separate,alone,True,True,high
+all multimer,T041_1,separate,clustered,True,True,medium
+all multimer,T041_1,product,alone,True,True,high
+all multimer,T041_1,product,clustered,True,True,acceptable
+all multimer,T089_1,linker,alone,True,True,medium
+all multimer,T089_1,linker,clustered,True,True,medium
+all multimer,T089_1,separate,alone,True,True,medium
+all multimer,T089_1,separate,clustered,True,True,acceptable
+all multimer,T089_1,product,alone,True,True,medium
+all multimer,T089_1,product,clustered,True,True,acceptable
+all multimer,T104_1,linker,alone,True,True,high
+all multimer,T104_1,linker,clustered,True,True,high
+all multimer,T104_1,separate,alone,True,True,high
+all multimer,T104_1,separate,clustered,True,True,high
+all multimer,T104_1,product,alone,True,True,high
+all multimer,T104_1,product,clustered,True,True,high
+all multimer,T131_1,linker,alone,False,False,incorrect
+all multimer,T131_1,linker,clustered,False,False,incorrect
+all multimer,T131_1,separate,alone,True,True,medium
+all multimer,T131_1,separate,clustered,False,False,incorrect
+all multimer,T131_1,product,alone,True,True,medium
+all multimer,T131_1,product,clustered,False,False,incorrect
+all multimer,T132_1,linker,alone,False,True,incorrect
+all multimer,T132_1,linker,clustered,True,True,acceptable
+all multimer,T132_1,separate,alone,True,True,acceptable
+all multimer,T132_1,separate,clustered,True,True,acceptable
+all multimer,T132_1,product,alone,False,True,incorrect
+all multimer,T132_1,product,clustered,True,True,acceptable
+all multimer,T142_1,linker,alone,True,True,medium
+all multimer,T142_1,linker,clustered,True,True,medium
+all multimer,T142_1,separate,alone,True,True,medium
+all multimer,T142_1,separate,clustered,True,True,medium
+all multimer,T142_1,product,alone,True,True,medium
+all multimer,T142_1,product,clustered,True,True,medium
+all multimer,T166_1,linker,alone,True,True,medium
+all multimer,T166_1,linker,clustered,True,True,medium
+all multimer,T166_1,separate,alone,True,True,medium
+all multimer,T166_1,separate,clustered,True,True,medium
+all multimer,T166_1,product,alone,True,True,medium
+all multimer,T166_1,product,clustered,True,True,medium
